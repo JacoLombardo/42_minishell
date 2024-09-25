@@ -12,7 +12,7 @@
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-SRCS = minishell.c
+SRCS = minishell.c source/buildins.c
 HEADER = minishell.h
 NAME = minishell
 LIBFT_PATH = libraries/libft

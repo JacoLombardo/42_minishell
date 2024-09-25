@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/09/25 16:21:17 by jalombar         ###   ########.fr       */
+/*   Created: 2024/09/25 14:21:14 by jalombar          #+#    #+#             */
+/*   Updated: 2024/09/25 14:21:21 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include "libraries/libft/libft.h"
-
-typedef struct s_cmd
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char	*cmd;
-	char	**options;
-	char	**args;
-	char	**env;
-}			t_cmd;
-
-/* buildins */
-int			ft_echo(t_cmd *cmd, int fd);
-int			ft_pwd(t_cmd *cmd, int fd);
-
-#endif
+	while (*s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+}
