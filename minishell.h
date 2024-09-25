@@ -13,4 +13,11 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+typedef struct	s_cmd {
+	char	*cmd;
+	char	**options;
+	char	**args;
+	char	**env;
+}		t_cmd;
+
 #endif
