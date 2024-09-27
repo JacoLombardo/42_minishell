@@ -5,17 +5,17 @@ CC	= cc # add flags
 CFLAGS	= -g -I.
 
 # libft
-LIBFT = libraries/libft/libft.a
+LIBFT = includes/libft/libft.a
 
 # linker flags
-LIBFT_FLAGS = -Llibraries/libft -lft
+LIBFT_FLAGS = -Lincludes/libft -lft
 LFLAGS = $(LIBFT_FLAGS)
 
 all:	$(NAME)
 
 $(LIBFT):
 	$(info Building libft...)
-	@make -s -C libraries/libft
+	@make -s -C includes/libft
 	
 $(NAME): $(LIBFT) $(OBJS)
 	$(info Linking $(NAME)...)
@@ -28,10 +28,10 @@ $(NAME): $(LIBFT) $(OBJS)
 
 clean:
 	@rm -f $(OBJS)
-	@make -s -C libraries/libft clean
+	@make -s -C includes/libft clean
 	$(info Removed!)
 fclean: clean
 	@rm -f $(NAME)
-	@make -s -C libraries/libft fclean
+	@make -s -C includes/libft fclean
 
 re:	fclean all

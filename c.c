@@ -28,20 +28,17 @@ int		is_bash_valid(char c)
 
 void	replace_vars(char *line, char *env[])
 {
-	// go through line
-	// when i find $
-		// copy whats after the $ in a temp "search" string (variable name). with a =
-		// strnstr with env[i], search, strlen(env[i]). returns start of the match
-		// value = return above + strlen(variable name)
-	int		i;
 	int		j;
+	int		i;
 	int		var_name_len;
 	char	*var_name;
 	char	*var_value;
 	char	*new_line;
+	char	*temp;
 
 	i = 0;
 	var_name_len = 0;
+	new_line = "";
 	while (line[i])
 	{
 		if (line[i] == '$' && what_quotes(line + i + 1) != 2)
@@ -52,8 +49,9 @@ void	replace_vars(char *line, char *env[])
 				var_name_len++;
 				i++;
 			}
-			var_name = ft_substr(line, i - var_name_len, var_name_len);
-			var_name = ft_strjoin(var_name, "=");
+			temp = ft_substr(line, i - var_name_len, var_name_len);
+			var_name = ft_strjoin(temp, "=");
+			free(temp);
 			// replace 
 			j = 0;
 			while (env[j])
@@ -63,14 +61,17 @@ void	replace_vars(char *line, char *env[])
 					j++;
 				else
 				{
-					printf("found: %s\n", var_value + var_name_len + 1);
+					printf("%s", var_value + var_name_len + 1);
 					break;
 				}
 			}
 			var_name_len = 0;
+			free(var_name);
 		}
+		printf("%c", line[i]);
 		i++;
 	}
+	printf("\n");
 }
 
 int	main(int argc, char *argv[], char *env[])
