@@ -7,7 +7,7 @@ void	print_tokens(char **tokens) // for testing
 	i = 0;
 	while (tokens[i])
 	{
-		printf("\t%s\n", tokens[i]);
+		printf("\t token %d : %s\n", i + 1, tokens[i]);
 		i++;
 	}
 }
@@ -86,12 +86,6 @@ char	*replace_vars(char *line, char *env[])
 
 int	main(int argc, char *argv[], char *env[])
 {
-	// int		i = 0;
-	// while (env[i])
-	// {
-	// 	printf("%s\n", env[i]);
-	// 	i++;
-	// }
 	char	line1[] =  "arg1 arg2 \"$PAPAFRITA\""; // quotes no space. 3
 	char	*line2 =  ft_strdup("hello i am $USER and this is $FRIEND"); // quotes no spaces. 3
 	char	line3[] =  "arg1 $arg2-arg3"; // no quotes. 2
