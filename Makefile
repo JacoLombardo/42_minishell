@@ -1,36 +1,37 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/09/25 13:27:38 by jalombar          #+#    #+#              #
-#    Updated: 2024/09/25 13:27:38 by jalombar         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+SRCS	= c.c quotes.c tokenize.c
+OBJS	= $(SRCS:%.c=%.o)
+NAME	= test
+CC	= cc # add flags
+CFLAGS	= -g -I.
 
-CC = cc
-CFLAGS = -Wall -Werror -Wextra
-SRCS = minishell.c
-HEADER = minishell.h
-NAME = minishell
-LIBFT_PATH = libraries/libft
-LIBFT = $(LIBFT_PATH)/libft.a
+# libft
+LIBFT = libraries/libft/libft.a
 
-all: $(NAME)
+# linker flags
+LIBFT_FLAGS = -Llibraries/libft -lft
+LFLAGS = $(LIBFT_FLAGS)
 
-$(NAME): $(SRCS) $(LIBFT)
-	$(CC) $(CFLAGS) -o $@ $(SRCS) -L$(LIBFT_PATH) -lft
+all:	$(NAME)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH)
+	$(info Building libft...)
+	@make -s -C libraries/libft
+	
+$(NAME): $(LIBFT) $(OBJS)
+	$(info Linking $(NAME)...)
+	@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
+	$(info Done!)
+	
+%.o: %.c
+	$(info Building $@...)
+	@$(CC) $(CFLAGS) $(LFLAGS) -o $@ -c $<
 
 clean:
-	$(MAKE) -C $(LIBFT_PATH) clean
-
+	@rm -f $(OBJS)
+	@make -s -C libraries/libft clean
+	$(info Removed!)
 fclean: clean
-	$(MAKE) -C $(LIBFT_PATH) fclean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@make -s -C libraries/libft fclean
 
-re: fclean all
+re:	fclean all
