@@ -1,0 +1,4 @@
+*.o
+*.a
+test
+ft_split.c

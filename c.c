@@ -26,7 +26,7 @@ int		is_bash_valid(char c)
 	return (0);
 }
 
-void	replace_vars(char *line, char *env[])
+char	*replace_vars(char *line, char *env[])
 {
 	int		j;
 	int		i;
@@ -35,10 +35,11 @@ void	replace_vars(char *line, char *env[])
 	char	*var_value;
 	char	*new_line;
 	char	*temp;
+	char	hold_char[2];
 
 	i = 0;
 	var_name_len = 0;
-	new_line = "";
+	new_line = ft_strdup("");
 	while (line[i])
 	{
 		if (line[i] == '$' && what_quotes(line + i + 1) != 2)
@@ -61,17 +62,26 @@ void	replace_vars(char *line, char *env[])
 					j++;
 				else
 				{
-					printf("%s", var_value + var_name_len + 1);
+					temp = ft_strdup(new_line); // should be newline??
+					free(new_line);
+					new_line = ft_strjoin(temp, var_value + var_name_len + 1);
+					free(temp);
 					break;
 				}
 			}
+			free(var_name); // if i move this to after line 53, i go from "9 allocs 7 frees" to 9/9, but i get a bunch of errors and there are still leaks
 			var_name_len = 0;
-			free(var_name);
 		}
-		printf("%c", line[i]);
+		// this little block below makes the string work fine but has bazillion allocs that are not freed. 59 allocs / 32 frees
+		temp = ft_strdup(new_line);
+		free(new_line);
+		hold_char[0] = line[i];
+		hold_char[1] = '\0'; // if i dont do this this way, the final new line has an extra random character after each real one
+		new_line = ft_strjoin(temp, hold_char);
+		free(temp);
 		i++;
 	}
-	printf("\n");
+	return (new_line);
 }
 
 int	main(int argc, char *argv[], char *env[])
@@ -83,15 +93,26 @@ int	main(int argc, char *argv[], char *env[])
 	// 	i++;
 	// }
 	char	line1[] =  "arg1 arg2 \"$PAPAFRITA\""; // quotes no space. 3
-	char	line2[] =  "hello i am $USER and this is $FRIEND"; // quotes no spaces. 3
+	char	*line2 =  ft_strdup("hello i am $USER and this is $FRIEND"); // quotes no spaces. 3
 	char	line3[] =  "arg1 $arg2-arg3"; // no quotes. 2
 	char	line4[] =  "arg1 \"arg2 arg3\""; // 2
 	char	line5[] =  "arg1 ar\"g2\""; // ?
-
+	char	*line6;
 	char	**tokens;
+	int		i = 0;
 
-	replace_vars(line1, env);
-	replace_vars(line2, env);
+	printf("%s\n", line2);
+	line6 = replace_vars(line2, env);
+	free(line2);
+	tokens = get_tokens(line6);
+	print_tokens(tokens);
+	while (tokens[i])
+	{
+		free(tokens[i]);
+		i++;
+	}
+	free(tokens);
+	free(line6);
 
 	return (0);
 }
