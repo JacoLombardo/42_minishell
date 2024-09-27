@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/09/25 16:21:17 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/09/27 11:32:18 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ typedef struct s_cmd
 /* buildins */
 int			ft_echo(t_cmd *cmd, int fd);
 int			ft_pwd(t_cmd *cmd, int fd);
+int			ft_env(t_cmd *cmd, int fd);
 
 #endif
