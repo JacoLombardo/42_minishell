@@ -16,6 +16,17 @@
 int		what_quotes(char const *string);
 char	**get_tokens(char *line);
 
+typedef enum	e_type {
+		THING,
+		OPERATOR,
+}		t_type;
+
+typedef struct	s_token {
+	t_type		type;
+	char	*value;
+	t_token	*next;
+}		t_token;
+
 typedef struct	s_cmd {
 	char	*cmd;
 	char	**options;
