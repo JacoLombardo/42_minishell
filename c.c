@@ -86,8 +86,8 @@ char	*replace_vars(char *line, char *env[])
 
 int	main(int argc, char *argv[], char *env[])
 {
-	char	line1[] =  "arg1 arg2 \"$PAPAFRITA\""; // quotes no space. 3
-	char	*line2 =  ft_strdup("hello i am $USER and this is $FRIEND"); // quotes no spaces. 3
+	char	line1[] =  "arg1 arg2\"$PAPAFRITA\""; // quotes no space. 3
+	char	*line2 =  ft_strdup("hello i || >> am $USER and this is $FRIEND"); // quotes no spaces. 3
 	char	line3[] =  "arg1 $arg2-arg3"; // no quotes. 2
 	char	line4[] =  "arg1 \"arg2 arg3\""; // 2
 	char	line5[] =  "arg1 ar\"g2\""; // ?
