@@ -13,9 +13,6 @@
 # define FALSE 0
 # define TRUE 1
 
-int		what_quotes(char const *string);
-char	**get_tokens(char *line);
-
 typedef enum	e_type {
 		THING,
 		OPERATOR,
@@ -33,5 +30,9 @@ typedef struct	s_cmd {
 	char	**args;
 	char	**env;
 }		t_cmd;
+
+int		what_quotes(char const *string);
+char	**get_tokens(char *line);
+void	append_token(t_token *token_list, char *value);
 
 #endif
