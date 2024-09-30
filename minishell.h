@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/09/27 11:32:18 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/09/30 11:48:19 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "libraries/libft/libft.h"
+# include <stdio.h>
 
 typedef struct s_cmd
 {
@@ -27,5 +28,11 @@ typedef struct s_cmd
 int			ft_echo(t_cmd *cmd, int fd);
 int			ft_pwd(t_cmd *cmd, int fd);
 int			ft_env(t_cmd *cmd, int fd);
+int			ft_cd(t_cmd *cmd, int fd);
+
+/* utils */
+char		**ft_cpyenv(char **env);
+char		*ft_getenv(char *name, char **env);
+char		*ft_setenv(char *name, char *value, char **env);
 
 #endif

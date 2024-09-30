@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:17:58 by jalombar          #+#    #+#             */
-/*   Updated: 2024/09/25 14:21:39 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/09/30 10:58:00 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char					*ft_strchr(const char *s, int c);
 int						ft_strcmp(const char *s1, const char *s2);
 char					*ft_strdup(const char *s);
 char					*ft_strjoin(char const *s1, char const *s2);
+char					*ft_strjoinjoin(char const *s1, char const *s2,
+							char const *s3);
 size_t					ft_strlcat(char *dst, const char *src, size_t size);
 size_t					ft_strlcpy(char *dst, const char *src, size_t size);
 size_t					ft_strlen(const char *s);
