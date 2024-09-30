@@ -16,8 +16,7 @@
 # include "libraries/libft/libft.h"
 # include <stdio.h>
 
-typedef struct s_cmd
-{
+typedef struct	s_cmd {
 	char	*cmd;
 	char	**options;
 	char	**args;
