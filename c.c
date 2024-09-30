@@ -15,15 +15,15 @@ void	print_tokens(char **tokens) // for testing
 int		is_quote(char c)
 {
 	if (c == '\'' || c == '\"')
-		return (1);
-	return (0);
+		return (TRUE);
+	return (FALSE);
 }
 
 int		is_bash_valid(char c)
 {
 	if (ft_isalnum(c) || c == '_')
-		return (1);
-	return (0);
+		return (TRUE);
+	return (FALSE);
 }
 
 char	*replace_vars(char *line, char *env[])
@@ -69,14 +69,13 @@ char	*replace_vars(char *line, char *env[])
 					break;
 				}
 			}
-			free(var_name); // if i move this to after line 53, i go from "9 allocs 7 frees" to 9/9, but i get a bunch of errors and there are still leaks
+			free(var_name);
 			var_name_len = 0;
 		}
-		// this little block below makes the string work fine but has bazillion allocs that are not freed. 59 allocs / 32 frees
 		temp = ft_strdup(new_line);
 		free(new_line);
 		hold_char[0] = line[i];
-		hold_char[1] = '\0'; // if i dont do this this way, the final new line has an extra random character after each real one
+		hold_char[1] = '\0';
 		new_line = ft_strjoin(temp, hold_char);
 		free(temp);
 		i++;

@@ -81,3 +81,18 @@ char	**get_tokens(char *line)
 	tokens[i] = NULL;
 	return (tokens);
 }
+
+t_token		*tokenize(char **line) // how many *
+{
+	t_token		*token_list; // *? *? *?
+	t_token		*new;
+	int			i;
+
+	i = 0;
+	while (*line[i])
+	{
+		append_token(token_list, line[i]);
+		i++;
+	}
+	return (token_list);
+}
