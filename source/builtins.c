@@ -1,48 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   buildins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/09/30 16:08:32 by jalombar         ###   ########.fr       */
+/*   Created: 2024/09/25 13:37:30 by jalombar          #+#    #+#             */
+/*   Updated: 2024/09/30 15:54:04 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_free_matrix(char **matrix)
+int	ft_echo(t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
-	while (matrix[i])
+	while (cmd->args[i])
 	{
-		free(matrix[i]);
+		if (cmd->args[i][0] == '$')
+			printf("%s", ft_getenv(cmd->args[i] + 1, cmd->env));
+		else
+			printf("%s", cmd->args[i]);
 		i++;
 	}
-	free(matrix);
-	return (NULL);
+	if (!cmd->options)
+		printf("\n");
+	return (0);
 }
 
-int	ft_find_var(char *env, char *name)
+void	ft_pwd(t_cmd *cmd)
 {
-	int		j;
-	char	*sub;
+	char	*cwd;
 
-	j = 0;
-	while (env[j] && env[j] != '=')
-		j++;
-	sub = ft_substr(env, 0, j);
-	if (!ft_strcmp(sub, name))
+	cwd = ft_getenv("PWD", cmd->env);
+	printf("%s\n", cwd);
+}
+
+void	ft_env(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->env[i])
 	{
-		free(sub);
-		return (j + 1);
-	}
-	else
-	{
-		free(sub);
-		return (0);
+		printf("%s\n", cmd->env[i]);
+		i++;
 	}
 }
