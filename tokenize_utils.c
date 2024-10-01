@@ -2,13 +2,13 @@
 
 t_type		get_type(char *str)
 {
-	if (ft_strncmp(str, "||", ft_strlen(str))
-			|| ft_strncmp(str, "&&", ft_strlen(str))
-			|| ft_strncmp(str, "|", ft_strlen(str))
-			|| ft_strncmp(str, ">", ft_strlen(str))
-			|| ft_strncmp(str, ">>", ft_strlen(str))
-			|| ft_strncmp(str, "<", ft_strlen(str))
-			|| ft_strncmp(str, "<<", ft_strlen(str)))
+	if (ft_strncmp(str, "||", ft_strlen(str)) == 0
+			|| ft_strncmp(str, "&&", ft_strlen(str)) == 0
+			|| ft_strncmp(str, "|", ft_strlen(str)) == 0
+			|| ft_strncmp(str, ">", ft_strlen(str)) == 0
+			|| ft_strncmp(str, ">>", ft_strlen(str)) == 0
+			|| ft_strncmp(str, "<", ft_strlen(str)) == 0
+			|| ft_strncmp(str, "<<", ft_strlen(str)) == 0)
 		return OPERATOR;
 	return (THING);
 }
@@ -31,7 +31,7 @@ void	append_token(t_token *token_list, char *value)
 {
 	t_token		*new;
 
-	while (token_list->next)
+	while (token_list->next != NULL)
 		token_list = token_list->next;
 	new = new_token(value);
 	new->prev = token_list;
@@ -43,4 +43,18 @@ t_token	*find_first(t_token *token_list)
 	while (token_list->prev != NULL)
 		token_list = token_list->prev;
 	return (token_list);
+}
+
+void	free_token_list(t_token *current)
+{
+	t_token *next;
+
+	next = current;
+	while (next)
+	{
+		free(current->value);
+		next = current->next;
+		free(current);
+		current = next;
+	}
 }

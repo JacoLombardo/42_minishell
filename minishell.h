@@ -32,10 +32,12 @@ typedef struct	s_cmd {
 	char	**env;
 }		t_cmd;
 
-int		what_quotes(char const *string);
-char	**get_tokens(char *line);
-void	append_token(t_token *token_list, char *value);
-t_token	*find_first(t_token *token_list);
+int			what_quotes(char const *string);
+char		**get_tokens(char *line);
+void		append_token(t_token *token_list, char *value);
+t_token		*find_first(t_token *token_list);
 t_token		*tokenize(char **line);
+void		free_token_list(t_token *current);
+t_token		*new_token(char *value);
 
 #endif

@@ -14,7 +14,7 @@
 
 void	print_ttoken(t_token *token)
 {
-	printf("value: %s, type: %i. ", token->value, token->type);
+	printf("value: %s\ttype: %i. ", token->value, token->type);
 	if (!token->next)
 		printf("this is the last one");
 	printf("\n");
@@ -93,7 +93,7 @@ char	*replace_vars(char *line, char *env[])
 
 int	main(int argc, char *argv[], char *env[])
 {
-	char	*line2 =  ft_strdup("hello i || >> am $USER and this is $FRIEND"); // quotes no spaces. 3
+	char	*line2 =  ft_strdup("hello i || >> am < $USER > and this is $FRIEND"); // quotes no spaces. 3
 
 	char	*line6;
 	char	**words;
@@ -118,6 +118,7 @@ int	main(int argc, char *argv[], char *env[])
 	}
 	free(words);
 	free(line6);
+	free_token_list(find_first(token_list));
 
 	return (0);
 }

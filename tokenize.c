@@ -82,16 +82,43 @@ char	**get_tokens(char *line)
 	return (tokens);
 }
 
+t_token *new_get_tokens(char *line)
+{
+	t_token *token_list;
+
+	while(*line)
+	{
+		while (*line == ' ')
+			line++;
+		if (is_operator_char(*line) && is_operator_char(*(line + 1)))
+		{
+			// &&, ||, <<, >>
+			// create operator token
+			line += 2;
+		} else if (is_operator_char(*line)) {
+			// >, <
+			// create operator token
+			line++;
+		}
+		else
+		{
+			// create thing token
+			len = 0;
+			while (*(line + len) != ' ' && !is_operator_char(*(line + len)))
+				len++;
+			line += len;
+		}
+	}
+}
+
 t_token		*tokenize(char **line) // how many *
 {
 	t_token		*token_list; // *? *? *?
 	t_token		*new;
 	int			i;
 
-	token_list = malloc(sizeof(t_token));
-	token_list->prev = NULL;
-	token_list->next = NULL;
-	i = 0;
+	token_list = new_token(line[0]);
+	i = 1;
 	while (line[i])
 	{
 		append_token(token_list, line[i]);
