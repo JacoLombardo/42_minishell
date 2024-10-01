@@ -19,9 +19,10 @@ typedef enum	e_type {
 }		t_type;
 
 typedef struct	s_token {
-	t_type		type;
-	char	*value;
+	t_type			type;
+	char			*value;
 	struct s_token	*next;
+	struct s_token	*prev;
 }		t_token;
 
 typedef struct	s_cmd {
@@ -34,5 +35,7 @@ typedef struct	s_cmd {
 int		what_quotes(char const *string);
 char	**get_tokens(char *line);
 void	append_token(t_token *token_list, char *value);
+t_token	*find_first(t_token *token_list);
+t_token		*tokenize(char **line);
 
 #endif

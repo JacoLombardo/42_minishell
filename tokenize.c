@@ -88,11 +88,14 @@ t_token		*tokenize(char **line) // how many *
 	t_token		*new;
 	int			i;
 
+	token_list = malloc(sizeof(t_token));
+	token_list->prev = NULL;
+	token_list->next = NULL;
 	i = 0;
-	while (*line[i])
+	while (line[i])
 	{
 		append_token(token_list, line[i]);
 		i++;
 	}
-	return (token_list);
+	return (find_first(token_list));
 }

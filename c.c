@@ -1,15 +1,23 @@
 #include "minishell.h"
 
-void	print_tokens(char **tokens) // for testing
-{
-	int i, j;
+// void	print_tokens(char **tokens) // for testing
+// {
+// 	int i, j;
 
-	i = 0;
-	while (tokens[i])
-	{
-		printf("\t token %d : %s\n", i + 1, tokens[i]);
-		i++;
-	}
+// 	i = 0;
+// 	while (tokens[i])
+// 	{
+// 		printf("\t token %d : %s\n", i + 1, tokens[i]);
+// 		i++;
+// 	}
+// }
+
+void	print_ttoken(t_token *token)
+{
+	printf("value: %s, type: %i. ", token->value, token->type);
+	if (!token->next)
+		printf("this is the last one");
+	printf("\n");
 }
 
 int		is_quote(char c)
@@ -85,26 +93,30 @@ char	*replace_vars(char *line, char *env[])
 
 int	main(int argc, char *argv[], char *env[])
 {
-	char	line1[] =  "arg1 arg2\"$PAPAFRITA\""; // quotes no space. 3
 	char	*line2 =  ft_strdup("hello i || >> am $USER and this is $FRIEND"); // quotes no spaces. 3
-	char	line3[] =  "arg1 $arg2-arg3"; // no quotes. 2
-	char	line4[] =  "arg1 \"arg2 arg3\""; // 2
-	char	line5[] =  "arg1 ar\"g2\""; // ?
-	char	*line6;
-	char	**tokens;
-	int		i = 0;
 
-	printf("%s\n", line2);
+	char	*line6;
+	char	**words;
+	int		i = 0;
+	t_token *token_list;
+
 	line6 = replace_vars(line2, env);
 	free(line2);
-	tokens = get_tokens(line6);
-	print_tokens(tokens);
-	while (tokens[i])
+	words = get_tokens(line6);
+	token_list = tokenize(words);
+	while (token_list->next != NULL)
 	{
-		free(tokens[i]);
+		print_ttoken(token_list);
+		token_list = token_list->next;
+	}
+	print_ttoken(token_list);
+
+	while (words[i])
+	{
+		free(words[i]);
 		i++;
 	}
-	free(tokens);
+	free(words);
 	free(line6);
 
 	return (0);
