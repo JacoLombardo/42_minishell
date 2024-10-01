@@ -11,7 +11,9 @@
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra
+LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
+RL_FLAGS = -L/path/to/readline-8.2/.libs -lreadline
 SRCS = minishell.c source/builtins.c source/builtins2.c source/env.c source/utils.c
 HEADER = minishell.h
 NAME = minishell
@@ -21,7 +23,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 all: $(NAME)
 
 $(NAME): $(SRCS) $(LIBFT)
-	$(CC) $(CFLAGS) -o $@ $(SRCS) -L$(LIBFT_PATH) -lft
+	$(CC) $(FLAGS) -o $@ $(SRCS) $(LIBFT_FLAGS) $(RL_FLAGS)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_PATH)

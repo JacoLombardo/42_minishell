@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/09/30 16:04:22 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:38:33 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,13 @@
 
 # include "libraries/libft/libft.h"
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
-typedef struct	s_cmd {
+static int	g_program;
+
+typedef struct s_cmd
+{
 	char	*cmd;
 	char	**options;
 	char	**args;
@@ -35,6 +40,7 @@ int			ft_unset(t_cmd *cmd);
 
 /* utils */
 char		*ft_free_matrix(char **matrix);
+char		*ft_free_cmd(t_cmd *cmd);
 int			ft_find_var(char *env, char *name);
 
 /* env */
