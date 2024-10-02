@@ -6,13 +6,13 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:59:47 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/02 10:42:36 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:07:47 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_child(t_cmd *cmd, int *p_fd)
+void	ft_child(t_cmd *cmd, t_data *data, int *p_fd)
 {
 	int	fd;
 
@@ -20,10 +20,10 @@ void	ft_child(t_cmd *cmd, int *p_fd)
 	dup2(fd, 0);
 	dup2(p_fd[1], 1);
 	close(p_fd[0]);
-	ft_exec(cmd->args[2], cmd->env);
+	ft_exec(cmd->args[2], data);
 }
 
-void	ft_parent(t_cmd *cmd, int *p_fd)
+void	ft_parent(t_cmd *cmd, t_data *data, int *p_fd)
 {
 	int	fd;
 
@@ -31,10 +31,10 @@ void	ft_parent(t_cmd *cmd, int *p_fd)
 	dup2(fd, 1);
 	dup2(p_fd[0], 0);
 	close(p_fd[1]);
-	ft_exec(cmd->args[3], cmd->env);
+	ft_exec(cmd->args[3], data);
 }
 
-void	ft_pipex(t_cmd *cmd)
+void	ft_pipex(t_cmd *cmd, t_data *data)
 {
 	int		p_fd[2];
 	pid_t	pid;
@@ -45,6 +45,6 @@ void	ft_pipex(t_cmd *cmd)
 	if (pid == -1)
 		exit(-1);
 	if (!pid)
-		ft_child(cmd, p_fd);
-	ft_parent(cmd, p_fd);
+		ft_child(cmd, data, p_fd);
+	ft_parent(cmd, data, p_fd);
 }

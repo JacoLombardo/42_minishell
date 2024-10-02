@@ -6,13 +6,13 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/02 10:36:26 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:46:49 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_builtins_main(int argc, char **argv)
+int	ft_builtins_main(int argc, char **argv, t_data *data)
 {
 	t_cmd	cmd;
 	int		i;
@@ -40,18 +40,18 @@ int	ft_builtins_main(int argc, char **argv)
 			i++;
 		}
 		cmd.args[i] = NULL;
-		ft_echo(&cmd);
+		ft_echo(&cmd, data);
 	}
 	else if (!ft_strcmp(argv[1], "pwd"))
-		ft_pwd(&cmd);
+		ft_pwd(&cmd, data);
 	else if (!ft_strcmp(argv[1], "env"))
-		ft_env(&cmd);
+		ft_env(&cmd, data);
 	else if (!ft_strcmp(argv[1], "cd"))
 	{
 		cmd.args = (char **)malloc(2 * sizeof(char *));
 		cmd.args[0] = ft_strdup(argv[2]);
 		cmd.args[1] = NULL;
-		ft_cd(&cmd);
+		ft_cd(&cmd, data);
 	}
 	else if (!ft_strcmp(argv[1], "export"))
 	{
@@ -59,26 +59,26 @@ int	ft_builtins_main(int argc, char **argv)
 		cmd.args[0] = ft_strdup(argv[2]);
 		cmd.args[1] = ft_strdup(argv[3]);
 		cmd.args[2] = NULL;
-		ft_export(&cmd);
+		ft_export(&cmd, data);
 	}
 	else if (!ft_strcmp(argv[1], "unset"))
 	{
 		cmd.args = (char **)malloc(2 * sizeof(char *));
 		cmd.args[0] = ft_strdup(argv[2]);
 		cmd.args[1] = NULL;
-		ft_unset(&cmd);
+		ft_unset(&cmd, data);
 	}
 	return (1);
 }
 
-char	*ft_pwd_name(t_cmd *cmd)
+char	*ft_pwd_name(t_data *data)
 {
 	int		i;
 	int		len;
 	char	*cwd;
 
 	i = 0;
-	cwd = ft_getenv("PWD", cmd->env);
+	cwd = ft_getenv("PWD", data->env);
 	len = ft_strlen(cwd);
 	while (cwd[len - i] != '/')
 		i++;
@@ -86,23 +86,47 @@ char	*ft_pwd_name(t_cmd *cmd)
 	return (cwd);
 }
 
+void	sig_handler(int signum, siginfo_t *info, void *context)
+{
+	(void)context;
+	(void)info;
+	if (signum == SIGUSR1)
+		g_program = 0;
+	else if (signum == SIGUSR2)
+		g_program = 2;
+}
+
 int	main(int argc, char **argv, char **env)
 {
-	char	*line;
-	char	*prompt;
-	t_cmd	cmd;
+	//struct sigaction	sa;
+	char				*line;
+	char				*prompt;
+	t_data				data;
+	HIST_ENTRY			**history;
 
 	(void)argv;
-	cmd.env = ft_cpyenv(env);
+	/* sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART | SA_SIGINFO;
+	sa.sa_sigaction = sig_handler;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL); */
+	data.env = ft_cpyenv(env);
+	history = NULL;
+	data.history = history;
+	data.ex_stat = NULL;
 	if (argc == 1)
 	{
 		g_program = 1;
 		while (g_program)
 		{
-			prompt = ft_strjoinjoin("🫠 :~", ft_pwd_name(&cmd), "$ ");
+			prompt = ft_strjoinjoin("🫠 :~", ft_pwd_name(&data), "$ ");
 			line = readline(prompt);
+			add_history(line);
+			history = history_list();
+			ft_exec(line, &data);
 			free(prompt);
-			printf("%s\n", line);
+			/* for (int i = 0; history[i] != NULL; i++)
+				printf("%d: %s\n", i + history_base, history[i]->line); */
 		}
 	}
 	else

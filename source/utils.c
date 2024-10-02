@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/02 10:28:40 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:36:16 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	*ft_free_cmd(t_cmd *cmd)
 	free(cmd->cmd);
 	ft_free_tab(cmd->args);
 	ft_free_tab(cmd->options);
-	ft_free_tab(cmd->env);
 	free(cmd);
 	return (NULL);
 }
