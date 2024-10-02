@@ -30,7 +30,7 @@ OBJS_BONUS := $(SRCS_BONUS:%.c=%.o)
 NAME	= libft.a
 CC	= cc
 RM	= rm -f
-CFLAGS	= -Wall -Wextra -Werror -I.
+CFLAGS	= -g -Wall -Wextra -Werror -I.
 
 all:	$(NAME)
 

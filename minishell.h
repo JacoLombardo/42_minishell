@@ -40,8 +40,10 @@ typedef struct	s_cmd {
 
 int			what_quotes(char const *string);
 
-// tokenizing
 
+//expanding
+char		*expand_vars(char *line, char *env[]);
+// tokenizing
 t_token		*tokenize(char *line);
 // making + appending
 t_token		*new_token(char *value, t_type type);

@@ -1,5 +1,12 @@
 #include "minishell.h"
 
+int		is_bash_valid(char c)
+{
+	if (ft_isalnum(c) || c == '_')
+		return (TRUE);
+	return (FALSE);
+}
+
 char	*expand_vars(char *line, char *env[])
 {
 	int		j;

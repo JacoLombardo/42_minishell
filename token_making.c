@@ -8,7 +8,10 @@ t_token	*new_token(char *value, t_type type)
 	if (!new_token)
 		return (NULL);
 	new_token->type = type;
-	new_token->value = ft_strdup(value);
+	if (value != NULL)
+		new_token->value = ft_strdup(value);
+	else
+		new_token->value = NULL;
 	new_token->next = NULL;
 	new_token->prev = NULL;
 	return (new_token);
@@ -21,6 +24,7 @@ void	append_token(t_token *token_list, char *value, t_type type)
 	while (token_list->next != NULL)
 		token_list = token_list->next;
 	new = new_token(value, type);
+	print_ttoken2(new);
 	new->prev = token_list;
 	token_list->next = new;
 }
@@ -51,7 +55,7 @@ int		value_token(t_token *token_list, char *line_pos)
 	while (line_pos[start] == ' ')
 		start++;
 	// extract value (handle quotes)
-	while (!((is_operator_char(line_pos[len]) || line_pos[len] == ' ') && what_quotes(line_pos + len + 1)))
+	while (!((is_operator_char(line_pos[len]) || line_pos[len] == ' ') && !what_quotes(line_pos + len + 1)) && line_pos[len])
 		len++;
 	value = ft_substr(line_pos, start, len);
 	append_token(token_list, value, THING);
