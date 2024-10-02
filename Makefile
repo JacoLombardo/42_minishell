@@ -1,4 +1,4 @@
-SRCS	= c.c quotes.c tokenize.c tokenize_utils.c
+SRCS	= c.c tokenizer.c token_making.c token_utils.c
 OBJS	= $(SRCS:%.c=%.o)
 NAME	= test
 CC	= cc # add flags

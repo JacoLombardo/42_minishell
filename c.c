@@ -1,17 +1,5 @@
 #include "minishell.h"
 
-// void	print_tokens(char **tokens) // for testing
-// {
-// 	int i, j;
-
-// 	i = 0;
-// 	while (tokens[i])
-// 	{
-// 		printf("\t token %d : %s\n", i + 1, tokens[i]);
-// 		i++;
-// 	}
-// }
-
 void	print_ttoken(t_token *token)
 {
 	printf("value: %s\ttype: %i. ", token->value, token->type);
@@ -96,14 +84,12 @@ int	main(int argc, char *argv[], char *env[])
 	char	*line2 =  ft_strdup("hello i || >> am < $USER > and this is $FRIEND"); // quotes no spaces. 3
 
 	char	*line6;
-	char	**words;
 	int		i = 0;
 	t_token *token_list;
 
 	line6 = replace_vars(line2, env);
 	free(line2);
-	words = get_tokens(line6);
-	token_list = tokenize(words);
+	tokenize(line6);
 	while (token_list->next != NULL)
 	{
 		print_ttoken(token_list);
@@ -111,12 +97,6 @@ int	main(int argc, char *argv[], char *env[])
 	}
 	print_ttoken(token_list);
 
-	while (words[i])
-	{
-		free(words[i]);
-		i++;
-	}
-	free(words);
 	free(line6);
 	free_token_list(find_first(token_list));
 
