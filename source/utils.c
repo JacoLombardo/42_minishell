@@ -6,34 +6,34 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/01 10:55:32 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/02 10:28:40 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_free_matrix(char **matrix)
+char	*ft_free_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
-	if (!matrix)
+	if (!tab)
 		return (NULL);
-	while (matrix[i])
+	while (tab[i])
 	{
-		free(matrix[i]);
+		free(tab[i]);
 		i++;
 	}
-	free(matrix);
+	free(tab);
 	return (NULL);
 }
 
 char	*ft_free_cmd(t_cmd *cmd)
 {
 	free(cmd->cmd);
-	ft_free_matrix(cmd->args);
-	ft_free_matrix(cmd->options);
-	ft_free_matrix(cmd->env);
+	ft_free_tab(cmd->args);
+	ft_free_tab(cmd->options);
+	ft_free_tab(cmd->env);
 	free(cmd);
 	return (NULL);
 }

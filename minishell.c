@@ -6,13 +6,13 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/01 15:37:25 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/02 10:36:26 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* int	ft_builtins_main(int argc, char **argv, char **env)
+int	ft_builtins_main(int argc, char **argv)
 {
 	t_cmd	cmd;
 	int		i;
@@ -69,7 +69,7 @@
 		ft_unset(&cmd);
 	}
 	return (1);
-} */
+}
 
 char	*ft_pwd_name(t_cmd *cmd)
 {
@@ -106,6 +106,6 @@ int	main(int argc, char **argv, char **env)
 		}
 	}
 	else
-		perror("Too many args\n");
+		printf("Too many args\n");
 	return (0);
 }
