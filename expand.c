@@ -16,7 +16,6 @@ char	*expand_vars(char *line, char *env[])
 	char	*var_value;
 	char	*new_line;
 	char	*temp;
-	char	hold_char[2];
 
 	i = 0;
 	var_name_len = 0;
@@ -55,9 +54,7 @@ char	*expand_vars(char *line, char *env[])
 		}
 		temp = ft_strdup(new_line);
 		free(new_line);
-		hold_char[0] = line[i];
-		hold_char[1] = '\0';
-		new_line = ft_strjoin(temp, hold_char);
+		new_line = ft_charjoin(temp, line[i]);
 		free(temp);
 		i++;
 	}

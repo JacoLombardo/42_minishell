@@ -24,7 +24,6 @@ void	append_token(t_token *token_list, char *value, t_type type)
 	while (token_list->next != NULL)
 		token_list = token_list->next;
 	new = new_token(value, type);
-	print_ttoken2(new);
 	new->prev = token_list;
 	token_list->next = new;
 }

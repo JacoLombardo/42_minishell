@@ -57,4 +57,6 @@ void		free_token_list(t_token *current);
 int			what_quotes(char const *string);
 int			is_operator_char(char c);
 
+char		*ft_charjoin(char const *str, char const c);
+
 #endif

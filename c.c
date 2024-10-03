@@ -18,8 +18,9 @@ int		is_quote(char c)
 int	main(int argc, char *argv[], char *env[])
 {
 	char	*line2 =  ft_strdup("hello i || >> am < $USER > and this is $FRIEND"); // quotes no spaces. 3
-
+	char	*line3 = ft_strdup("hola como estas");
 	char	*line6;
+	char	*test;
 	int		i = 0;
 	t_token *token_list;
 
@@ -35,6 +36,9 @@ int	main(int argc, char *argv[], char *env[])
 //
 	//free(line6);
 	//free_token_list(find_first(token_list));
+
+	test = ft_charjoin(line6, '!');
+	printf("%s\n", test);
 
 	return (0);
 }
