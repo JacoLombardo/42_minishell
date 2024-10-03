@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/02 10:35:56 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:50:59 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,23 @@ char	**ft_cpyenv(char **env)
 {
 	char	**new_env;
 	int		i;
+	int		j;
 
 	i = 0;
-	while (env[i])
-		i++;
-	new_env = (char **)malloc((i + 1) * sizeof(char *));
+	j = 0;
+	new_env = (char **)malloc((ft_tablen(env) + 2) * sizeof(char *));
 	if (!new_env)
 		return (NULL);
-	i = 0;
 	while (env[i])
 	{
-		new_env[i] = ft_strdup(env[i]);
+		new_env[i + j] = ft_strdup(env[i]);
 		if (!new_env)
 			return (NULL);
+		if (!ft_strncmp(env[i], "PWD", 3))
+		{
+			j++;
+			new_env[i + j] = ft_strjoin("OLD_", env[i]);
+		}
 		i++;
 	}
 	new_env[i] = NULL;

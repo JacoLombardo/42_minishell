@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/02 15:46:49 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:51:42 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,15 @@ char	*ft_pwd_name(t_data *data)
 	return (cwd);
 }
 
-void	sig_handler(int signum, siginfo_t *info, void *context)
-{
-	(void)context;
-	(void)info;
-	if (signum == SIGUSR1)
-		g_program = 0;
-	else if (signum == SIGUSR2)
-		g_program = 2;
-}
+// void	sig_handler(int signum, siginfo_t *info, void *context)
+// {
+// 	(void)context;
+// 	(void)info;
+// 	if (signum == SIGUSR1)
+// 		g_program = 0;
+// 	else if (signum == SIGUSR2)
+// 		g_program = 2;
+// }
 
 int	main(int argc, char **argv, char **env)
 {
@@ -116,8 +116,9 @@ int	main(int argc, char **argv, char **env)
 	data.ex_stat = NULL;
 	if (argc == 1)
 	{
-		g_program = 1;
-		while (g_program)
+		//g_program = 1;
+		//while (g_program)
+		while (1)
 		{
 			prompt = ft_strjoinjoin("🫠 :~", ft_pwd_name(&data), "$ ");
 			line = readline(prompt);

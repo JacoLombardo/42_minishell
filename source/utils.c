@@ -6,11 +6,21 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/02 11:36:16 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:44:42 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	ft_tablen(char **tab)
+{
+	int	len;
+
+	len = 0;
+	while (tab[len])
+		len++;
+	return (len);
+}
 
 char	*ft_free_tab(char **tab)
 {

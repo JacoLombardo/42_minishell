@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/02 14:45:45 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:44:57 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
-# include <signal.h>
-# include <asm-generic/siginfo.h>
+//# include <signal.h>
+//# include <asm-generic/siginfo.h>
 
-static int			g_program;
+//static int			g_program;
 
 typedef struct s_status
 {
@@ -74,6 +74,7 @@ void				ft_parent(t_cmd *cmd, t_data *data, int *p_fd);
 void				ft_pipex(t_cmd *cmd, t_data *data);
 
 /* utils */
+int					ft_tablen(char **tab);
 char				*ft_free_tab(char **tab);
 char				*ft_free_cmd(t_cmd *cmd);
 int					ft_find_var(char *env, char *name);

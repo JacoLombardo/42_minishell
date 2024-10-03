@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:30:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/02 11:32:41 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:53:47 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ int	ft_cd(t_cmd *cmd, t_data *data)
 	{
 		perror("cd");
 		free(path);
-		return (0);
+		return (1);
 	}
 	else
 	{
+		ft_setenv("OLD_PWD", cwd, data->env);
 		ft_setenv("PWD", path, data->env);
 		free(path);
-		return (1);
+		return (0);
 	}
 }
 
@@ -40,27 +41,23 @@ int	ft_export(t_cmd *cmd, t_data *data)
 {
 	int	len;
 
-	len = 0;
-	while (data->env[len])
-		len++;
+	len = ft_tablen(data->env);
 	data->env = ft_reallocenv(data->env, len);
 	if (!data->env)
-		return (0);
+		return (1);
 	data->env[len] = ft_strjoinjoin(cmd->args[0], "=", cmd->args[1]);
 	data->env[len + 1] = NULL;
-	return (1);
+	return (0);
 }
 
 int	ft_unset(t_cmd *cmd, t_data *data)
 {
 	int	len;
 
-	len = 0;
-	while (data->env[len])
-		len++;
+	len = ft_tablen(data->env);
 	data->env = ft_deallocenv(data->env, len, cmd->args[0]);
 	if (!data->env)
-		return (0);
-	else
 		return (1);
+	else
+		return (0);
 }
