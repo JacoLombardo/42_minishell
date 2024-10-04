@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "includes/minishell.h"
 
 void	print_ttoken(t_token *token)
 {
@@ -33,7 +33,6 @@ int	main(int argc, char *argv[], char *env[])
 	//	token_list = token_list->next;
 	//}
 	//print_ttoken(token_list);
-//
 	//free(line6);
 	//free_token_list(find_first(token_list));
 

@@ -1,4 +1,6 @@
-SRCS	= c.c expand.c tokenize.c token_making.c token_utils.c ft_charjoin.c
+SRCS	= c.c \
+		expanding/expand.c expanding/ft_charjoin.c \
+		tokenizing/token_making.c tokenizing/token_utils.c tokenizing/tokenize.c
 OBJS	= $(SRCS:%.c=%.o)
 NAME	= test
 CC	= cc # add flags
@@ -18,12 +20,11 @@ $(LIBFT):
 	@make -s -C includes/libft
 	
 $(NAME): $(LIBFT) $(OBJS)
-	$(info Linking $(NAME)...)
+	$(info Building $(NAME)...)
 	@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
 	$(info Done!)
 	
 %.o: %.c
-	$(info Building $@...)
 	@$(CC) $(CFLAGS) $(LFLAGS) -o $@ -c $<
 
 clean:

@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 char	*ft_charjoin(char const *str, char const c)
 {
@@ -10,7 +10,6 @@ char	*ft_charjoin(char const *str, char const c)
 	new = (char *)malloc(sizeof(char) * (len + 2));
 	if (!new)
 		return (NULL);
-
 	i = 0;
 	while (i <= len)
 	{
