@@ -15,13 +15,13 @@
 
 typedef enum	e_type {
 		THING,
+		T_PIPE,
 		T_OR,
 		T_AND,
-		T_BIGBIG, // >>
-		T_SMALLSMALL, // <<
-		T_PIPE,
-		T_BIG,
-		T_SMALL,
+		T_APPEND, // >>
+		T_HEREDOC, // <<
+		T_OUT,
+		T_IN,
 }		t_type;
 
 typedef struct	s_token {

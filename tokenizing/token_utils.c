@@ -7,15 +7,15 @@ t_type		get_type(char *str)
 	else if (ft_strncmp(str, "&&", 2) == 0)
 		return (T_AND);
 	else if (ft_strncmp(str, ">>", 2) == 0)
-		return (T_BIGBIG);
+		return (T_APPEND);
 	else if (ft_strncmp(str, "<<", 2) == 0)
-		return (T_SMALLSMALL);
+		return (T_HEREDOC);
 	else if (ft_strncmp(str, "|", 1) == 0)
 		return (T_PIPE);
 	else if (ft_strncmp(str, ">", 1) == 0)
-		return (T_BIG);
+		return (T_OUT);
 	else if (ft_strncmp(str, "<", 1) == 0)
-		return (T_SMALL);
+		return (T_IN);
 	return (THING);
 }
 
