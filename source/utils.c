@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/03 11:44:42 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:02:42 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,56 @@ char	*ft_free_tab(char **tab)
 
 char	*ft_free_cmd(t_cmd *cmd)
 {
-	free(cmd->cmd);
 	ft_free_tab(cmd->args);
-	ft_free_tab(cmd->options);
+	free(cmd->redirection);
+	free(cmd->target);
 	free(cmd);
+	return (NULL);
+}
+
+char	*ft_free_ast(t_ast *ast)
+{
+	int		i;
+	t_cmd	*cmds;
+	t_cmd	*temp;
+
+	i = 0;
+	cmds = *ast->cmds;
+	while (cmds->next)
+	{
+		temp = cmds;
+		cmds = cmds->next;
+		ft_free_cmd(temp);
+	}
+	while (ast->operators[i])
+	{
+		free(ast->operators[i]);
+		i++;
+	}
+	free(ast->input);
+	free(ast);
+	return (NULL);
+}
+
+char	*ft_free_data(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->env[i])
+	{
+		free(data->env[i]);
+		i++;
+	}
+	free(data->env);
+	i = 0;
+	while (data->history[i])
+	{
+		free(data->history[i]);
+		i++;
+	}
+	free(data->history);
+	free(data);
 	return (NULL);
 }
 

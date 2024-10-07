@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:30:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/03 11:53:47 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:43:50 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,11 @@ int	ft_unset(t_cmd *cmd, t_data *data)
 		return (1);
 	else
 		return (0);
+}
+
+int	ft_exit(t_cmd *cmd, t_data *data)
+{
+	(void)cmd;
+	(void)data;
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:37:30 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/02 11:34:03 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:40:54 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,44 @@
 
 int	ft_echo(t_cmd *cmd, t_data *data)
 {
-	int	i;
+	int		i;
+	char	*line;
+	char	*temp;
 
-	i = 0;
+	(void)data;
+	if (!ft_strcmp(cmd->args[1], "-n"))
+		i = 2;
+	else
+		i = 1;
+	line = ft_strdup(cmd->args[0]);
 	while (cmd->args[i])
 	{
-		if (cmd->args[i][0] == '$')
-			printf("%s", ft_getenv(cmd->args[i] + 1, data->env));
-		else
-			printf("%s", cmd->args[i]);
+		temp = line;
+		line = ft_strjoin(temp, cmd->args[i]);
+		if (!line)
+			return (1);
+		free(temp);
 		i++;
 	}
-	if (!cmd->options)
-		printf("\n");
+	if (!ft_strcmp(cmd->args[1], "-n"))
+		printf("%s", line);
+	else
+		printf("%s\n", line);
+	free(line);
 	return (0);
 }
 
-void	ft_pwd(t_cmd *cmd, t_data *data)
+int	ft_pwd(t_cmd *cmd, t_data *data)
 {
 	char	*cwd;
 
 	(void)cmd;
 	cwd = ft_getenv("PWD", data->env);
 	printf("%s\n", cwd);
+	return (0);
 }
 
-void	ft_env(t_cmd *cmd, t_data *data)
+int	ft_env(t_cmd *cmd, t_data *data)
 {
 	int	i;
 
@@ -50,4 +62,5 @@ void	ft_env(t_cmd *cmd, t_data *data)
 		printf("%s\n", data->env[i]);
 		i++;
 	}
+	return (0);
 }

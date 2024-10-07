@@ -6,13 +6,13 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/03 11:51:42 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:44:59 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_builtins_main(int argc, char **argv, t_data *data)
+/* int	ft_builtins_main(int argc, char **argv, t_data *data)
 {
 	t_cmd	cmd;
 	int		i;
@@ -69,7 +69,7 @@ int	ft_builtins_main(int argc, char **argv, t_data *data)
 		ft_unset(&cmd, data);
 	}
 	return (1);
-}
+} */
 
 char	*ft_pwd_name(t_data *data)
 {
@@ -113,7 +113,6 @@ int	main(int argc, char **argv, char **env)
 	data.env = ft_cpyenv(env);
 	history = NULL;
 	data.history = history;
-	data.ex_stat = NULL;
 	if (argc == 1)
 	{
 		//g_program = 1;
