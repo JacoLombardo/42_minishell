@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/08 18:26:15 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:30:06 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,17 @@ t_ast	ft_set()
 	t_cmd *cmd2;
 	t_cmd *cmd3;
 	t_cmd *cmd4;
+	t_cmd *cmd5;
 
 	//ast.operators = NULL;
 	ast.cmds = NULL;
-	ast.operators = (char **)malloc(4 * sizeof(char *));
+	ast.operators = (char **)malloc(5 * sizeof(char *));
 	ast.operators[0] = ft_strdup("|");
 	ast.operators[1] = ft_strdup("|");
 	ast.operators[2] = NULL;
 	ast.operators[2] = ft_strdup("&&");
-	ast.operators[3] = NULL;
+	ast.operators[3] = ft_strdup("&&");
+	ast.operators[4] = NULL;
 
 	cmd1 = (t_cmd *)malloc(1 * sizeof(t_cmd));
 	cmd1->args = (char **)malloc(4 * sizeof(char *));
@@ -150,10 +152,20 @@ t_ast	ft_set()
 	cmd4->redirection = NULL;
 	cmd4->target = NULL;
 
+	cmd5 = (t_cmd *)malloc(1 * sizeof(t_cmd));
+	cmd5->args = (char **)malloc(3 * sizeof(char *));
+	cmd5->args[0] = ft_strdup("echo");
+	cmd5->args[1] = ft_strdup("dajeeeeee");
+	cmd5->args[2] = NULL;
+	cmd5->cmd = cmd4->args[0];
+	cmd5->redirection = NULL;
+	cmd5->target = NULL;
+
 	cmd1->next = cmd2;
 	cmd2->next = cmd3;
 	cmd3->next = cmd4;
-	cmd4->next = NULL;
+	cmd4->next = cmd5;
+	cmd5->next = NULL;
 
 	ast.cmds = (t_cmd **)malloc(sizeof(t_cmd *));
 	*ast.cmds = cmd1;

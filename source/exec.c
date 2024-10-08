@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/08 18:26:48 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:03:55 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,53 @@ int	ft_handle_pipe(t_cmd **cmd, t_data *data, char ***operators)
 	return (status);
 }
 
+int	ft_logical_and(t_cmd **cmd, t_data *data, char ***operators)
+{
+	int	count;
+	int	status;
+
+	count = 0;
+	if (**operators && !ft_strcmp(**operators, "|"))
+	{
+		while (**operators && !ft_strcmp(**operators, "|"))
+		{
+			(*operators)++;
+			count++;
+		}
+		status = ft_pipe(cmd, data, count);
+	}
+	else
+	{
+		status = ft_exec(*cmd, data);
+		(*operators)++;
+	}
+	*cmd = (*cmd)->next;
+	return (status);
+}
+
+int	ft_logical_or(t_cmd **cmd, t_data *data, char ***operators)
+{
+	int	count;
+	int	status;
+
+	count = 0;
+	if (**operators && !ft_strcmp(**operators, "|"))
+	{
+		while (**operators && !ft_strcmp(**operators, "|"))
+		{
+			(*operators)++;
+			count++;
+			*cmd = (*cmd)->next;
+		}
+	}
+	else
+	{
+		*cmd = (*cmd)->next;
+		(*operators)++;
+	}
+	return (status);
+}
+
 int	ft_check_operators(t_ast *ast, t_data *data)
 {
 	int	status;
@@ -126,15 +173,13 @@ int	ft_check_operators(t_ast *ast, t_data *data)
 		status = ft_exec(*ast->cmds, data);
 	else
 	{
+		status = ft_handle_pipe(&cmd, data, &operators);
 		while (*operators && cmd)
 		{
-			status = ft_handle_pipe(&cmd, data, &operators);
-			if (*operators && (!ft_strcmp(*operators, "&&") || !ft_strcmp(*operators, "||")))
-			{
-				status = ft_logical(cmd, data, *operators, status);
-				cmd = cmd->next;
-				operators++;
-			}
+			if (!ft_strcmp(*operators, "&&") && !status)
+				status = ft_logical_and(&cmd, data, &operators);
+			else if (!ft_strcmp(*operators, "||") && (status > 0 || status < 0))
+				status = ft_logical_or(&cmd, data, &operators);
 		}
 	}
 	return (status);
