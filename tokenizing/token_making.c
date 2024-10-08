@@ -35,7 +35,7 @@ int		operator_token(t_token *token_list, char *line_pos)
 
 	type = get_type(line_pos);
 	append_token(token_list, NULL, type);
-	if (type == T_PIPE || type == T_BIG || type == T_SMALL)
+	if (type == T_PIPE || type == T_OUT || type == T_IN)
 		len = 1;
 	else
 		len = 2;
@@ -58,5 +58,6 @@ int		value_token(t_token *token_list, char *line_pos)
 		len++;
 	value = ft_substr(line_pos, start, len);
 	append_token(token_list, value, THING);
+	free(value);
 	return (len);
 }

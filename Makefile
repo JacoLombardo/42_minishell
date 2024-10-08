@@ -1,6 +1,7 @@
 SRCS	= c.c \
 		expanding/expand.c expanding/ft_charjoin.c \
-		tokenizing/token_making.c tokenizing/token_utils.c tokenizing/tokenize.c
+		tokenizing/token_making.c tokenizing/token_utils.c tokenizing/tokenize.c \
+		parsing/parse.c
 OBJS	= $(SRCS:%.c=%.o)
 NAME	= test
 CC	= cc # add flags

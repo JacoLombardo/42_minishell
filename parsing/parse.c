@@ -63,7 +63,6 @@ t_node	*make_simple_command(t_parser *parser)
 	node = create_node(SIMPLE_CMD);
 	node->cmd = simple;
 	return (node);
-
 }
 
 t_node	*make_redirect(t_parser *parser)
