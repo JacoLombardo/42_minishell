@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/07 15:44:59 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:26:15 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,89 @@ char	*ft_pwd_name(t_data *data)
 // 		g_program = 2;
 // }
 
+t_ast	ft_set()
+{
+	t_ast ast;
+	t_cmd *cmd1;
+	t_cmd *cmd2;
+	t_cmd *cmd3;
+	t_cmd *cmd4;
+
+	//ast.operators = NULL;
+	ast.cmds = NULL;
+	ast.operators = (char **)malloc(4 * sizeof(char *));
+	ast.operators[0] = ft_strdup("|");
+	ast.operators[1] = ft_strdup("|");
+	ast.operators[2] = NULL;
+	ast.operators[2] = ft_strdup("&&");
+	ast.operators[3] = NULL;
+
+	cmd1 = (t_cmd *)malloc(1 * sizeof(t_cmd));
+	cmd1->args = (char **)malloc(4 * sizeof(char *));
+	cmd1->args[0] = ft_strdup("echo");
+	cmd1->args[1] = ft_strdup("ciao");
+	cmd1->args[2] = ft_strdup("come");
+	cmd1->args[3] = NULL;
+	cmd1->cmd = cmd1->args[0];
+	cmd1->redirection = NULL;
+	cmd1->target = NULL;
+	//cmd1->next = NULL;
+
+	cmd2 = (t_cmd *)malloc(1 * sizeof(t_cmd));
+	cmd2->args = (char **)malloc(2 * sizeof(char *));
+	cmd2->args[0] = ft_strdup("cat");
+	cmd2->args[1] = NULL;
+	cmd2->cmd = cmd2->args[0];
+	cmd2->redirection = NULL;
+	cmd2->target = NULL;
+
+	cmd3 = (t_cmd *)malloc(1 * sizeof(t_cmd));
+	cmd3->args = (char **)malloc(3 * sizeof(char *));
+	cmd3->args[0] = ft_strdup("wc");
+	cmd3->args[1] = ft_strdup("-l");
+	cmd3->args[2] = NULL;
+	cmd3->cmd = cmd3->args[0];
+	cmd3->redirection = NULL;
+	cmd3->target = NULL;
+
+	cmd4 = (t_cmd *)malloc(1 * sizeof(t_cmd));
+	cmd4->args = (char **)malloc(3 * sizeof(char *));
+	cmd4->args[0] = ft_strdup("echo");
+	cmd4->args[1] = ft_strdup("bene");
+	cmd4->args[2] = NULL;
+	cmd4->cmd = cmd4->args[0];
+	cmd4->redirection = NULL;
+	cmd4->target = NULL;
+
+	cmd1->next = cmd2;
+	cmd2->next = cmd3;
+	cmd3->next = cmd4;
+	cmd4->next = NULL;
+
+	ast.cmds = (t_cmd **)malloc(sizeof(t_cmd *));
+	*ast.cmds = cmd1;
+	return (ast);
+}
+
+void	ft_check(t_ast *ast)
+{
+	t_cmd *cmd;
+	char **operators;
+
+	cmd = *ast->cmds;
+	operators = ast->operators;
+	while (*operators)
+	{
+		printf("%s\n", *operators);
+		operators++;
+	}
+	while (cmd)
+	{
+		printf("%s\n", cmd->cmd);
+		cmd = cmd->next;
+	}
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	//struct sigaction	sa;
@@ -103,6 +186,7 @@ int	main(int argc, char **argv, char **env)
 	char				*prompt;
 	t_data				data;
 	HIST_ENTRY			**history;
+	t_ast				ast;
 
 	(void)argv;
 	/* sigemptyset(&sa.sa_mask);
@@ -113,8 +197,12 @@ int	main(int argc, char **argv, char **env)
 	data.env = ft_cpyenv(env);
 	history = NULL;
 	data.history = history;
+	ast = ft_set();
+	//ft_check(&ast);
+	ft_check_operators(&ast, &data);
 	if (argc == 1)
 	{
+		/*
 		//g_program = 1;
 		//while (g_program)
 		while (1)
@@ -123,11 +211,12 @@ int	main(int argc, char **argv, char **env)
 			line = readline(prompt);
 			add_history(line);
 			history = history_list();
-			ft_exec(line, &data);
+			//ft_exec(line, &data);
 			free(prompt);
-			/* for (int i = 0; history[i] != NULL; i++)
-				printf("%d: %s\n", i + history_base, history[i]->line); */
+			for (int i = 0; history[i] != NULL; i++)
+				printf("%d: %s\n", i + history_base, history[i]->line);
 		}
+		*/
 	}
 	else
 		printf("Too many args\n");

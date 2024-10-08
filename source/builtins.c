@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:37:30 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/07 15:40:54 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:48:01 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_echo(t_cmd *cmd, t_data *data)
 		i = 2;
 	else
 		i = 1;
-	line = ft_strdup(cmd->args[0]);
+	line = ft_strdup(cmd->args[i++]);
 	while (cmd->args[i])
 	{
 		temp = line;

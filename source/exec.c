@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/08 10:53:56 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:26:48 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	ft_external(t_cmd *cmd, t_data *data)
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 	}
+	return (status);
 }
 
 int	ft_exec(t_cmd *cmd, t_data *data)
@@ -92,109 +93,49 @@ int	ft_exec(t_cmd *cmd, t_data *data)
 	return (data->last_exit);
 }
 
-int	ft_handle_pipe(t_cmd *cmd, t_data *data, char **operators)
+int	ft_handle_pipe(t_cmd **cmd, t_data *data, char ***operators)
 {
 	int	count;
-	int	exit;
+	int	status;
 
 	count = 0;
-	if (!ft_strcmp(*operators, "|"))
+	if (**operators && !ft_strcmp(**operators, "|"))
 	{
-		while (!ft_strcmp(*operators, "|"))
+		while (**operators && !ft_strcmp(**operators, "|"))
 		{
-			operators++;
+			(*operators)++;
 			count++;
 		}
-		exit = ft_pipe(cmd, data, count);
+		status = ft_pipe(cmd, data, count);
 	}
 	else
-		exit = ft_exec(cmd, data);
-	return (exit);
+		status = ft_exec(*cmd, data);
+	*cmd = (*cmd)->next;
+	return (status);
 }
 
 int	ft_check_operators(t_ast *ast, t_data *data)
 {
-	int	exit;
+	int	status;
 	t_cmd	*cmd;
 	char	**operators;
 
-	cmd = *ast->cmds
-	if (!ast->operators)
-		exit = ft_exec(*ast->cmds, data);
+	cmd = *ast->cmds;
+	operators = ast->operators;
+	if (!operators)
+		status = ft_exec(*ast->cmds, data);
 	else
 	{
 		while (*operators && cmd)
 		{
-			if (!ft_strcmp(*operators, "|"))
-				exit = ft_handle_pipe(cmd, data, operators)
-			else if (!ft_strcmp(*operators, "&&"))
-				exit = ft_logical_and(cmd, data, exit);
-			else if (!ft_strcmp(*operators, "||"))
-				exit = ft_logical_or(cmd, data, exit);
-			cmd = cmd->next;
-			operators++;
+			status = ft_handle_pipe(&cmd, data, &operators);
+			if (*operators && (!ft_strcmp(*operators, "&&") || !ft_strcmp(*operators, "||")))
+			{
+				status = ft_logical(cmd, data, *operators, status);
+				cmd = cmd->next;
+				operators++;
+			}
 		}
-		
 	}
+	return (status);
 }
-
-// int	ft_check_operators(t_ast *ast, t_data *data)
-// {
-// 	int	i;
-// 	int	exit;
-// 	t_cmd	*cmd;
-
-// 	i = 0;
-// 	cmd = *ast->cmds
-// 	if (!ast->operators)
-// 		ft_exec(*ast->cmds, data);
-// 	else
-// 	{
-// 		while (operators[i] && cmd)
-// 		{
-// 			count = 0;
-// 			if (!ft_strcmp(operators[i], "|"))
-// 			{
-				
-// 			}
-// 			else if (!ft_strcmp(operators[i], "&&"))
-// 				exit = ft_logical_and(cmd, data, exit);
-// 			else if (!ft_strcmp(operators[i], "||"))
-// 				exit = ft_logical_or(cmd, data, exit);
-// 			cmd = cmd->next;
-// 			i++;
-// 		}
-		
-// 	}
-// }
-
-/* void	ft_exec(t_cmd *cmd, t_data *data)
-{
-	char	**s_cmd;
-	char	*path;
-	pid_t	pid;
-	int		status;
-
-	s_cmd = ft_split(cmd, ' ');
-	path = ft_get_path(s_cmd[0], data->env);
-	pid = fork();
-	if (pid == -1)
-		exit(-1);
-	if (!pid)
-	{
-		if (execve(path, s_cmd, data->env) == -1)
-		{
-			ft_putstr_fd("minishell: command not found: ", 2);
-			ft_putendl_fd(s_cmd[0], 2);
-			ft_free_tab(s_cmd);
-			exit(1);
-		}
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			ft_new_ex_stat(&data->ex_stat, WEXITSTATUS(status), cmd);
-	}
-	ft_free_tab(s_cmd);
-} */
