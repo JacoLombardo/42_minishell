@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/07 15:41:27 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/08 10:53:56 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_get_path(char *cmd, char **env)
 	return (cmd);
 }
 
-void	ft_external(t_cmd *cmd, t_data *data)
+int	ft_external(t_cmd *cmd, t_data *data)
 {
 	char	*path;
 	pid_t	pid;
@@ -63,11 +63,11 @@ void	ft_external(t_cmd *cmd, t_data *data)
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			data->last_exit = WEXITSTATUS(status);
+			return (WEXITSTATUS(status));
 	}
 }
 
-void	ft_exec(t_cmd *cmd, t_data *data)
+int	ft_exec(t_cmd *cmd, t_data *data)
 {
 	if (cmd->redirection)
 		ft_redirect(cmd->target, cmd->redirection);
@@ -86,15 +86,87 @@ void	ft_exec(t_cmd *cmd, t_data *data)
 	else if (!ft_strcmp(cmd->cmd, "exit"))
 		data->last_exit = ft_exit(cmd, data);
 	else
-		ft_external(cmd, data);
+		data->last_exit = ft_external(cmd, data);
 	if (cmd->redirection)
 		ft_reset_redirect(cmd->target, cmd->redirection);
+	return (data->last_exit);
 }
 
-/* int	ft_check_operators(t_ast *ast, t_data *data)
+int	ft_handle_pipe(t_cmd *cmd, t_data *data, char **operators)
 {
-	if ()
-} */
+	int	count;
+	int	exit;
+
+	count = 0;
+	if (!ft_strcmp(*operators, "|"))
+	{
+		while (!ft_strcmp(*operators, "|"))
+		{
+			operators++;
+			count++;
+		}
+		exit = ft_pipe(cmd, data, count);
+	}
+	else
+		exit = ft_exec(cmd, data);
+	return (exit);
+}
+
+int	ft_check_operators(t_ast *ast, t_data *data)
+{
+	int	exit;
+	t_cmd	*cmd;
+	char	**operators;
+
+	cmd = *ast->cmds
+	if (!ast->operators)
+		exit = ft_exec(*ast->cmds, data);
+	else
+	{
+		while (*operators && cmd)
+		{
+			if (!ft_strcmp(*operators, "|"))
+				exit = ft_handle_pipe(cmd, data, operators)
+			else if (!ft_strcmp(*operators, "&&"))
+				exit = ft_logical_and(cmd, data, exit);
+			else if (!ft_strcmp(*operators, "||"))
+				exit = ft_logical_or(cmd, data, exit);
+			cmd = cmd->next;
+			operators++;
+		}
+		
+	}
+}
+
+// int	ft_check_operators(t_ast *ast, t_data *data)
+// {
+// 	int	i;
+// 	int	exit;
+// 	t_cmd	*cmd;
+
+// 	i = 0;
+// 	cmd = *ast->cmds
+// 	if (!ast->operators)
+// 		ft_exec(*ast->cmds, data);
+// 	else
+// 	{
+// 		while (operators[i] && cmd)
+// 		{
+// 			count = 0;
+// 			if (!ft_strcmp(operators[i], "|"))
+// 			{
+				
+// 			}
+// 			else if (!ft_strcmp(operators[i], "&&"))
+// 				exit = ft_logical_and(cmd, data, exit);
+// 			else if (!ft_strcmp(operators[i], "||"))
+// 				exit = ft_logical_or(cmd, data, exit);
+// 			cmd = cmd->next;
+// 			i++;
+// 		}
+		
+// 	}
+// }
 
 /* void	ft_exec(t_cmd *cmd, t_data *data)
 {

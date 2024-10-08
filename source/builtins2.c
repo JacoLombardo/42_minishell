@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:30:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/07 15:43:50 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/08 08:53:14 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_cd(t_cmd *cmd, t_data *data)
 		path = ft_strdup(cmd->args[0] + 1);
 	if (chdir(path))
 	{
-		perror("cd");
+		perror(path);
 		free(path);
 		return (1);
 	}

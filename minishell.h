@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/07 15:58:37 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/08 09:28:52 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ char				*ft_setenv(char *name, char *value, char **env);
 
 /* exec */
 char				*ft_get_path(char *cmd, char **env);
-void				ft_exec(char *cmd, t_data *data);
+int					ft_exec(char *cmd, t_data *data);
 
 /* operators */
-void				ft_child(t_cmd *cmd, t_data *data, int *p_fd);
-void				ft_parent(t_cmd *cmd, t_data *data, int *p_fd);
-void				ft_pipe(t_ast *ast, t_data *data);
+int					ft_child(t_cmd *cmd, t_data *data, int *p_fd);
+int					ft_parent(t_cmd *cmd, t_data *data, int *p_fd);
+int					ft_pipe(t_ast *ast, t_data *data);
 
 /* pipex */
 int					ft_open_file(char *file, int in_or_out);

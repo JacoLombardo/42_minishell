@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:56:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/07 15:28:27 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/08 08:50:18 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ void	ft_reset_redirect(char *file, char *redirection)
 	else if (!ft_strcmp(redirection, ">"))
 	{
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		to_fd = 1;
+	}
+	else if (!ft_strcmp(redirection, ">>"))
+	{
+		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 		to_fd = 1;
 	}
 	if (fd == -1)
