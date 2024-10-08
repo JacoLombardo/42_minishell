@@ -1,4 +1,5 @@
-#include "../includes/minishell.h"
+#ifndef PARSE_H
+# define PARSE_H
 
 typedef enum	e_node_type
 {
@@ -57,3 +58,17 @@ typedef struct	s_redirect
 	t_redir_type	type;
 	char 			*target;
 }		t_redirect;
+
+void	parse(t_token *token_list);
+
+t_node	*make_pipeline(t_parser *parser);
+t_node	*make_full_command(t_parser *parser);
+t_node	*make_redirect(t_parser *parser);
+t_node	*make_simple_command(t_parser *parser);
+
+t_node	*create_node(t_node_type type);
+void	advance(t_parser *parser);
+int		accept(t_parser *parser, t_type type);
+int		expect(t_parser *parser, t_type type);
+
+#endif

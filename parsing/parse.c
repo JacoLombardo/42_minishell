@@ -1,111 +1,63 @@
-#include "parse.h"
+#include "../includes/minishell.h"
 
-void	advance(t_parser *parser)
+t_parser	*parser_init(t_token *token_list)
 {
-	parser->curr_token = parser->curr_token->next;
+	t_parser	*parser;
+
+	parser = malloc(sizeof(t_parser));
+	parser->err_num = 0;
+	parser->curr_token = token_list;
+	parser->node = NULL;
+	return (parser);
 }
 
-int		accept(t_parser *parser, t_type type)
+void	print_node(t_node *node)
 {
-	if (parser->curr_token->type == type)
+	t_arg	*arg;
+
+	if (!node)
+		return ;
+	if (node->type == PIPELINE)
 	{
-		advance(parser);
-		return (TRUE);
+		printf("\npipeline: ");
+		print_node(node->pair->left);
+		print_node(node->pair->right);
 	}
-	return (FALSE);
-}
-
-int		expect(t_parser *parser, t_type type)
-{
-	if (accept(parser, type))
-		return (TRUE);
-	parser->err_num = 1;
-	// todo: write cleanup function
-	return (FALSE);
-}
-
-t_node	*create_node(t_node_type type)
-{
-	t_node	*node;
-
-	node = malloc(sizeof(t_node));
-	node->type = type;
-
-	return (node);
-}
-
-t_node	*make_simple_command(t_parser *parser)
-{
-	t_simple_cmd	*simple;
-	t_node 			*node;
-	t_arg			*new;
-	t_arg			*curr;
-
-	simple = malloc(sizeof(t_simple_cmd));
-	simple->command = parser->curr_token->value;
-	simple->arg = malloc(sizeof(t_arg));
-	simple->arg->next = NULL;
-	simple->arg->value = NULL;
-	advance(parser);
-
-	while (accept(parser, THING))
+	else if (node->type == FULL_CMD)
 	{
-		curr = simple->arg;
-		while (curr->next)
-			curr = curr->next;
-
-		new = malloc(sizeof(t_arg));
-		new->value = parser->curr_token->value;
-		new->next = NULL;
-		curr->next = new;
+		printf("\n\tfull command: ");
+		print_node(node->pair->left);
+		print_node(node->pair->right);
 	}
-
-	node = create_node(SIMPLE_CMD);
-	node->cmd = simple;
-	return (node);
-}
-
-t_node	*make_redirect(t_parser *parser)
-{
-	t_redirect	*redir;
-	t_node 		*node;
-
-	redir = malloc(sizeof(t_redirect));
-	redir->type = parser->curr_token->type;
-
-	expect(parser, THING);
-	redir->target = parser->curr_token->value;
-
-	node = create_node(REDIRECT);
-	node->redirect = redir;
-	return (node);
-}
-
-t_node	*make_full_command(t_parser *parser)
-{
-	t_node	*redir_nodes;
-	t_node	*cmd_node;
-	t_node 	*node;
-
-	if (parser->curr_token->type == THING)
+	else if (node->type == REDIRECT)
 	{
-		cmd_node = make_simple_command(parser);
+		printf("\n\t\tredirect: ");
+		printf("type %d, target %s", node->redirect->type, node->redirect->target);
 	}
-
-	if (parser->curr_token->type >= T_APPEND)
+	else if (node->type == SIMPLE_CMD)
 	{
-		redir_nodes = make_redirect(parser);
+		printf("\n\t\tsimple command: ");
+		printf("cmd %s, args ", node->cmd->command);
+		arg = node->cmd->arg;
+		printf("%s ", arg->value);
+		while (arg->next)
+		{
+			arg = arg->next;
+			printf("%s ", arg->value);
+		}
 	}
-
-	node = create_node(FULL_CMD);
-	node->pair = malloc(sizeof(t_pair));
-	node->pair->left = cmd_node;
-	node->pair->right = redir_nodes;
-	
-	return (node);
+	else
+		printf ("?");
+	printf("\n");
 }
 
-t_node	*make_pipeline(t_parser *parser)
+void	parse(t_token *token_list)
 {
+	t_parser	*parser;
+	t_node		*top_node;
 
+	parser = parser_init(token_list);
+	top_node = make_full_command(parser);
+
+	print_node(top_node);
 }
