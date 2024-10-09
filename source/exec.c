@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/08 19:03:55 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:21:43 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	ft_external(t_cmd *cmd, t_data *data)
 
 	path = ft_get_path(cmd->cmd, data->env);
 	pid = fork();
+	status = 0;
 	if (pid == -1)
 		exit(-1);
 	if (!pid)
@@ -98,28 +99,7 @@ int	ft_handle_pipe(t_cmd **cmd, t_data *data, char ***operators)
 	int	count;
 	int	status;
 
-	count = 0;
-	if (**operators && !ft_strcmp(**operators, "|"))
-	{
-		while (**operators && !ft_strcmp(**operators, "|"))
-		{
-			(*operators)++;
-			count++;
-		}
-		status = ft_pipe(cmd, data, count);
-	}
-	else
-		status = ft_exec(*cmd, data);
-	*cmd = (*cmd)->next;
-	return (status);
-}
-
-int	ft_logical_and(t_cmd **cmd, t_data *data, char ***operators)
-{
-	int	count;
-	int	status;
-
-	count = 0;
+	count = 1;
 	if (**operators && !ft_strcmp(**operators, "|"))
 	{
 		while (**operators && !ft_strcmp(**operators, "|"))
@@ -132,38 +112,14 @@ int	ft_logical_and(t_cmd **cmd, t_data *data, char ***operators)
 	else
 	{
 		status = ft_exec(*cmd, data);
-		(*operators)++;
-	}
-	*cmd = (*cmd)->next;
-	return (status);
-}
-
-int	ft_logical_or(t_cmd **cmd, t_data *data, char ***operators)
-{
-	int	count;
-	int	status;
-
-	count = 0;
-	if (**operators && !ft_strcmp(**operators, "|"))
-	{
-		while (**operators && !ft_strcmp(**operators, "|"))
-		{
-			(*operators)++;
-			count++;
-			*cmd = (*cmd)->next;
-		}
-	}
-	else
-	{
 		*cmd = (*cmd)->next;
-		(*operators)++;
 	}
 	return (status);
 }
 
 int	ft_check_operators(t_ast *ast, t_data *data)
 {
-	int	status;
+	int		status;
 	t_cmd	*cmd;
 	char	**operators;
 
@@ -179,7 +135,7 @@ int	ft_check_operators(t_ast *ast, t_data *data)
 			if (!ft_strcmp(*operators, "&&") && !status)
 				status = ft_logical_and(&cmd, data, &operators);
 			else if (!ft_strcmp(*operators, "||") && (status > 0 || status < 0))
-				status = ft_logical_or(&cmd, data, &operators);
+				ft_logical_or(&cmd, data, &operators);
 		}
 	}
 	return (status);

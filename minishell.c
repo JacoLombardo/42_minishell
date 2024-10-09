@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/08 18:30:06 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:20:36 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,7 @@ t_ast	ft_set()
 	ast.operators = (char **)malloc(5 * sizeof(char *));
 	ast.operators[0] = ft_strdup("|");
 	ast.operators[1] = ft_strdup("|");
-	ast.operators[2] = NULL;
-	ast.operators[2] = ft_strdup("&&");
+	ast.operators[2] = ft_strdup("|");
 	ast.operators[3] = ft_strdup("&&");
 	ast.operators[4] = NULL;
 
@@ -124,7 +123,6 @@ t_ast	ft_set()
 	cmd1->cmd = cmd1->args[0];
 	cmd1->redirection = NULL;
 	cmd1->target = NULL;
-	//cmd1->next = NULL;
 
 	cmd2 = (t_cmd *)malloc(1 * sizeof(t_cmd));
 	cmd2->args = (char **)malloc(2 * sizeof(char *));
@@ -133,6 +131,14 @@ t_ast	ft_set()
 	cmd2->cmd = cmd2->args[0];
 	cmd2->redirection = NULL;
 	cmd2->target = NULL;
+
+	/* cmd3 = (t_cmd *)malloc(1 * sizeof(t_cmd));
+	cmd3->args = (char **)malloc(2 * sizeof(char *));
+	cmd3->args[0] = ft_strdup("cat");
+	cmd3->args[1] = NULL;
+	cmd3->cmd = cmd2->args[0];
+	cmd3->redirection = NULL;
+	cmd3->target = NULL; */
 
 	cmd3 = (t_cmd *)malloc(1 * sizeof(t_cmd));
 	cmd3->args = (char **)malloc(3 * sizeof(char *));
@@ -144,10 +150,9 @@ t_ast	ft_set()
 	cmd3->target = NULL;
 
 	cmd4 = (t_cmd *)malloc(1 * sizeof(t_cmd));
-	cmd4->args = (char **)malloc(3 * sizeof(char *));
-	cmd4->args[0] = ft_strdup("echo");
-	cmd4->args[1] = ft_strdup("bene");
-	cmd4->args[2] = NULL;
+	cmd4->args = (char **)malloc(2 * sizeof(char *));
+	cmd4->args[0] = ft_strdup("cat");
+	cmd4->args[1] = NULL;
 	cmd4->cmd = cmd4->args[0];
 	cmd4->redirection = NULL;
 	cmd4->target = NULL;
@@ -157,7 +162,7 @@ t_ast	ft_set()
 	cmd5->args[0] = ft_strdup("echo");
 	cmd5->args[1] = ft_strdup("dajeeeeee");
 	cmd5->args[2] = NULL;
-	cmd5->cmd = cmd4->args[0];
+	cmd5->cmd = cmd5->args[0];
 	cmd5->redirection = NULL;
 	cmd5->target = NULL;
 
@@ -194,8 +199,8 @@ void	ft_check(t_ast *ast)
 int	main(int argc, char **argv, char **env)
 {
 	//struct sigaction	sa;
-	char				*line;
-	char				*prompt;
+	/* char				*line;
+	char				*prompt; */
 	t_data				data;
 	HIST_ENTRY			**history;
 	t_ast				ast;
@@ -211,6 +216,7 @@ int	main(int argc, char **argv, char **env)
 	data.history = history;
 	ast = ft_set();
 	//ft_check(&ast);
+	//pipex(*ast.cmds, &data);
 	ft_check_operators(&ast, &data);
 	if (argc == 1)
 	{
