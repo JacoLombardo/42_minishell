@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/09 16:21:35 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:40:15 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	ft_child(t_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 {
 	int	status;
 
-	if (cmd->redirection)
-		ft_redirect(cmd->target, cmd->redirection);
 	if (*pipex.prev_fd != -1)
 	{
 		dup2(*pipex.prev_fd, STDIN_FILENO);
@@ -37,9 +35,8 @@ int	ft_parent(t_cmd *cmd, t_data *data, t_pipe pipex)
 {
 	int	status;
 
+	(void)cmd;
 	(void)data;
-	if (cmd->redirection)
-		ft_redirect(cmd->target, cmd->redirection);
 	close(pipex.pipe_fd[1]);
 	if (*pipex.prev_fd != -1)
 		close(*pipex.prev_fd);

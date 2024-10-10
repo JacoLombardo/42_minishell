@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/09 16:21:43 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:40:30 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,29 +94,6 @@ int	ft_exec(t_cmd *cmd, t_data *data)
 	return (data->last_exit);
 }
 
-int	ft_handle_pipe(t_cmd **cmd, t_data *data, char ***operators)
-{
-	int	count;
-	int	status;
-
-	count = 1;
-	if (**operators && !ft_strcmp(**operators, "|"))
-	{
-		while (**operators && !ft_strcmp(**operators, "|"))
-		{
-			(*operators)++;
-			count++;
-		}
-		status = ft_pipe(cmd, data, count);
-	}
-	else
-	{
-		status = ft_exec(*cmd, data);
-		*cmd = (*cmd)->next;
-	}
-	return (status);
-}
-
 int	ft_check_operators(t_ast *ast, t_data *data)
 {
 	int		status;
@@ -132,10 +109,10 @@ int	ft_check_operators(t_ast *ast, t_data *data)
 		status = ft_handle_pipe(&cmd, data, &operators);
 		while (*operators && cmd)
 		{
-			if (!ft_strcmp(*operators, "&&") && !status)
-				status = ft_logical_and(&cmd, data, &operators);
-			else if (!ft_strcmp(*operators, "||") && (status > 0 || status < 0))
-				ft_logical_or(&cmd, data, &operators);
+			if (!ft_strcmp(*operators, "&&"))
+				status = ft_logical_and(&cmd, data, &operators, status);
+			else if (!ft_strcmp(*operators, "||"))
+				ft_logical_or(&cmd, data, &operators, status);
 		}
 	}
 	return (status);
