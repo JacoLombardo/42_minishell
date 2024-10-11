@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/10 11:40:48 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:46:40 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,12 @@ int					ft_check_operators(t_ast *ast, t_data *data);
 
 /* operators */
 void				ft_skip_pipe(t_cmd **cmd, t_data *data, char ***operators);
-int					ft_handle_pipe(t_cmd **cmd, t_data *data, char ***operators);
-int					ft_logical_and(t_cmd **cmd, t_data *data,
-						char ***operators, int status);
-int					ft_logical_or(t_cmd **cmd, t_data *data, char ***operators, int status);
+int					ft_handle_pipe(t_cmd **cmd, t_data *data,
+						char ***operators);
+int					ft_logical_and(t_cmd **cmd, t_data *data, char ***operators,
+						int status);
+int					ft_logical_or(t_cmd **cmd, t_data *data, char ***operators,
+						int status);
 
 /* pipe */
 void				ft_child(t_cmd *cmd, t_data *data, t_pipe pipex, int flag);
