@@ -15,14 +15,14 @@ FLAGS = -Wall -Werror -Wextra
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
 RL_FLAGS = -L/path/to/readline-8.2/.libs -lreadline
 SRCS = minishell.c \
-		source/builtins.c \
-		source/builtins2.c \
-		source/env.c \
-		source/exec.c \
-		source/operators.c \
-		source/pipe.c \
-		source/redirections.c \
-		source/utils.c
+		source/execution/builtins.c \
+		source/execution/builtins2.c \
+		source/execution/env.c \
+		source/execution/exec.c \
+		source/execution/operators.c \
+		source/execution/pipe.c \
+		source/execution/redirections.c \
+		source/execution/utils.c
 HEADER = minishell.h
 NAME = minishell
 LIBFT_PATH = libraries/libft

@@ -6,11 +6,11 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:37:30 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/09 16:04:16 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:51:28 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/execution.h"
 
 int	ft_echo(t_cmd *cmd, t_data *data)
 {

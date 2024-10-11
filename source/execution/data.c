@@ -6,9 +6,9 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:55:33 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/07 14:55:45 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:51:35 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/execution.h"
 
