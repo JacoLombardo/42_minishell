@@ -1,5 +1,14 @@
 #include "../includes/minishell.h"
 
+t_redirect	*find_last(t_redirect *redir)
+{
+	if (!redir)
+		return (NULL);
+	while (redir->next)
+		redir = redir->next;
+	return (redir);
+}
+
 t_node	*create_node(t_node_type type)
 {
 	t_node	*node;

@@ -116,21 +116,24 @@ typedef struct	s_simple_cmd
 
 typedef struct	s_redirect
 {
-	t_redir_type	type;
-	char 			*target;
+	t_redir_type		type;
+	char 				*target;
+	struct s_redirect	*next;
 }		t_redirect;
 
-void	parse(t_token *token_list);
+void		parse(t_token *token_list);
 
-t_node	*make_pipeline(t_parser *parser);
-t_node	*make_full_command(t_parser *parser);
-t_node	*make_redirect(t_parser *parser);
-t_node	*make_simple_command(t_parser *parser);
+t_node		*make_pipeline(t_parser *parser);
+t_node		*make_full_command(t_parser *parser);
+t_node		*make_redirect(t_parser *parser, t_redirect *redir_list);
+void		append_redirect(t_parser *parser, t_redirect *redir_list);
+t_node		*make_simple_command(t_parser *parser);
 
-t_node	*create_node(t_node_type type);
-void	advance(t_parser *parser);
-int		accept(t_parser *parser, t_type type);
-int		expect(t_parser *parser, t_type type);
-t_type	peek(t_parser *parser);
+t_redirect	*find_last(t_redirect *redir);
+t_node		*create_node(t_node_type type);
+void		advance(t_parser *parser);
+int			accept(t_parser *parser, t_type type);
+int			expect(t_parser *parser, t_type type);
+t_type		peek(t_parser *parser);
 
 #endif

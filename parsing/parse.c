@@ -14,6 +14,8 @@ t_parser	*parser_init(t_token *token_list)
 void	print_node(t_node *node)
 {
 	t_arg	*arg;
+	t_redirect *redir;
+	const char	*types[] = {"APPEND", "HEREDOC", "OUT", "IN", "ERROR"};
 
 	if (!node)
 		return ;
@@ -31,19 +33,23 @@ void	print_node(t_node *node)
 	}
 	else if (node->type == REDIRECT)
 	{
-		printf("\n\t\tredirect: ");
-		printf("type %d, target %s", node->redirect->type, node->redirect->target);
+		printf("\n\t\tredirects: ");
+		redir = node->redirect;
+		while (redir->next)
+		{
+			redir = redir->next;
+			printf("| %s, target %s ", types[redir->type], redir->target);
+		}
 	}
 	else if (node->type == SIMPLE_CMD)
 	{
-		printf("\n\t\tsimple command: ");
-		printf("cmd %s, args ", node->cmd->command);
+		printf("\n\t\tsimple_command: ");
+		printf("cmd %s, args: ", node->cmd->command);
 		arg = node->cmd->arg;
-		printf("%s ", arg->value);
 		while (arg->next)
 		{
 			arg = arg->next;
-			printf("%s ", arg->value);
+			printf("%s, ", arg->value);
 		}
 	}
 	else
