@@ -38,6 +38,5 @@ t_type	peek(t_parser *parser)
 {
 	if (parser->curr_token)
 		return (parser->curr_token->type);
-
-	return (-1);
+	return (T_ERR);
 }

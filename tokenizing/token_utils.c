@@ -16,7 +16,7 @@ t_type		get_type(char *str)
 		return (T_OUT);
 	else if (ft_strncmp(str, "<", 1) == 0)
 		return (T_IN);
-	return (THING);
+	return (T_THING);
 }
 
 int		what_quotes(char const *string)

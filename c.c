@@ -17,13 +17,13 @@ int		is_quote(char c)
 
 int	main(int argc, char *argv[], char *env[])
 {
-	char	*line2 =  ft_strdup("echo hello");
+	//char	*line2 =  ft_strdup("echo hello");
 	char	*line6;
 
 	t_token *token_list;
 
-	line6 = expand_vars(line2, env);
-	free(line2);
+	line6 = expand_vars(argv[1], env);
+	//free(line2);
 	token_list = tokenize(line6);
 	free(line6);
 

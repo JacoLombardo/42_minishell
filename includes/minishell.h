@@ -15,7 +15,8 @@
 # define TRUE 1
 
 typedef enum	e_type {
-		THING,
+		T_ERR,
+		T_THING,
 		T_PIPE,
 		T_OR,
 		T_AND,
@@ -70,10 +71,11 @@ typedef enum	e_node_type
 
 typedef enum	e_redir_type
 {
-		APPEND = T_APPEND,
-		HEREDOC = T_HEREDOC,
-		OUT = T_OUT,
-		IN = T_IN,
+		R_APPEND,
+		R_HEREDOC,
+		R_OUT,
+		R_IN,
+		R_ERR,
 }		t_redir_type;
 
 typedef struct	s_node
