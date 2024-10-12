@@ -4,7 +4,7 @@ char	*ft_charjoin(char const *str, char const c)
 {
 	size_t	len;
 	char	*new;
-	int		i;
+	size_t	i;
 
 	len = ft_strlen(str);
 	new = (char *)malloc(sizeof(char) * (len + 2));

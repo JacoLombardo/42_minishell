@@ -125,8 +125,9 @@ void		parse(t_token *token_list);
 
 t_node		*make_pipeline(t_parser *parser);
 t_node		*make_full_command(t_parser *parser);
-t_node		*make_redirect(t_parser *parser, t_redirect *redir_list);
+t_node		*make_redirect(t_redirect *redir_list);
 void		append_redirect(t_parser *parser, t_redirect *redir_list);
+t_redir_type	get_redirect_type(t_type token_type);
 t_node		*make_simple_command(t_parser *parser);
 
 t_redirect	*find_last(t_redirect *redir);

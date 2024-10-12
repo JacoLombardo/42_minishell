@@ -28,7 +28,7 @@ void	append_token(t_token *token_list, char *value, t_type type)
 	token_list->next = new;
 }
 
-int		operator_token(t_token *token_list, char *line_pos)
+int	operator_token(t_token *token_list, char *line_pos)
 {
 	int		len;
 	t_type	type;
@@ -42,7 +42,7 @@ int		operator_token(t_token *token_list, char *line_pos)
 	return (len);
 }
 
-int		value_token(t_token *token_list, char *line_pos)
+int	value_token(t_token *token_list, char *line_pos)
 {
 	char	*value;
 	int		len;
@@ -50,12 +50,10 @@ int		value_token(t_token *token_list, char *line_pos)
 
 	start = 0;
 	len = 0;
-	// skip spaces
 	while (line_pos[start] == ' ')
 		start++;
-	// extract value (handle quotes)
 	while (!((is_operator_char(line_pos[len]) || line_pos[len] == ' ')
-				&& !what_quotes(line_pos + len + 1)) && line_pos[len])
+			&& !what_quotes(line_pos + len + 1)) && line_pos[len])
 		len++;
 	value = ft_substr(line_pos, start, len);
 	append_token(token_list, value, T_THING);

@@ -3,7 +3,7 @@
 t_node	*make_simple_command(t_parser *parser)
 {
 	t_simple_cmd	*simple;
-	t_node 			*node;
+	t_node			*node;
 	t_arg			*new;
 	t_arg			*curr;
 
@@ -28,23 +28,9 @@ t_node	*make_simple_command(t_parser *parser)
 	return (node);
 }
 
-t_redir_type	get_redirect_type(t_type token_type)
+t_node	*make_redirect(t_redirect *redir_list)
 {
-	if (token_type == T_APPEND)
-		return (R_APPEND);
-	else if (token_type == T_HEREDOC)
-		return (R_HEREDOC);
-	else if (token_type == T_IN)
-		return (R_IN);
-	else if (token_type == T_OUT)
-		return (R_OUT);
-	else
-		return (R_ERR);
-}
-
-t_node	*make_redirect(t_parser *parser, t_redirect *redir_list)
-{
-	t_node 		*node;
+	t_node	*node;
 
 	node = create_node(REDIRECT);
 	node->redirect = redir_list;
@@ -73,21 +59,23 @@ t_node	*make_full_command(t_parser *parser)
 	node->pair = malloc(sizeof(t_pair));
 	node->pair->left = NULL;
 	node->pair->right = NULL;
-	//
 	redir_list = malloc(sizeof(t_redirect));
 	redir_list->type = R_ERR;
 	redir_list->target = NULL;
 	redir_list->next = NULL;
-	//
+	while (peek(parser) >= T_APPEND)
+		append_redirect(parser, redir_list);
 	if (peek(parser) == T_THING)
 		node->pair->left = make_simple_command(parser);
 	while (peek(parser) >= T_APPEND)
 		append_redirect(parser, redir_list);
-	node->pair->right = make_redirect(parser, redir_list);
+	node->pair->right = make_redirect(redir_list);
 	return (node);
 }
 
 t_node	*make_pipeline(t_parser *parser)
 {
-
+	if (!parser)
+		printf ("bup");
+	return (NULL);
 }

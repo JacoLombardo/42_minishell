@@ -15,37 +15,19 @@ t_node	*create_node(t_node_type type)
 
 	node = malloc(sizeof(t_node));
 	node->type = type;
-
 	return (node);
 }
 
-void	advance(t_parser *parser)
+t_redir_type	get_redirect_type(t_type token_type)
 {
-	parser->curr_token = parser->curr_token->next;
-}
-
-int		accept(t_parser *parser, t_type type)
-{
-	if (parser->curr_token->next && parser->curr_token->next->type == type)
-	{
-		advance(parser);
-		return (TRUE);
-	}
-	return (FALSE);
-}
-
-int		expect(t_parser *parser, t_type type)
-{
-	if (accept(parser, type))
-		return (TRUE);
-	parser->err_num = 1;
-	// todo: write cleanup function
-	return (FALSE);
-}
-
-t_type	peek(t_parser *parser)
-{
-	if (parser->curr_token)
-		return (parser->curr_token->type);
-	return (T_ERR);
+	if (token_type == T_APPEND)
+		return (R_APPEND);
+	else if (token_type == T_HEREDOC)
+		return (R_HEREDOC);
+	else if (token_type == T_IN)
+		return (R_IN);
+	else if (token_type == T_OUT)
+		return (R_OUT);
+	else
+		return (R_ERR);
 }

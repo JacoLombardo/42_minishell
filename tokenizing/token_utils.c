@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-t_type		get_type(char *str)
+t_type	get_type(char *str)
 {
 	if (ft_strncmp(str, "||", 2) == 0)
 		return (T_OR);
@@ -19,11 +19,13 @@ t_type		get_type(char *str)
 	return (T_THING);
 }
 
-int		what_quotes(char const *string)
+int	what_quotes(char const *string)
 {
-	int i = 0;
-	int quote_type = 0;
+	int	i;
+	int	quote_type;
 
+	i = 0;
+	quote_type = 0;
 	while (string[i])
 	{
 		if (string[i] == '\"' && quote_type == 0)
@@ -48,7 +50,7 @@ t_token	*find_first(t_token *token_list)
 
 void	free_token_list(t_token *current)
 {
-	t_token *next;
+	t_token	*next;
 
 	next = current;
 	while (next)

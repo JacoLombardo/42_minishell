@@ -22,6 +22,8 @@ int	main(int argc, char *argv[], char *env[])
 
 	t_token *token_list;
 
+	if (!argc)
+		printf("bup");
 	line6 = expand_vars(argv[1], env);
 	//free(line2);
 	token_list = tokenize(line6);

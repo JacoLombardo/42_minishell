@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int		is_bash_valid(char c)
+int	is_bash_valid(char c)
 {
 	if (ft_isalnum(c) || c == '_')
 		return (TRUE);
@@ -25,7 +25,7 @@ char	*expand_vars(char *line, char *env[])
 		if (line[i] == '$' && what_quotes(line + i + 1) != 2)
 		{
 			i++;
-			while(is_bash_valid(line[i]))
+			while (is_bash_valid(line[i]))
 			{
 				var_name_len++;
 				i++;
@@ -33,7 +33,6 @@ char	*expand_vars(char *line, char *env[])
 			temp = ft_substr(line, i - var_name_len, var_name_len);
 			var_name = ft_strjoin(temp, "=");
 			free(temp);
-			// replace 
 			j = 0;
 			while (env[j])
 			{
@@ -42,11 +41,11 @@ char	*expand_vars(char *line, char *env[])
 					j++;
 				else
 				{
-					temp = ft_strdup(new_line); // should be newline??
+					temp = ft_strdup(new_line);
 					free(new_line);
 					new_line = ft_strjoin(temp, var_value + var_name_len + 1);
 					free(temp);
-					break;
+					break ;
 				}
 			}
 			free(var_name);

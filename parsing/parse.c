@@ -13,8 +13,8 @@ t_parser	*parser_init(t_token *token_list)
 
 void	print_node(t_node *node)
 {
-	t_arg	*arg;
-	t_redirect *redir;
+	t_arg		*arg;
+	t_redirect	*redir;
 	const char	*types[] = {"APPEND", "HEREDOC", "OUT", "IN", "ERROR"};
 
 	if (!node)
@@ -64,6 +64,5 @@ void	parse(t_token *token_list)
 
 	parser = parser_init(token_list);
 	top_node = make_full_command(parser);
-
 	print_node(top_node);
 }

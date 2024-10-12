@@ -1,10 +1,10 @@
 SRCS	= c.c \
 		expanding/expand.c expanding/ft_charjoin.c \
 		tokenizing/token_making.c tokenizing/token_utils.c tokenizing/tokenize.c \
-		parsing/parse.c parsing/node_making.c parsing/parsing_utils.c
+		parsing/parse.c parsing/node_making.c parsing/parsing_utils.c parsing/parsing_movement.c
 OBJS	= $(SRCS:%.c=%.o)
 NAME	= test
-CC	= cc # add flags
+CC	= cc -Wall -Werror -Wextra
 CFLAGS	= -g -I.
 
 # libft
