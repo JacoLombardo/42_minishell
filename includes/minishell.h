@@ -33,19 +33,13 @@ typedef struct	s_token {
 	struct s_token	*prev;
 }		t_token;
 
-typedef struct	s_cmd {
-	char	*cmd;
-	char	**options;
-	char	**args;
-	char	**env;
-}		t_cmd;
+
 
 //expanding
 int			what_quotes(char const *string);
 char		*expand_vars(char *line, char *env[]);
 // tokenizing
 t_token		*tokenize(char *line);
-// making + appending
 t_token		*new_token(char *value, t_type type);
 void		append_token(t_token *token_list, char *value, t_type type);
 int			operator_token(t_token *token_list, char *line_pos);
@@ -136,5 +130,19 @@ void		advance(t_parser *parser);
 int			accept(t_parser *parser, t_type type);
 int			expect(t_parser *parser, t_type type);
 t_type		peek(t_parser *parser);
+
+//////////////////////////////////////////// for jacopo
+
+typedef struct s_cmd
+{
+	char			*cmd;
+	char			**args;
+	t_redir_type	*redir_types;
+	char			**targets;
+}		t_cmd;
+
+// testing
+void	print_node(t_node *node);
+void	print_jacopo(t_cmd *jacopo);
 
 #endif
