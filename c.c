@@ -17,20 +17,14 @@ int		is_quote(char c)
 
 int	main(int argc, char *argv[], char *env[])
 {
-	//char	*line2 =  ft_strdup("echo hello");
-	char	*line6;
+	char	*line;
 
-	t_token *token_list;
-
-	if (!argc)
-		printf("bup");
-	line6 = expand_vars(argv[1], env);
-	//free(line2);
-	token_list = tokenize(line6);
-	free(line6);
-
-	parse(find_first(token_list));
-	free_token_list(find_first(token_list));
-
+	if (argc != 2)
+	{
+		printf("pass the whole thing as a single string for now\n");
+		return (1);
+	}
+	line = ft_strdup(argv[1]);
+	parse(line, env);
 	return (0);
 }

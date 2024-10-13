@@ -115,7 +115,19 @@ typedef struct	s_redirect
 	struct s_redirect	*next;
 }		t_redirect;
 
-t_cmd		*parse(t_token *token_list);
+// ----- for jacopo -----
+
+typedef struct s_cmd
+{
+	char			*cmd;
+	char			**args;
+	t_redir_type	*redir_types;
+	char			**targets;
+}		t_cmd;
+
+// ----------------------
+
+t_cmd		*parse(char *line, char *env[]);
 
 t_node		*make_pipeline(t_parser *parser);
 t_node		*make_full_command(t_parser *parser);
@@ -130,16 +142,6 @@ void		advance(t_parser *parser);
 int			accept(t_parser *parser, t_type type);
 int			expect(t_parser *parser, t_type type);
 t_type		peek(t_parser *parser);
-
-//////////////////////////////////////////// for jacopo
-
-typedef struct s_cmd
-{
-	char			*cmd;
-	char			**args;
-	t_redir_type	*redir_types;
-	char			**targets;
-}		t_cmd;
 
 char	**args_to_array(t_arg *arg_list);
 void	redir_to_arrays(t_cmd *jacopo, t_redirect *redir_list);
