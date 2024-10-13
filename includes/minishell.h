@@ -115,7 +115,7 @@ typedef struct	s_redirect
 	struct s_redirect	*next;
 }		t_redirect;
 
-void		parse(t_token *token_list);
+t_cmd		*parse(t_token *token_list);
 
 t_node		*make_pipeline(t_parser *parser);
 t_node		*make_full_command(t_parser *parser);
@@ -140,6 +140,10 @@ typedef struct s_cmd
 	t_redir_type	*redir_types;
 	char			**targets;
 }		t_cmd;
+
+char	**args_to_array(t_arg *arg_list);
+void	redir_to_arrays(t_cmd *jacopo, t_redirect *redir_list);
+t_cmd	*jacopize(t_node *full_cmd);
 
 // testing
 void	print_node(t_node *node);

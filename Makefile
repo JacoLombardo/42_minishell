@@ -1,7 +1,8 @@
 SRCS	= c.c \
 		expanding/expand.c expanding/ft_charjoin.c \
 		tokenizing/token_making.c tokenizing/token_utils.c tokenizing/tokenize.c \
-		parsing/parse.c parsing/node_making.c parsing/parsing_utils.c parsing/parsing_movement.c parsing/print_parse.c
+		parsing/parse.c parsing/parsing_nodes.c parsing/parsing_utils.c parsing/parsing_movement.c parsing/parsing_output.c \
+		testing/testing_funcs.c
 OBJS	= $(SRCS:%.c=%.o)
 NAME	= test
 CC	= cc -Wall -Werror -Wextra
