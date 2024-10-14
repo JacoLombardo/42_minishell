@@ -1,66 +1,70 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildins2.c                                        :+:      :+:    :+:   */
+/*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:30:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/09/30 15:41:27 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:42:45 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/execution.h"
 
-int	ft_cd(t_cmd *cmd)
+int	ft_cd(t_cmd *cmd, t_data *data)
 {
 	char	*cwd;
 	char	*path;
 
-	cwd = ft_getenv("PWD", cmd->env);
+	cwd = ft_getenv("PWD", data->env);
 	if (cmd->args[0][0] != '~')
 		path = ft_strjoinjoin(cwd, "/", cmd->args[0]);
 	else
 		path = ft_strdup(cmd->args[0] + 1);
 	if (chdir(path))
 	{
-		perror("cd");
+		perror(path);
 		free(path);
-		return (0);
+		return (1);
 	}
 	else
 	{
-		ft_setenv("PWD", path, cmd->env);
+		ft_setenv("OLD_PWD", cwd, data->env);
+		ft_setenv("PWD", path, data->env);
 		free(path);
-		return (1);
+		return (0);
 	}
 }
 
-int	ft_export(t_cmd *cmd)
+int	ft_export(t_cmd *cmd, t_data *data)
 {
 	int	len;
 
-	len = 0;
-	while (cmd->env[len])
-		len++;
-	cmd->env = ft_reallocenv(cmd->env, len);
-	if (!cmd->env)
-		return (0);
-	cmd->env[len] = ft_strjoinjoin(cmd->args[0], "=", cmd->args[1]);
-	cmd->env[len + 1] = NULL;
-	return (1);
+	len = ft_tablen(data->env);
+	data->env = ft_reallocenv(data->env, len);
+	if (!data->env)
+		return (1);
+	data->env[len] = ft_strjoinjoin(cmd->args[0], "=", cmd->args[1]);
+	data->env[len + 1] = NULL;
+	return (0);
 }
 
-int	ft_unset(t_cmd *cmd)
+int	ft_unset(t_cmd *cmd, t_data *data)
 {
 	int	len;
 
-	len = 0;
-	while (cmd->env[len])
-		len++;
-	cmd->env = ft_deallocenv(cmd->env, len, cmd->args[0]);
-	if (!cmd->env)
-		return (0);
-	else
+	len = ft_tablen(data->env);
+	data->env = ft_deallocenv(data->env, len, cmd->args[0]);
+	if (!data->env)
 		return (1);
+	else
+		return (0);
+}
+
+void	ft_exit(int status, t_data *data)
+{
+	ft_free_data(data);
+	g_program = 0;
+	exit(status);
 }

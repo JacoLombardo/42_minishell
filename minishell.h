@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/09/30 16:04:22 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:31:28 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,39 @@
 # define MINISHELL_H
 
 # include "libraries/libft/libft.h"
+# include "includes/execution.h"
+# include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <sys/wait.h>
+# include <signal.h>
 
-typedef struct	s_cmd {
-	char	*cmd;
-	char	**options;
-	char	**args;
-	char	**env;
-}			t_cmd;
+static int			g_program = 1;
 
-/* builtins */
-int			ft_echo(t_cmd *cmd);
-void		ft_pwd(t_cmd *cmd);
-void		ft_env(t_cmd *cmd);
+typedef struct s_data
+{
+	char			**env;
+	HIST_ENTRY		**history;
+	int				last_exit;
+	struct s_ast	*ast;
+}					t_data;
 
-/* builtins2 */
-int			ft_cd(t_cmd *cmd);
-int			ft_export(t_cmd *cmd);
-int			ft_unset(t_cmd *cmd);
+typedef struct s_cmd
+{
+	char			*cmd;
+	char			**args;
+	char			**redirections;
+	char			**targets;
+    char            *operator;
+	struct s_cmd	*next;
+}					t_cmd;
 
-/* utils */
-char		*ft_free_matrix(char **matrix);
-int			ft_find_var(char *env, char *name);
-
-/* env */
-char		**ft_deallocenv(char **env, int size, char *name);
-char		**ft_reallocenv(char **env, int size);
-char		**ft_cpyenv(char **env);
-char		*ft_getenv(char *name, char **env);
-char		*ft_setenv(char *name, char *value, char **env);
+typedef struct s_ast
+{
+	struct s_cmd	**cmds;
+	char			**operators;
+}					t_ast;
 
 #endif

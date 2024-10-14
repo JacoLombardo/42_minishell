@@ -6,24 +6,20 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/09/30 16:08:32 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/14 10:39:32 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/execution.h"
 
-char	*ft_free_matrix(char **matrix)
+int	ft_tablen(char **tab)
 {
-	int	i;
+	int	len;
 
-	i = 0;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
-	return (NULL);
+	len = 0;
+	while (tab[len])
+		len++;
+	return (len);
 }
 
 int	ft_find_var(char *env, char *name)
