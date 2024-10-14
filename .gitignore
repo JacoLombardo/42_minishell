@@ -1,4 +1,5 @@
 *.o
 *.a
-
-minishell
+test
+ft_split.c
+old*
