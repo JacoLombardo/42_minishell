@@ -6,11 +6,11 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/09/30 16:08:24 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:51:38 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../includes/execution.h"
 
 /* Reduces the memory allocation of env and remove a specific VAR */
 
@@ -37,7 +37,7 @@ char	**ft_deallocenv(char **env, int size, char *name)
 		i++;
 	}
 	new_env[i] = NULL;
-	ft_free_matrix(env);
+	ft_free_tab(env);
 	return (new_env);
 }
 
@@ -60,7 +60,7 @@ char	**ft_reallocenv(char **env, int size)
 		i++;
 	}
 	new_env[i] = NULL;
-	ft_free_matrix(env);
+	ft_free_tab(env);
 	return (new_env);
 }
 
@@ -70,19 +70,23 @@ char	**ft_cpyenv(char **env)
 {
 	char	**new_env;
 	int		i;
+	int		j;
 
 	i = 0;
-	while (env[i])
-		i++;
-	new_env = (char **)malloc((i + 1) * sizeof(char *));
+	j = 0;
+	new_env = (char **)malloc((ft_tablen(env) + 2) * sizeof(char *));
 	if (!new_env)
 		return (NULL);
-	i = 0;
 	while (env[i])
 	{
-		new_env[i] = ft_strdup(env[i]);
+		new_env[i + j] = ft_strdup(env[i]);
 		if (!new_env)
 			return (NULL);
+		if (!ft_strncmp(env[i], "PWD", 3))
+		{
+			j++;
+			new_env[i + j] = ft_strjoin("OLD_", env[i]);
+		}
 		i++;
 	}
 	new_env[i] = NULL;
