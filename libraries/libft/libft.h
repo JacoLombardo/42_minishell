@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:17:58 by jalombar          #+#    #+#             */
-/*   Updated: 2024/09/25 14:27:07 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:30:25 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 int						ft_atoi(const char *nptr);
 void					ft_bzero(void *s, size_t n);
 void					*ft_calloc(size_t nmemb, size_t size);
+char					*ft_charjoin(char const *str, char const c);
 int						ft_isalnum(int c);
 int						ft_isalpha(int c);
 int						ft_isascii(int c);

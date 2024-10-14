@@ -1,21 +1,3 @@
-SRCS	= c.c \
-		expanding/expand.c expanding/ft_charjoin.c \
-		tokenizing/token_making.c tokenizing/token_utils.c tokenizing/tokenize.c \
-		parsing/parse.c parsing/parsing_nodes.c parsing/parsing_utils.c parsing/parsing_movement.c parsing/parsing_output.c \
-		testing/testing_funcs.c
-OBJS	= $(SRCS:%.c=%.o)
-NAME	= test
-CC	= cc -Wall -Werror -Wextra
-CFLAGS	= -g -I.
-
-# libft
-LIBFT = includes/libft/libft.a
-
-# linker flags
-LIBFT_FLAGS = -Lincludes/libft -lft
-LFLAGS = $(LIBFT_FLAGS)
-
-all:	$(NAME)
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
@@ -32,8 +14,8 @@ CC = cc
 FLAGS = -Wall -Werror -Wextra
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
 RL_FLAGS = -L/path/to/readline-8.2/.libs -lreadline
-SRCS = minishell.c \
-		source/execution/builtins.c \
+SRCS = minishell.c $(EXEC) $(PARSINg) $(TOKEN) $(EXPAND) testing/testing_funcs.c
+EXEC = source/execution/builtins.c \
 		source/execution/builtins2.c \
 		source/execution/env.c \
 		source/execution/exec.c \
@@ -43,6 +25,16 @@ SRCS = minishell.c \
 		source/execution/redirections.c \
 		source/execution/signals.c \
 		source/execution/utils.c
+PARSING = source/parsing/parse.c \
+			source/parsing/parsing_nodes.c \
+			source/parsing/parsing_utils.c \
+			source/parsing/parsing_movement.c \
+			source/parsing/parsing_output.c
+TOKEN = source/tokenizing/token_making.c \
+		source/tokenizing/token_utils.c \
+		source/tokenizing/tokenize.c
+EXPAND = source/expanding/expand.c \
+			source/expanding/ft_charjoin.c
 HEADER = minishell.h
 NAME = minishell
 LIBFT_PATH = libraries/libft

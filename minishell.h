@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/14 15:31:28 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:22:03 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <signal.h>
+
+# define FALSE 0
+# define TRUE 1
 
 static int			g_program = 1;
 
@@ -48,5 +51,25 @@ typedef struct s_ast
 	struct s_cmd	**cmds;
 	char			**operators;
 }					t_ast;
+
+/* Carolina */
+typedef struct	s_redirect
+{
+	t_redir_type		type;
+	char 				*target;
+	struct s_redirect	*next;
+}		t_redirect;
+
+typedef struct s_cmd
+{
+	char			*cmd;
+	char			**args;
+	t_redir_type	*redir_types;
+	char			**targets;
+}		t_cmd;
+
+/* testing */
+void	print_node(t_node *node);
+void	print_jacopo(t_cmd *jacopo);
 
 #endif
