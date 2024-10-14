@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/11 15:16:53 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:31:49 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	ft_external(t_cmd *cmd, t_data *data)
 
 int	ft_exec(t_cmd *cmd, t_data *data)
 {
-	if (cmd->redirection)
-		ft_redirect(cmd->target, cmd->redirection);
+	if (cmd->redirections)
+		ft_redirect(cmd->redirections, cmd->targets);
 	if (!ft_strcmp(cmd->cmd, "echo"))
 		data->last_exit = ft_echo(cmd, data);
 	else if (!ft_strcmp(cmd->cmd, "cd"))
@@ -86,12 +86,34 @@ int	ft_exec(t_cmd *cmd, t_data *data)
 	else if (!ft_strcmp(cmd->cmd, "env"))
 		data->last_exit = ft_env(cmd, data);
 	else if (!ft_strcmp(cmd->cmd, "exit"))
-		data->last_exit = ft_exit(cmd, data);
+		ft_exit(0, data);
 	else
 		data->last_exit = ft_external(cmd, data);
-	if (cmd->redirection)
-		ft_reset_redirect(cmd->target, cmd->redirection);
+	if (cmd->redirections)
+		ft_reset_redirect(cmd->redirections, cmd->targets);
 	return (data->last_exit);
+}
+
+int	ft_check_operators2(t_ast *ast, t_data *data)
+{
+	int		status;
+	t_cmd	*cmd;
+
+	cmd = *ast->cmds;
+	if (!cmd->operator)
+		status = ft_exec(cmd, data);
+	else
+	{
+		status = ft_handle_pipe2(&cmd, data);
+		while (cmd)
+		{
+			if (!ft_strcmp(cmd->operator, "&&"))
+				status = ft_logical_and2(&cmd, data, status);
+			else if (!ft_strcmp(cmd->operator, "||"))
+				ft_logical_or2(&cmd, data, status);
+		}
+	}
+	return (status);
 }
 
 int	ft_check_operators(t_ast *ast, t_data *data)

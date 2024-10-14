@@ -19,9 +19,11 @@ SRCS = minishell.c \
 		source/execution/builtins2.c \
 		source/execution/env.c \
 		source/execution/exec.c \
+		source/execution/free.c \
 		source/execution/operators.c \
 		source/execution/pipe.c \
 		source/execution/redirections.c \
+		source/execution/signals.c \
 		source/execution/utils.c
 HEADER = minishell.h
 NAME = minishell

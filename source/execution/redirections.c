@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:56:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/11 15:12:53 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:01:26 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	ft_heredoc(char *delimiter)
 	}
 }
 
-void	ft_in_redirect(char *file, char *redirection, int *from_fd, int *to_fd)
+void	ft_in_redirect(char *redirection, char *target, int *from_fd, int *to_fd)
 {
 	if (!ft_strcmp(redirection, "<"))
 	{
-		*to_fd = open(file, O_RDONLY, 0777);
+		*to_fd = open(target, O_RDONLY, 0777);
 		*from_fd = 0;
 	}
 	else if (!ft_strcmp(redirection, "<<"))
@@ -51,24 +51,56 @@ void	ft_in_redirect(char *file, char *redirection, int *from_fd, int *to_fd)
 	}
 }
 
-void	ft_out_redirect(char *file, char *redirection, int *from_fd, int *to_fd)
+void	ft_out_redirect(char *redirection, char *target,  int *from_fd, int *to_fd)
 {
 	if (!ft_strcmp(redirection, ">"))
 	{
-		ft_putstr_fd("dentro\n", 2);
-		*to_fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-		ft_putstr_fd("che cazzo fai\n", *to_fd);
+		*to_fd = open(target, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		*from_fd = 1;
 	}
 	else if (!ft_strcmp(redirection, ">>"))
 	{
-		*to_fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
+		*to_fd = open(target, O_WRONLY | O_CREAT | O_APPEND, 0777);
 		*from_fd = 1;
 	}
 }
 
-void	ft_redirect(char *file, char *redirection)
+void	ft_redirect(char **redirections, char **targets)
 {
+	int	i;
+	int	from_fd;
+	int	to_fd;
+
+	i = 0;
+	from_fd = 0;
+	to_fd = -1;
+	while (redirections[i])
+	{
+		if (!ft_strcmp(redirections[i], "<") || !ft_strcmp(redirections[i],
+				"<<"))
+			ft_in_redirect(redirections[i], targets[i], &from_fd, &to_fd);
+		else if (!ft_strcmp(redirections[i], ">") || !ft_strcmp(redirections[i],
+				">>"))
+			ft_out_redirect(redirections[i], targets[i], &from_fd, &to_fd);
+		if (to_fd == -1)
+		{
+			perror(targets[i]);
+			exit(1);
+		}
+		dup2(to_fd, from_fd);
+		i++;
+	}
+}
+
+/* void	ft_redirect(char *file, char *redirection)
+{
+	int	from_fd;
+	int	to_fd;
+	int	from_fd;
+	int	to_fd;
+	int	fd;
+	int	to_fd;
+	int	i;
 	int	from_fd;
 	int	to_fd;
 
@@ -84,13 +116,36 @@ void	ft_redirect(char *file, char *redirection)
 		exit(1);
 	}
 	dup2(to_fd, from_fd);
-}
-
-void	ft_reset_redirect(char *file, char *redirection)
+} */
+void	ft_reset_redirect(char **redirections, char **targets)
 {
+	int	i;
 	int	from_fd;
 	int	to_fd;
 
+	i = 0;
+	from_fd = 0;
+	to_fd = -1;
+	while (redirections[i])
+	{
+		if (!ft_strcmp(redirections[i], "<") || !ft_strcmp(redirections[i],
+				"<<"))
+			ft_in_redirect(targets[i], redirections[i], &to_fd, &from_fd);
+		else if (!ft_strcmp(redirections[i], ">") || !ft_strcmp(redirections[i],
+				">>"))
+			ft_out_redirect(targets[i], redirections[i], &to_fd, &from_fd);
+		if (to_fd == -1)
+		{
+			perror(targets[i]);
+			exit(1);
+		}
+		dup2(to_fd, from_fd);
+		i++;
+	}
+}
+
+/* void	ft_reset_redirect(char *file, char *redirection)
+{
 	from_fd = 0;
 	to_fd = -1;
 	if (!ft_strcmp(redirection, "<") || !ft_strcmp(redirection, "<<"))
@@ -103,13 +158,9 @@ void	ft_reset_redirect(char *file, char *redirection)
 		exit(1);
 	}
 	dup2(to_fd, from_fd);
-}
-
+} */
 /* void	ft_redirect(char *file, char *redirection)
 {
-	int	fd;
-	int	to_fd;
-
 	fd = -1;
 	if (!ft_strcmp(redirection, "<"))
 	{

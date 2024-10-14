@@ -6,16 +6,72 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 11:26:07 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/11 13:51:46 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:34:25 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
+void	ft_skip_pipe2(t_cmd **cmd, t_data *data)
+{
+	(void)data;
+	if ((*cmd)->operator&& !ft_strcmp((*cmd)->operator, "|"))
+	{
+		while (*cmd && !ft_strcmp((*cmd)->operator, "|"))
+			*cmd = (*cmd)->next;
+		//*cmd = (*cmd)->next;
+	}
+	else
+		*cmd = (*cmd)->next;
+}
+
+int	ft_handle_pipe2(t_cmd **cmd, t_data *data)
+{
+	int		count;
+	int		status;
+	t_cmd	*temp;
+
+	count = 1;
+	temp = *cmd;
+	if (temp->operator&& !ft_strcmp(temp->operator, "|"))
+	{
+		while (temp->operator&& !ft_strcmp(temp->operator, "|"))
+		{
+			temp = temp->next;
+			count++;
+		}
+		status = ft_pipe(cmd, data, count);
+	}
+	else
+	{
+		status = ft_exec(*cmd, data);
+		*cmd = (*cmd)->next;
+	}
+	return (status);
+}
+
+int	ft_logical_and2(t_cmd **cmd, t_data *data, int status)
+{
+	if (!status)
+		status = ft_handle_pipe2(cmd, data);
+	else
+		ft_skip_pipe2(cmd, data);
+	return (status);
+}
+
+int	ft_logical_or2(t_cmd **cmd, t_data *data, int status)
+{
+	if (status > 0 || status < 0)
+		status = ft_handle_pipe2(cmd, data);
+	else
+		ft_skip_pipe2(cmd, data);
+	return (status);
+}
+
 void	ft_skip_pipe(t_cmd **cmd, t_data *data, char ***operators)
 {
 	(void)data;
-	//printf("inside skip: cmd-%s, op-%s\n", (*cmd)->cmd, **operators);
+	// printf("inside skip: cmd-%s, op-%s\n", (*cmd)->cmd, **operators);
 	if (**operators && !ft_strcmp(**operators, "|"))
 	{
 		while (**operators && !ft_strcmp(**operators, "|"))
@@ -35,7 +91,7 @@ int	ft_handle_pipe(t_cmd **cmd, t_data *data, char ***operators)
 	int	status;
 
 	count = 1;
-	//printf("inside handle: cmd-%s, op-%s\n", (*cmd)->cmd, **operators);
+	// printf("inside handle: cmd-%s, op-%s\n", (*cmd)->cmd, **operators);
 	if (**operators && !ft_strcmp(**operators, "|"))
 	{
 		while (**operators && !ft_strcmp(**operators, "|"))
