@@ -18,7 +18,7 @@
 # include "types.h"
 
 /* PARSING */
-t_cmd		*parse(char *line, char *env[]);
+t_full_cmd		*parse(char *line, char *env[]);
 t_node		*make_pipeline(t_parser *parser);
 t_node		*make_full_command(t_parser *parser);
 t_node		*make_redirect(t_redirect *redir_list);
@@ -34,8 +34,8 @@ int			expect(t_parser *parser, t_type type);
 t_type		peek(t_parser *parser);
 
 char	**args_to_array(t_arg *arg_list);
-void	redir_to_arrays(t_cmd *jacopo, t_redirect *redir_list);
-t_cmd	*jacopize(t_node *full_cmd);
+void	redir_to_arrays(t_full_cmd *jacopo, t_redirect *redir_list);
+t_full_cmd	*jacopize(t_node *full_cmd);
 
 /* TOKENIZING */
 t_token		*tokenize(char *line);
@@ -60,6 +60,6 @@ int			is_operator_char(char c);
 
 /* TESTING */
 void	print_node(t_node *node);
-void	print_jacopo(t_cmd *jacopo);
+void	print_jacopo(t_full_cmd *jacopo);
 
 #endif
