@@ -6,11 +6,12 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:24:40 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/14 19:27:24 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:38:26 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/expanding.h"
+//#include "../../includes/expanding.h"
+#include "../../includes/parsing.h"
 
 int	is_bash_valid(char c)
 {

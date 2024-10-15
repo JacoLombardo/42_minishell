@@ -6,11 +6,13 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/14 15:15:58 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:18:06 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_program = 0;
 
 char	*ft_pwd_name(t_data *data)
 {
@@ -182,7 +184,7 @@ int	main(int argc, char **argv, char **env)
 		// data.ast = ft_set();
 		// ft_check(&ast);
 		// ft_check_operators(&ast, &data);
-		while (g_program)
+		while (!g_program)
 		{
 			prompt = ft_strjoinjoin("🫠 \033[1;36m:~", ft_pwd_name(&data),
 					"  \033[0m");

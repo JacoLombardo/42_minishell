@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:15:00 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/14 19:34:15 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:46:53 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,74 +14,11 @@
 # define PARSING_H
 
 # include "../minishell.h"
+# include "structs.h"
+# include "types.h"
 
-typedef enum	e_type {
-		T_ERR,
-		T_THING,
-		T_PIPE,
-		T_OR,
-		T_AND,
-		T_APPEND, // >>
-		T_HEREDOC, // <<
-		T_OUT,
-		T_IN,
-}		t_type;
-
-typedef enum	e_node_type
-{
-		PIPELINE,
-		FULL_CMD,
-		REDIRECT,
-		SIMPLE_CMD,
-}		t_node_type;
-
-typedef enum	e_redir_type
-{
-		R_APPEND,
-		R_HEREDOC,
-		R_OUT,
-		R_IN,
-		R_ERR,
-}		t_redir_type;
-
-typedef struct	s_node
-{
-	t_node_type		type;
-	union
-	{
-		struct s_pair		*pair;
-		struct s_simple_cmd	*cmd;
-		struct s_redirect	*redirect;
-	};
-}		t_node;
-
-typedef struct	s_parser
-{
-	int		err_num;
-	t_token	*curr_token;
-	t_node	*node;
-}		t_parser;
-
-typedef	struct	s_pair
-{
-	t_node	*left;
-	t_node	*right;
-}		t_pair;
-
-typedef struct	s_arg
-{
-	char			*value;
-	struct s_arg	*next;
-}		t_arg;
-
-typedef struct	s_simple_cmd
-{
-	char	*command;
-	t_arg	*arg;
-}		t_simple_cmd;
-
+/* PARSING */
 t_cmd		*parse(char *line, char *env[]);
-
 t_node		*make_pipeline(t_parser *parser);
 t_node		*make_full_command(t_parser *parser);
 t_node		*make_redirect(t_redirect *redir_list);
@@ -100,11 +37,29 @@ char	**args_to_array(t_arg *arg_list);
 void	redir_to_arrays(t_cmd *jacopo, t_redirect *redir_list);
 t_cmd	*jacopize(t_node *full_cmd);
 
-/* utilities */
+/* TOKENIZING */
+t_token		*tokenize(char *line);
+t_token		*new_token(char *value, t_type type);
+void		append_token(t_token *token_list, char *value, t_type type);
+int			operator_token(t_token *token_list, char *line_pos);
+int			value_token(t_token *token_list, char *line_pos);
+
+void	print_ttoken(t_token *token);
+int		is_quote(char c);
+
+/* EXPANDING */
+int			what_quotes(char const *string);
+char		*expand_vars(char *line, char *env[]);
+
+/* UTILS */
 t_type		get_type(char *str);
 t_token		*find_first(t_token *token_list);
 void		free_token_list(t_token *current);
 int			what_quotes(char const *string);
 int			is_operator_char(char c);
+
+/* TESTING */
+void	print_node(t_node *node);
+void	print_jacopo(t_cmd *jacopo);
 
 #endif

@@ -6,11 +6,26 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:32:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/14 19:32:50 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:45:52 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/tokenizing.h"
+#include "../../includes/parsing.h"
+
+void	print_ttoken(t_token *token)
+{
+	printf("value: %s\ttype: %i. ", token->value, token->type);
+	if (!token->next)
+		printf("this is the last one");
+	printf("\n");
+}
+
+int		is_quote(char c)
+{
+	if (c == '\'' || c == '\"')
+		return (TRUE);
+	return (FALSE);
+}
 
 t_type	get_type(char *str)
 {

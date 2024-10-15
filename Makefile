@@ -11,10 +11,10 @@
 # **************************************************************************** #
 
 CC = cc
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -I -g
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
 RL_FLAGS = -L/path/to/readline-8.2/.libs -lreadline
-SRCS = minishell.c $(EXEC) $(PARSINg) $(TOKEN) $(EXPAND) testing/testing_funcs.c
+SRCS = minishell.c $(EXEC) $(PARSING) $(TOKEN) $(EXPAND) #testing/testing_funcs.c
 EXEC = source/execution/builtins.c \
 		source/execution/builtins2.c \
 		source/execution/env.c \
@@ -33,8 +33,7 @@ PARSING = source/parsing/parse.c \
 TOKEN = source/tokenizing/token_making.c \
 		source/tokenizing/token_utils.c \
 		source/tokenizing/tokenize.c
-EXPAND = source/expanding/expand.c \
-			source/expanding/ft_charjoin.c
+EXPAND = source/expanding/expand.c
 HEADER = minishell.h
 NAME = minishell
 LIBFT_PATH = libraries/libft
@@ -46,23 +45,13 @@ $(NAME): $(SRCS) $(LIBFT)
 	$(CC) $(FLAGS) -o $@ $(SRCS) $(LIBFT_FLAGS) $(RL_FLAGS)
 
 $(LIBFT):
-	$(info Building libft...)
-	@make -s -C includes/libft
-	
-$(NAME): $(LIBFT) $(OBJS)
-	$(info Building $(NAME)...)
-	@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
-	$(info Done!)
-	
-%.o: %.c
-	@$(CC) $(CFLAGS) $(LFLAGS) -o $@ -c $<
+	$(MAKE) -C $(LIBFT_PATH)
 
 clean:
-	@rm -f $(OBJS)
-	@make -s -C includes/libft clean
-	$(info Removed!)
-fclean: clean
-	@rm -f $(NAME)
-	@make -s -C includes/libft fclean
+	$(MAKE) -C $(LIBFT_PATH) clean
 
-re:	fclean all
+fclean: clean
+	$(MAKE) -C $(LIBFT_PATH) fclean
+	rm -f $(NAME)
+
+re: fclean all

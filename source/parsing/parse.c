@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:31:46 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/14 19:31:58 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:45:26 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,5 @@ t_cmd	*parse(char *line, char *env[])
 	//print_node(top_node);
 	jacopo = jacopize(top_node);
 	free_token_list(find_first(token_list));
-	print_jacopo(jacopo);
 	return(jacopo);
 }

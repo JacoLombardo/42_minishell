@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/14 15:20:39 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:47:01 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,12 @@
 # define EXECUTION_H
 
 # include "../minishell.h"
+# include "structs.h"
+# include "types.h"
+
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
-
-typedef struct s_pipe
-{
-	int				*prev_fd;
-	pid_t			pid;
-	int				pipe_fd[2];
-}					t_pipe;
 
 /* builtins */
 int					ft_echo(t_cmd *cmd, t_data *data);
@@ -64,6 +60,11 @@ int					ft_logical_and(t_cmd **cmd, t_data *data, char ***operators,
 int					ft_logical_or(t_cmd **cmd, t_data *data, char ***operators,
 						int status);
 
+void	ft_skip_pipe2(t_cmd **cmd, t_data *data);
+int	ft_handle_pipe2(t_cmd **cmd, t_data *data);
+int	ft_logical_and2(t_cmd **cmd, t_data *data, int status);
+int	ft_logical_or2(t_cmd **cmd, t_data *data, int status);
+
 /* pipe */
 void				ft_child(t_cmd *cmd, t_data *data, t_pipe pipex, int flag);
 int					ft_parent(t_cmd *cmd, t_data *data, t_pipe pipex);
@@ -72,18 +73,12 @@ int					ft_pipe(t_cmd **cmd, t_data *data, int count);
 
 /* redirections */
 void				ft_heredoc(char *delimiter);
-void				ft_redirect(char **redirections, char **targets);
-void				ft_reset_redirect(char **redirections, char **targets);
-/* void				ft_redirect(char *file, char *redirection);
-void	ft_reset_redirect(char *file, char *redirection); */
+void				ft_redirect(t_redir_type *redirections, char **targets);
+void				ft_reset_redirect(t_redir_type *redirections, char **targets);
 
 /* signals */
 void				ft_handle_sigint(int signal);
 void				ft_sig_init(void);
-/* void				ft_sigint_init(struct sigaction *sa_sigint);
-void				ft_sigquit_init(struct sigaction *sa_sigquit);
-void	ft_signals_init(struct sigaction *sa_sigint,
-						struct sigaction *sa_sigquit); */
 
 /* utils */
 int					ft_tablen(char **tab);

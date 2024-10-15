@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:39:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/14 12:20:31 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:03:10 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_free_tab(char **tab)
 int	ft_free_cmd(t_cmd *cmd)
 {
 	ft_free_tab(cmd->args);
-	ft_free_tab(cmd->redirections);
+	free(cmd->redirections);
 	ft_free_tab(cmd->targets);
 	free(cmd);
 	return (0);

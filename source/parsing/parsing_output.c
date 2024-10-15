@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:32:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/14 19:32:19 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:57:27 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	redir_to_arrays(t_cmd *jacopo, t_redirect *redir_list)
 		count++;
 		redir_list = redir_list->next;
 	}
-	jacopo->redir_types = malloc(sizeof(t_redir_type) * count);
+	jacopo->redirections = malloc(sizeof(t_redir_type) * count);
 	jacopo->targets = malloc(sizeof(char*) * (count + 1));
 	count = 0;
 	while (first->next)
 	{
 		first = first->next;
-		jacopo->redir_types[count] = first->type;
+		jacopo->redirections[count] = first->type;
 		jacopo->targets[count] = ft_strdup(first->target);
 		count++;
 	}
@@ -72,7 +72,7 @@ t_cmd	*jacopize(t_node *full_cmd)
 	jacopo->cmd = ft_strdup(full_cmd->pair->left->cmd->command);
 	jacopo->args = args_to_array(full_cmd->pair->left->cmd->arg);
 	jacopo->args[0] = ft_strdup(jacopo->cmd);
-	jacopo->redir_types = NULL;
+	jacopo->redirections = NULL;
 	jacopo->targets = NULL;
 	redir_to_arrays(jacopo, full_cmd->pair->right->redirect);
 	

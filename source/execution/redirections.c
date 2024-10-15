@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:56:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/14 11:01:26 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:47:43 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,35 +37,35 @@ void	ft_heredoc(char *delimiter)
 	}
 }
 
-void	ft_in_redirect(char *redirection, char *target, int *from_fd, int *to_fd)
+void	ft_in_redirect(t_redir_type redirection, char *target, int *from_fd, int *to_fd)
 {
-	if (!ft_strcmp(redirection, "<"))
+	if (redirection == R_IN)
 	{
 		*to_fd = open(target, O_RDONLY, 0777);
 		*from_fd = 0;
 	}
-	else if (!ft_strcmp(redirection, "<<"))
+	else if (redirection == R_HEREDOC)
 	{
 		*to_fd = open("/tmp/heredoc_temp", O_RDONLY, 0777);
 		*from_fd = 0;
 	}
 }
 
-void	ft_out_redirect(char *redirection, char *target,  int *from_fd, int *to_fd)
+void	ft_out_redirect(t_redir_type redirection, char *target,  int *from_fd, int *to_fd)
 {
-	if (!ft_strcmp(redirection, ">"))
+	if (redirection == R_OUT)
 	{
 		*to_fd = open(target, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		*from_fd = 1;
 	}
-	else if (!ft_strcmp(redirection, ">>"))
+	else if (redirection == R_APPEND)
 	{
 		*to_fd = open(target, O_WRONLY | O_CREAT | O_APPEND, 0777);
 		*from_fd = 1;
 	}
 }
 
-void	ft_redirect(char **redirections, char **targets)
+void	ft_redirect(t_redir_type *redirections, char **targets)
 {
 	int	i;
 	int	from_fd;
@@ -76,11 +76,9 @@ void	ft_redirect(char **redirections, char **targets)
 	to_fd = -1;
 	while (redirections[i])
 	{
-		if (!ft_strcmp(redirections[i], "<") || !ft_strcmp(redirections[i],
-				"<<"))
+		if (redirections[i] == R_IN || redirections[i] == R_HEREDOC)
 			ft_in_redirect(redirections[i], targets[i], &from_fd, &to_fd);
-		else if (!ft_strcmp(redirections[i], ">") || !ft_strcmp(redirections[i],
-				">>"))
+		else if (redirections[i] == R_OUT || redirections[i] == R_APPEND)
 			ft_out_redirect(redirections[i], targets[i], &from_fd, &to_fd);
 		if (to_fd == -1)
 		{
@@ -92,32 +90,7 @@ void	ft_redirect(char **redirections, char **targets)
 	}
 }
 
-/* void	ft_redirect(char *file, char *redirection)
-{
-	int	from_fd;
-	int	to_fd;
-	int	from_fd;
-	int	to_fd;
-	int	fd;
-	int	to_fd;
-	int	i;
-	int	from_fd;
-	int	to_fd;
-
-	from_fd = 0;
-	to_fd = -1;
-	if (!ft_strcmp(redirection, "<") || !ft_strcmp(redirection, "<<"))
-		ft_in_redirect(file, redirection, &from_fd, &to_fd);
-	else if (!ft_strcmp(redirection, ">") || !ft_strcmp(redirection, ">>"))
-		ft_out_redirect(file, redirection, &from_fd, &to_fd);
-	if (to_fd == -1)
-	{
-		perror(file);
-		exit(1);
-	}
-	dup2(to_fd, from_fd);
-} */
-void	ft_reset_redirect(char **redirections, char **targets)
+void	ft_reset_redirect(t_redir_type *redirections, char **targets)
 {
 	int	i;
 	int	from_fd;
@@ -128,12 +101,10 @@ void	ft_reset_redirect(char **redirections, char **targets)
 	to_fd = -1;
 	while (redirections[i])
 	{
-		if (!ft_strcmp(redirections[i], "<") || !ft_strcmp(redirections[i],
-				"<<"))
-			ft_in_redirect(targets[i], redirections[i], &to_fd, &from_fd);
-		else if (!ft_strcmp(redirections[i], ">") || !ft_strcmp(redirections[i],
-				">>"))
-			ft_out_redirect(targets[i], redirections[i], &to_fd, &from_fd);
+		if (redirections[i] == R_IN || redirections[i] == R_HEREDOC)
+			ft_in_redirect(redirections[i], targets[i], &to_fd, &from_fd);
+		else if (redirections[i] == R_OUT || redirections[i] == R_APPEND)
+			ft_out_redirect(redirections[i], targets[i], &to_fd, &from_fd);
 		if (to_fd == -1)
 		{
 			perror(targets[i]);
@@ -143,73 +114,3 @@ void	ft_reset_redirect(char **redirections, char **targets)
 		i++;
 	}
 }
-
-/* void	ft_reset_redirect(char *file, char *redirection)
-{
-	from_fd = 0;
-	to_fd = -1;
-	if (!ft_strcmp(redirection, "<") || !ft_strcmp(redirection, "<<"))
-		ft_in_redirect(file, redirection, &to_fd, &from_fd);
-	else if (!ft_strcmp(redirection, ">") || !ft_strcmp(redirection, ">>"))
-		ft_out_redirect(file, redirection, &to_fd, &from_fd);
-	if (to_fd == -1)
-	{
-		perror(file);
-		exit(1);
-	}
-	dup2(to_fd, from_fd);
-} */
-/* void	ft_redirect(char *file, char *redirection)
-{
-	fd = -1;
-	if (!ft_strcmp(redirection, "<"))
-	{
-		fd = open(file, O_RDONLY, 0777);
-		to_fd = 0;
-	}
-	else if (!ft_strcmp(redirection, ">"))
-	{
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-		to_fd = 1;
-	}
-	else if (!ft_strcmp(redirection, ">>"))
-	{
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
-		to_fd = 1;
-	}
-	if (fd == -1)
-	{
-		perror(file);
-		exit(1);
-	}
-	dup2(fd, to_fd);
-}
-
-void	ft_reset_redirect(char *file, char *redirection)
-{
-	int	fd;
-	int	to_fd;
-
-	fd = -1;
-	if (!ft_strcmp(redirection, "<"))
-	{
-		fd = open(file, O_RDONLY, 0777);
-		to_fd = 0;
-	}
-	else if (!ft_strcmp(redirection, ">"))
-	{
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-		to_fd = 1;
-	}
-	else if (!ft_strcmp(redirection, ">>"))
-	{
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
-		to_fd = 1;
-	}
-	if (fd == -1)
-	{
-		perror(file);
-		exit(1);
-	}
-	dup2(to_fd, fd);
-} */
