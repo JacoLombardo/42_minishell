@@ -7,11 +7,16 @@ void	print_node(t_node *node)
 	const char	*types[] = {"APPEND", "HEREDOC", "OUT", "IN", "ERROR"};
 
 	if (!node)
+	{
+		printf("\nempty");
 		return ;
+	}
 	if (node->type == PIPELINE)
 	{
 		printf("\npipeline: ");
+		printf("\nleft: ");
 		print_node(node->pair->left);
+		printf("\nright: ");
 		print_node(node->pair->right);
 	}
 	else if (node->type == FULL_CMD)
@@ -27,14 +32,14 @@ void	print_node(t_node *node)
 		while (redir->next)
 		{
 			redir = redir->next;
-			printf("| %s, target %s ", types[redir->type], redir->target);
+			printf("%s (target %s), ", types[redir->type], redir->target);
 		}
 	}
 	else if (node->type == SIMPLE_CMD)
 	{
 		printf("\n\t\tsimple_command: ");
-		printf("cmd %s, args: ", node->cmd->command);
-		arg = node->cmd->arg;
+		printf("cmd %s, args: ", node->simp_cmd->command);
+		arg = node->simp_cmd->arg;
 		while (arg->next)
 		{
 			arg = arg->next;
@@ -46,10 +51,11 @@ void	print_node(t_node *node)
 	printf("\n");
 }
 
-void	print_jacopo(t_full_cmd *jacopo)
+void	print_jacopo(t_full_cmd *jacopo, int index)
 {
 	const char	*types[] = {"APPEND", "HEREDOC", "OUT", "IN", "ERROR"};
 	
+	printf("command %i\n", index);
 	printf("jacopo's command: %s\n", jacopo->cmd);
 	printf("jacopo's args: ");
 	int i = 0;
@@ -71,8 +77,15 @@ void	print_jacopo(t_full_cmd *jacopo)
 	int j = i;
 	while (i > 0)
 	{
-		printf("%s, ", types[jacopo->redir_types[j - i]]);
+		printf("%s, ", types[jacopo->redirections[j - i]]);
 		i--;
 	}
 	printf("\n");
+	printf("jacopo's operator: %s", jacopo->operator);
+	printf("\n");
+
+	if (jacopo->next)
+	{
+		print_jacopo(jacopo->next, index + 1);
+	}
 }

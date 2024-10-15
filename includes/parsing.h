@@ -60,6 +60,6 @@ int			is_operator_char(char c);
 
 /* TESTING */
 void	print_node(t_node *node);
-void	print_jacopo(t_full_cmd *jacopo);
+void	print_jacopo(t_full_cmd *jacopo, int index);
 
 #endif
