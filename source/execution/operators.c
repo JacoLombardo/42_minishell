@@ -12,7 +12,7 @@
 
 #include "../../includes/execution.h"
 
-void	ft_skip_pipe2(t_cmd **cmd, t_data *data)
+void	ft_skip_pipe2(t_full_cmd **cmd, t_data *data)
 {
 	(void)data;
 	if ((*cmd)->operator&& !ft_strcmp((*cmd)->operator, "|"))
@@ -25,11 +25,11 @@ void	ft_skip_pipe2(t_cmd **cmd, t_data *data)
 		*cmd = (*cmd)->next;
 }
 
-int	ft_handle_pipe2(t_cmd **cmd, t_data *data)
+int	ft_handle_pipe2(t_full_cmd **cmd, t_data *data)
 {
 	int		count;
 	int		status;
-	t_cmd	*temp;
+	t_full_cmd	*temp;
 
 	count = 1;
 	temp = *cmd;
@@ -50,7 +50,7 @@ int	ft_handle_pipe2(t_cmd **cmd, t_data *data)
 	return (status);
 }
 
-int	ft_logical_and2(t_cmd **cmd, t_data *data, int status)
+int	ft_logical_and2(t_full_cmd **cmd, t_data *data, int status)
 {
 	if (!status)
 		status = ft_handle_pipe2(cmd, data);
@@ -59,7 +59,7 @@ int	ft_logical_and2(t_cmd **cmd, t_data *data, int status)
 	return (status);
 }
 
-int	ft_logical_or2(t_cmd **cmd, t_data *data, int status)
+int	ft_logical_or2(t_full_cmd **cmd, t_data *data, int status)
 {
 	if (status > 0 || status < 0)
 		status = ft_handle_pipe2(cmd, data);
@@ -68,7 +68,7 @@ int	ft_logical_or2(t_cmd **cmd, t_data *data, int status)
 	return (status);
 }
 
-void	ft_skip_pipe(t_cmd **cmd, t_data *data, char ***operators)
+void	ft_skip_pipe(t_full_cmd **cmd, t_data *data, char ***operators)
 {
 	(void)data;
 	// printf("inside skip: cmd-%s, op-%s\n", (*cmd)->cmd, **operators);
@@ -85,7 +85,7 @@ void	ft_skip_pipe(t_cmd **cmd, t_data *data, char ***operators)
 		*cmd = (*cmd)->next;
 }
 
-int	ft_handle_pipe(t_cmd **cmd, t_data *data, char ***operators)
+int	ft_handle_pipe(t_full_cmd **cmd, t_data *data, char ***operators)
 {
 	int	count;
 	int	status;
@@ -109,7 +109,7 @@ int	ft_handle_pipe(t_cmd **cmd, t_data *data, char ***operators)
 	return (status);
 }
 
-int	ft_logical_and(t_cmd **cmd, t_data *data, char ***operators, int status)
+int	ft_logical_and(t_full_cmd **cmd, t_data *data, char ***operators, int status)
 {
 	(*operators)++;
 	if (!status)
@@ -119,7 +119,7 @@ int	ft_logical_and(t_cmd **cmd, t_data *data, char ***operators, int status)
 	return (status);
 }
 
-int	ft_logical_or(t_cmd **cmd, t_data *data, char ***operators, int status)
+int	ft_logical_or(t_full_cmd **cmd, t_data *data, char ***operators, int status)
 {
 	(*operators)++;
 	if (status > 0 || status < 0)

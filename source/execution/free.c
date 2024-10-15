@@ -29,7 +29,7 @@ int	ft_free_tab(char **tab)
 	return (0);
 }
 
-int	ft_free_cmd(t_cmd *cmd)
+int	ft_free_cmd(t_full_cmd *cmd)
 {
 	ft_free_tab(cmd->args);
 	free(cmd->redirections);
@@ -40,8 +40,8 @@ int	ft_free_cmd(t_cmd *cmd)
 
 int	ft_free_ast(t_ast *ast)
 {
-	t_cmd	*cmds;
-	t_cmd	*temp;
+	t_full_cmd	*cmds;
+	t_full_cmd	*temp;
 
 	cmds = *ast->cmds;
 	while (cmds->next)

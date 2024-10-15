@@ -24,7 +24,8 @@ typedef struct	s_node
 	union
 	{
 		struct s_pair		*pair;
-		struct s_simple_cmd	*cmd;
+		struct s_cmd		*full_cmd;
+		struct s_simple_cmd	*simp_cmd;
 		struct s_redirect	*redirect;
 	};
 }		t_node;
@@ -82,15 +83,15 @@ typedef struct s_ast
 	char			**operators;
 }					t_ast;
 
-typedef struct s_cmd
+typedef struct s_full_cmd
 {
 	char			*cmd;
 	char			**args;
 	t_redir_type	*redirections;
 	char			**targets;
-	char            *operator;
-    struct s_cmd	*next;
-}		t_cmd;
+	char			*operator;
+	struct s_cmd	*next;
+}		t_full_cmd;
 
 typedef struct s_data
 {
