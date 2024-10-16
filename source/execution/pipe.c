@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/11 13:51:50 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:12:02 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,35 @@ int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 	else
 		status = ft_parent(cmd, data, pipex);
 	return (status);
+}
+
+int	ft_pipe2(t_full_cmd **cmd, t_data *data, int count)
+{
+	int		i;
+	t_pipe	pipex;
+	int		status;
+	int		prev_fd;
+
+	prev_fd = -1;
+	pipex.prev_fd = &prev_fd;
+	i = 0;
+	while (i < count)
+	{
+		if (i < count - 1)
+		{
+			if (pipe(pipex.pipe_fd) == -1)
+			{
+				perror("pipe");
+				exit(EXIT_FAILURE);
+			}
+			status = ft_fork(*cmd, data, pipex, 1);
+			*cmd = (*cmd)->next;
+		}
+		else
+			status = ft_fork(*cmd, data, pipex, 0);
+		i++;
+	}
+	return (WEXITSTATUS(status));
 }
 
 int	ft_pipe(t_full_cmd **cmd, t_data *data, int count)

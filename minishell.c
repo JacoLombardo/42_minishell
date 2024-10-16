@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 12:13:35 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:00:40 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ int	main(int argc, char **argv, char **env)
 	t_data	data;
 	char	*line;
 	char	*prompt;
-	t_cmd	*cmd;
+	t_full_cmd	*cmd;
 
 	(void)argv;
 	if (argc == 1)
