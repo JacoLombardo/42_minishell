@@ -41,7 +41,7 @@ char	*ft_get_path(char *cmd, char **env)
 	return (cmd);
 }
 
-int	ft_external(t_cmd *cmd, t_data *data)
+int	ft_external(t_full_cmd *cmd, t_data *data)
 {
 	char	*path;
 	pid_t	pid;
@@ -69,7 +69,7 @@ int	ft_external(t_cmd *cmd, t_data *data)
 	return (status);
 }
 
-int	ft_exec(t_cmd *cmd, t_data *data)
+int	ft_exec(t_full_cmd *cmd, t_data *data)
 {
 	if (cmd->redirections)
 		ft_redirect(cmd->redirections, cmd->targets);
@@ -97,7 +97,7 @@ int	ft_exec(t_cmd *cmd, t_data *data)
 int	ft_check_operators2(t_ast *ast, t_data *data)
 {
 	int		status;
-	t_cmd	*cmd;
+	t_full_cmd	*cmd;
 
 	cmd = *ast->cmds;
 	if (!cmd->operator)
@@ -119,7 +119,7 @@ int	ft_check_operators2(t_ast *ast, t_data *data)
 int	ft_check_operators(t_ast *ast, t_data *data)
 {
 	int		status;
-	t_cmd	*cmd;
+	t_full_cmd	*cmd;
 	char	**operators;
 
 	cmd = *ast->cmds;

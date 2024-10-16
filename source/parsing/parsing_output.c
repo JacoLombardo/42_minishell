@@ -37,7 +37,7 @@ char	**args_to_array(t_arg *arg_list)
 	return (result);
 }
 
-void	redir_to_arrays(t_cmd *jacopo, t_redirect *redir_list)
+void	redir_to_arrays(t_full_cmd *jacopo, t_redirect *redir_list)
 {
 	t_redirect		*first;
 	int				count;
@@ -62,15 +62,15 @@ void	redir_to_arrays(t_cmd *jacopo, t_redirect *redir_list)
 	jacopo->targets[count] = NULL;
 }
 
-t_cmd	*jacopize(t_node *full_cmd)
+t_full_cmd	*jacopize(t_node *full_cmd)
 {
-	t_cmd	*jacopo;
+	t_full_cmd	*jacopo;
 
-	jacopo = malloc(sizeof(t_cmd));
+	jacopo = malloc(sizeof(t_full_cmd));
 	if (!jacopo)
 		return (NULL);
-	jacopo->cmd = ft_strdup(full_cmd->pair->left->cmd->command);
-	jacopo->args = args_to_array(full_cmd->pair->left->cmd->arg);
+	jacopo->cmd = ft_strdup(full_cmd->pair->left->simp_cmd->command);
+	jacopo->args = args_to_array(full_cmd->pair->left->simp_cmd->arg);
 	jacopo->args[0] = ft_strdup(jacopo->cmd);
 	jacopo->redirections = NULL;
 	jacopo->targets = NULL;
