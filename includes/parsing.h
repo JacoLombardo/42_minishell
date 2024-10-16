@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:15:00 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 11:46:53 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:59:57 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,5 @@ t_token		*find_first(t_token *token_list);
 void		free_token_list(t_token *current);
 int			what_quotes(char const *string);
 int			is_operator_char(char c);
-
-/* TESTING */
-void	print_node(t_node *node);
-void	print_jacopo(t_full_cmd *jacopo);
 
 #endif

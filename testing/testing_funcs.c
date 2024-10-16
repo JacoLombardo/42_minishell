@@ -71,7 +71,7 @@ void	print_jacopo(t_full_cmd *jacopo)
 	int j = i;
 	while (i > 0)
 	{
-		printf("%s, ", types[jacopo->redir_types[j - i]]);
+		printf("%s, ", types[jacopo->redirections[j - i]]);
 		i--;
 	}
 	printf("\n");
