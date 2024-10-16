@@ -12,7 +12,7 @@
 
 #include "../../includes/execution.h"
 
-int	ft_echo(t_cmd *cmd, t_data *data)
+int	ft_echo(t_full_cmd *cmd, t_data *data)
 {
 	int		i;
 	char	*line;
@@ -41,7 +41,7 @@ int	ft_echo(t_cmd *cmd, t_data *data)
 	return (0);
 }
 
-int	ft_pwd(t_cmd *cmd, t_data *data)
+int	ft_pwd(t_full_cmd *cmd, t_data *data)
 {
 	char	*cwd;
 
@@ -51,7 +51,7 @@ int	ft_pwd(t_cmd *cmd, t_data *data)
 	return (0);
 }
 
-int	ft_env(t_cmd *cmd, t_data *data)
+int	ft_env(t_full_cmd *cmd, t_data *data)
 {
 	int	i;
 

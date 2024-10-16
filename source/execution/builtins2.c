@@ -12,7 +12,7 @@
 
 #include "../../includes/execution.h"
 
-int	ft_cd(t_cmd *cmd, t_data *data)
+int	ft_cd(t_full_cmd *cmd, t_data *data)
 {
 	char	*cwd;
 	char	*path;
@@ -37,7 +37,7 @@ int	ft_cd(t_cmd *cmd, t_data *data)
 	}
 }
 
-int	ft_export(t_cmd *cmd, t_data *data)
+int	ft_export(t_full_cmd *cmd, t_data *data)
 {
 	int	len;
 
@@ -50,7 +50,7 @@ int	ft_export(t_cmd *cmd, t_data *data)
 	return (0);
 }
 
-int	ft_unset(t_cmd *cmd, t_data *data)
+int	ft_unset(t_full_cmd *cmd, t_data *data)
 {
 	int	len;
 

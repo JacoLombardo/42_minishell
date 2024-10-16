@@ -42,16 +42,16 @@ LIBFT = $(LIBFT_PATH)/libft.a
 all: $(NAME)
 
 $(NAME): $(SRCS) $(LIBFT)
-	$(CC) $(FLAGS) -o $@ $(SRCS) $(LIBFT_FLAGS) $(RL_FLAGS)
+	@$(CC) $(FLAGS) -o $@ $(SRCS) $(LIBFT_FLAGS) $(RL_FLAGS)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH)
+	@$(MAKE) -s -C $(LIBFT_PATH)
 
 clean:
-	$(MAKE) -C $(LIBFT_PATH) clean
+	@$(MAKE) -s -C $(LIBFT_PATH) clean
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_PATH) fclean
+	@$(MAKE) -s -C $(LIBFT_PATH) fclean
 	rm -f $(NAME)
 
 re: fclean all

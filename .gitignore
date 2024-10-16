@@ -2,3 +2,8 @@
 *.a
 
 minishell
+
+test
+old_*
+*.swp
+

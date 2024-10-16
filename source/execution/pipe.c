@@ -12,7 +12,7 @@
 
 #include "../../includes/execution.h"
 
-void	ft_child(t_cmd *cmd, t_data *data, t_pipe pipex, int flag)
+void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 {
 	int	status;
 
@@ -31,7 +31,7 @@ void	ft_child(t_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 	exit(status);
 }
 
-int	ft_parent(t_cmd *cmd, t_data *data, t_pipe pipex)
+int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 {
 	int	status;
 
@@ -48,7 +48,7 @@ int	ft_parent(t_cmd *cmd, t_data *data, t_pipe pipex)
 		return (1);
 }
 
-int	ft_fork(t_cmd *cmd, t_data *data, t_pipe pipex, int flag)
+int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 {
 	int	status;
 
@@ -66,7 +66,7 @@ int	ft_fork(t_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 	return (status);
 }
 
-int	ft_pipe(t_cmd **cmd, t_data *data, int count)
+int	ft_pipe(t_full_cmd **cmd, t_data *data, int count)
 {
 	int		i;
 	t_pipe	pipex;

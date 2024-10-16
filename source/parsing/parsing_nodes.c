@@ -20,7 +20,7 @@ t_node	*make_simple_command(t_parser *parser)
 	t_arg			*curr;
 
 	simple = malloc(sizeof(t_simple_cmd));
-	simple->command = parser->curr_token->value;
+	simple->command = ft_strdup(parser->curr_token->value);
 	simple->arg = malloc(sizeof(t_arg));
 	simple->arg->next = NULL;
 	simple->arg->value = NULL;
@@ -30,12 +30,12 @@ t_node	*make_simple_command(t_parser *parser)
 		while (curr->next)
 			curr = curr->next;
 		new = malloc(sizeof(t_arg));
-		new->value = parser->curr_token->value;
+		new->value = ft_strdup(parser->curr_token->value);
 		new->next = NULL;
 		curr->next = new;
 	}
 	node = create_node(SIMPLE_CMD);
-	node->cmd = simple;
+	node->simp_cmd = simple;
 	advance(parser);
 	return (node);
 }
@@ -57,7 +57,7 @@ void	append_redirect(t_parser *parser, t_redirect *redir_list)
 	redir->type = get_redirect_type(parser->curr_token->type);
 	redir->next = NULL;
 	expect(parser, T_THING);
-	redir->target = parser->curr_token->value;
+	redir->target = ft_strdup(parser->curr_token->value);
 	find_last(redir_list)->next = redir;
 	advance(parser);
 }

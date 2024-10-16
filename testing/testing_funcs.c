@@ -46,7 +46,7 @@ void	print_node(t_node *node)
 	printf("\n");
 }
 
-void	print_jacopo(t_cmd *jacopo)
+void	print_jacopo(t_full_cmd *jacopo)
 {
 	const char	*types[] = {"APPEND", "HEREDOC", "OUT", "IN", "ERROR"};
 	
