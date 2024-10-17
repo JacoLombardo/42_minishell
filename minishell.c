@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/17 12:15:38 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:33:11 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,23 +138,18 @@ t_ast	*ft_set(void)
 	return (ast);
 }
 
-void	ft_check(t_ast *ast)
+void	ft_check(t_full_cmd *cmd)
 {
-	t_full_cmd	*cmd;
-	char		**operators;
+	int	i;
 
-	cmd = *ast->cmds;
-	operators = ast->operators;
-	while (*operators)
-	{
-		printf("%s\n", *operators);
-		operators++;
-	}
+	i = 0;
 	while (cmd)
 	{
-		printf("%s\n", cmd->cmd);
+		print_jacopo(cmd, i);
 		cmd = cmd->next;
+		i++;
 	}
+	printf("\n");
 }
 
 t_data	ft_init(char **env)
@@ -197,7 +192,7 @@ int	main(int argc, char **argv, char **env)
 				break ;
 			}
 			cmd = parse(line, data.env);
-			// print_jacopo(cmd);
+			//print_jacopo(cmd, 0);
 			ft_check_operators2(cmd, &data);
 			add_history(line);
 			data.history = history_list();

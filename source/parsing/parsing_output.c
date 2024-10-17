@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:32:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/17 10:26:36 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:28:42 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ t_full_cmd	*jacopize(t_node *pipeline)
 	jacopo->args[0] = ft_strdup(jacopo->cmd);
 	jacopo->redirections = NULL;
 	jacopo->targets = NULL;
-	jacopo->operator = ft_strdup("|");
+	jacopo->operator = NULL;
+	if (jacopo->next)
+		jacopo->operator = ft_strdup("|");
 	redir_to_arrays(jacopo, full_cmd->pair->right->redirect);
 	jacopo->next = jacopize(pipeline->pair->right);
 	return (jacopo);
