@@ -44,9 +44,10 @@ t_full_cmd	*parse(char *line, char *env[])
 	free(line);
 	free(expanded);
 	parser = parser_init(token_list);
-	top_node = make_full_command(parser);
-	//print_node(top_node);
+	top_node = make_pipeline(parser);
+	print_node(top_node);
 	jacopo = jacopize(top_node);
+	//jacopo = NULL;
 	free_token_list(find_first(token_list));
 	return(jacopo);
 }

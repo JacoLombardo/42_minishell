@@ -87,7 +87,16 @@ t_node	*make_full_command(t_parser *parser)
 
 t_node	*make_pipeline(t_parser *parser)
 {
-	if (!parser)
-		printf ("bup");
-	return (NULL);
+	t_node	*pipeline;
+
+	pipeline = create_node(PIPELINE);
+	pipeline->pair = malloc(sizeof(t_pair));
+	pipeline->pair->right = NULL;
+	pipeline->pair->left = make_full_command(parser);
+	if (peek(parser) == T_PIPE)
+	{
+		advance(parser);
+		pipeline->pair->right = make_pipeline(parser);
+	}
+	return (pipeline);
 }
