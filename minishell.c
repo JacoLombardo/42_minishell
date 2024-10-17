@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/17 10:24:34 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:20:59 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,8 +197,8 @@ int	main(int argc, char **argv, char **env)
 				break ;
 			}
 			cmd = parse(line, data.env);
-			//print_jacopo(cmd);
-			ft_exec(cmd, &data);
+			//print_jacopo(cmd, 0);
+			ft_check_operators2(cmd, &data);
 			add_history(line);
 			data.history = history_list();
 			free(prompt);
