@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:47:39 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 11:01:33 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:23:49 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,87 +18,88 @@
 # include <readline/readline.h>
 
 /* PARSING */
-typedef struct	s_node
+typedef struct s_node
 {
-	t_node_type		type;
+	t_node_type				type;
 	union
 	{
 		struct s_pair		*pair;
-		struct s_full_cmd		*full_cmd;
+		struct s_full_cmd	*full_cmd;
 		struct s_simple_cmd	*simp_cmd;
 		struct s_redirect	*redirect;
 	};
-}		t_node;
+}							t_node;
 
-typedef struct	s_token {
-	t_type			type;
-	char			*value;
-	struct s_token	*next;
-	struct s_token	*prev;
-}		t_token;
-
-typedef struct	s_parser
+typedef struct s_token
 {
-	int		err_num;
-	t_token	*curr_token;
-	t_node	*node;
-}		t_parser;
+	t_type					type;
+	char					*value;
+	struct s_token			*next;
+	struct s_token			*prev;
+}							t_token;
 
-typedef	struct	s_pair
+typedef struct s_parser
 {
-	t_node	*left;
-	t_node	*right;
-}		t_pair;
+	int						err_num;
+	t_token					*curr_token;
+	t_node					*node;
+}							t_parser;
 
-typedef struct	s_arg
+typedef struct s_pair
 {
-	char			*value;
-	struct s_arg	*next;
-}		t_arg;
+	t_node					*left;
+	t_node					*right;
+}							t_pair;
 
-typedef struct	s_simple_cmd
+typedef struct s_arg
 {
-	char	*command;
-	t_arg	*arg;
-}		t_simple_cmd;
+	char					*value;
+	struct s_arg			*next;
+}							t_arg;
 
-typedef struct	s_redirect
+typedef struct s_simple_cmd
 {
-	t_redir_type		type;
-	char 				*target;
-	struct s_redirect	*next;
-}		t_redirect;
+	char					*command;
+	t_arg					*arg;
+}							t_simple_cmd;
+
+typedef struct s_redirect
+{
+	t_redir_type			type;
+	char					*target;
+	struct s_redirect		*next;
+}							t_redirect;
 
 /* EXECUTION */
 typedef struct s_pipe
 {
-	int				*prev_fd;
-	pid_t			pid;
-	int				pipe_fd[2];
-}					t_pipe;
+	int						*prev_fd;
+	pid_t					pid;
+	int						pipe_fd[2];
+}							t_pipe;
 
 typedef struct s_ast
 {
-	struct s_full_cmd	**cmds;
-	char			**operators;
-}					t_ast;
+	struct s_full_cmd		**cmds;
+	char					**operators;
+}							t_ast;
 
 typedef struct s_full_cmd
 {
-	char			*cmd;
-	char			**args;
-	t_redir_type	*redirections;
-	char			**targets;
-	char			*operator;
-	struct s_full_cmd	*next;
-}		t_full_cmd;
+	char					*cmd;
+	char					**args;
+	t_redir_type			*redirections;
+	char					**targets;
+	char					*operator;
+	struct s_full_cmd		*next;
+}							t_full_cmd;
 
 typedef struct s_data
 {
-	char			**env;
-	HIST_ENTRY		**history;
-	int				last_exit;
-	struct s_ast	*ast;
-}					t_data;
+	char					**env;
+	HIST_ENTRY				**history;
+	int						last_exit;
+	struct s_ast			*ast;
+}							t_data;
 
 #endif

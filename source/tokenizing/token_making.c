@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:32:30 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/16 13:54:40 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:26:55 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_token	*new_token(char *value, t_type type)
 {
-	t_token		*new_token;
+	t_token	*new_token;
 
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
@@ -31,7 +31,7 @@ t_token	*new_token(char *value, t_type type)
 
 void	append_token(t_token *token_list, char *value, t_type type)
 {
-	t_token		*new;
+	t_token	*new;
 
 	while (token_list->next != NULL)
 		token_list = token_list->next;

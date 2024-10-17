@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:31:46 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 11:45:26 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:26:13 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_full_cmd	*parse(char *line, char *env[])
 {
 	t_parser	*parser;
 	t_node		*top_node;
-	t_full_cmd		*jacopo;
+	t_full_cmd	*jacopo;
 	char		*expanded;
 	t_token		*token_list;
 
@@ -47,7 +47,6 @@ t_full_cmd	*parse(char *line, char *env[])
 	top_node = make_pipeline(parser);
 	print_node(top_node);
 	jacopo = jacopize(top_node);
-	//jacopo = NULL;
 	free_token_list(find_first(token_list));
-	return(jacopo);
+	return (jacopo);
 }

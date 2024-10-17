@@ -6,13 +6,13 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/16 14:00:40 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:24:34 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_program = 0;
+int g_program;
 
 char	*ft_pwd_name(t_data *data)
 {
@@ -171,7 +171,7 @@ t_data	ft_init(char **env)
 	return (data);
 }
 
-int	main2(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
 	char	*line;

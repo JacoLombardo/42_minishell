@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/16 14:00:21 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:21:13 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 # define FALSE 0
 # define TRUE 1
 
-extern int g_program;
+extern  int g_program;
 
 /* TESTING */
 void	print_node(t_node *node);
-void	print_jacopo(t_full_cmd *jacopo);
+void	print_jacopo(t_full_cmd *jacopo, int index);
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   testing_funcs.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/17 10:27:15 by jalombar          #+#    #+#             */
+/*   Updated: 2024/10/17 10:27:16 by jalombar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	print_node(t_node *node)
@@ -47,18 +59,20 @@ void	print_node(t_node *node)
 		}
 	}
 	else
-		printf ("?");
+		printf("?");
 	printf("\n");
 }
 
 void	print_jacopo(t_full_cmd *jacopo, int index)
 {
 	const char	*types[] = {"APPEND", "HEREDOC", "OUT", "IN", "ERROR"};
-	
+	int			i;
+	int			j;
+
 	printf("command %i\n", index);
 	printf("jacopo's command: %s\n", jacopo->cmd);
 	printf("jacopo's args: ");
-	int i = 0;
+	i = 0;
 	while (jacopo->args[i])
 	{
 		printf("%s, ", jacopo->args[i]);
@@ -74,7 +88,7 @@ void	print_jacopo(t_full_cmd *jacopo, int index)
 	}
 	printf("\n");
 	printf("jacopo's redirection types: ");
-	int j = i;
+	j = i;
 	while (i > 0)
 	{
 		printf("%s, ", types[jacopo->redirections[j - i]]);
@@ -83,7 +97,6 @@ void	print_jacopo(t_full_cmd *jacopo, int index)
 	printf("\n");
 	printf("jacopo's operator: %s", jacopo->operator);
 	printf("\n");
-
 	if (jacopo->next)
 	{
 		print_jacopo(jacopo->next, index + 1);

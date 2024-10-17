@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:32:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 11:45:52 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:27:00 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_ttoken(t_token *token)
 	printf("\n");
 }
 
-int		is_quote(char c)
+int	is_quote(char c)
 {
 	if (c == '\'' || c == '\"')
 		return (TRUE);

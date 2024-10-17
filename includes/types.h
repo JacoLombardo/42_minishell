@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:50:02 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 11:47:12 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:23:56 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,35 @@
 
 # include "structs.h"
 
-typedef enum	e_redir_type
+typedef enum e_redir_type
 {
-		R_APPEND,
-		R_HEREDOC,
-		R_OUT,
-		R_IN,
-		R_ERR,
-}		t_redir_type;
+	R_APPEND,
+	R_HEREDOC,
+	R_OUT,
+	R_IN,
+	R_ERR,
+}	t_redir_type;
 
 /* PARSING */
-typedef enum	e_type {
-		T_ERR,
-		T_THING,
-		T_PIPE,
-		T_OR,
-		T_AND,
-		T_APPEND, // >>
-		T_HEREDOC, // <<
-		T_OUT,
-		T_IN,
-}		t_type;
-
-typedef enum	e_node_type
+typedef enum e_type
 {
-		PIPELINE,
-		FULL_CMD,
-		REDIRECT,
-		SIMPLE_CMD,
-}		t_node_type;
+	T_ERR,
+	T_THING,
+	T_PIPE,
+	T_OR,
+	T_AND,
+	T_APPEND,  // >>
+	T_HEREDOC, // <<
+	T_OUT,
+	T_IN,
+}	t_type;
+
+typedef enum e_node_type
+{
+	PIPELINE,
+	FULL_CMD,
+	REDIRECT,
+	SIMPLE_CMD,
+}	t_node_type;
 
 #endif

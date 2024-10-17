@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:32:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 10:57:27 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:26:36 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**args_to_array(t_arg *arg_list)
 		arg_count++;
 		arg_list = arg_list->next;
 	}
-	result = malloc(sizeof(char*) * (arg_count + 2));
+	result = malloc(sizeof(char *) * (arg_count + 2));
 	arg_count = 1;
 	while (first->next)
 	{
@@ -39,8 +39,8 @@ char	**args_to_array(t_arg *arg_list)
 
 void	redir_to_arrays(t_full_cmd *jacopo, t_redirect *redir_list)
 {
-	t_redirect		*first;
-	int				count;
+	t_redirect	*first;
+	int			count;
 
 	count = 0;
 	first = redir_list;
@@ -50,7 +50,7 @@ void	redir_to_arrays(t_full_cmd *jacopo, t_redirect *redir_list)
 		redir_list = redir_list->next;
 	}
 	jacopo->redirections = malloc(sizeof(t_redir_type) * count);
-	jacopo->targets = malloc(sizeof(char*) * (count + 1));
+	jacopo->targets = malloc(sizeof(char *) * (count + 1));
 	count = 0;
 	while (first->next)
 	{
@@ -81,6 +81,5 @@ t_full_cmd	*jacopize(t_node *pipeline)
 	jacopo->operator = ft_strdup("|");
 	redir_to_arrays(jacopo, full_cmd->pair->right->redirect);
 	jacopo->next = jacopize(pipeline->pair->right);
-	
 	return (jacopo);
 }
