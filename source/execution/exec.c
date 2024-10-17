@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 12:05:24 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:15:17 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,10 @@ int	ft_exec(t_full_cmd *cmd, t_data *data)
 	return (data->last_exit);
 }
 
-int	ft_check_operators2(t_ast *ast, t_data *data)
+int	ft_check_operators2(t_full_cmd *cmd, t_data *data)
 {
-	int		status;
-	t_full_cmd	*cmd;
+	int	status;
 
-	cmd = *ast->cmds;
 	if (!cmd->operator)
 		status = ft_exec(cmd, data);
 	else
@@ -118,9 +116,9 @@ int	ft_check_operators2(t_ast *ast, t_data *data)
 
 int	ft_check_operators(t_ast *ast, t_data *data)
 {
-	int		status;
+	int			status;
 	t_full_cmd	*cmd;
-	char	**operators;
+	char		**operators;
 
 	cmd = *ast->cmds;
 	operators = ast->operators;

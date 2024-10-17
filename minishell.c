@@ -6,13 +6,13 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/17 10:24:34 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:15:38 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_program;
+int		g_program;
 
 char	*ft_pwd_name(t_data *data)
 {
@@ -31,7 +31,7 @@ char	*ft_pwd_name(t_data *data)
 
 t_ast	*ft_set(void)
 {
-	t_ast	*ast;
+	t_ast		*ast;
 	t_full_cmd	*cmd1;
 	t_full_cmd	*cmd2;
 	t_full_cmd	*cmd3;
@@ -141,7 +141,7 @@ t_ast	*ft_set(void)
 void	ft_check(t_ast *ast)
 {
 	t_full_cmd	*cmd;
-	char	**operators;
+	char		**operators;
 
 	cmd = *ast->cmds;
 	operators = ast->operators;
@@ -173,9 +173,9 @@ t_data	ft_init(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data	data;
-	char	*line;
-	char	*prompt;
+	t_data		data;
+	char		*line;
+	char		*prompt;
 	t_full_cmd	*cmd;
 
 	(void)argv;
@@ -197,12 +197,12 @@ int	main(int argc, char **argv, char **env)
 				break ;
 			}
 			cmd = parse(line, data.env);
-			//print_jacopo(cmd);
-			ft_exec(cmd, &data);
+			// print_jacopo(cmd);
+			ft_check_operators2(cmd, &data);
 			add_history(line);
 			data.history = history_list();
 			free(prompt);
-			//printf("%s\n", line);
+			// printf("%s\n", line);
 		}
 	}
 	else
