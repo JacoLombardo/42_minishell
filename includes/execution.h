@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 11:47:01 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:12:18 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int					ft_logical_and(t_full_cmd **cmd, t_data *data, char ***operators,
 int					ft_logical_or(t_full_cmd **cmd, t_data *data, char ***operators,
 						int status);
 
+int	ft_pipe2(t_full_cmd **cmd, t_data *data, int count);
 void	ft_skip_pipe2(t_full_cmd **cmd, t_data *data);
 int	ft_handle_pipe2(t_full_cmd **cmd, t_data *data);
 int	ft_logical_and2(t_full_cmd **cmd, t_data *data, int status);

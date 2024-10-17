@@ -1,4 +1,4 @@
-#include "../includes/parsing.h"
+#include "../minishell.h"
 
 void	print_node(t_node *node)
 {
@@ -33,8 +33,8 @@ void	print_node(t_node *node)
 	else if (node->type == SIMPLE_CMD)
 	{
 		printf("\n\t\tsimple_command: ");
-		printf("cmd %s, args: ", node->cmd->command);
-		arg = node->cmd->arg;
+		printf("cmd %s, args: ", node->simp_cmd->command);
+		arg = node->simp_cmd->arg;
 		while (arg->next)
 		{
 			arg = arg->next;
