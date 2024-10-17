@@ -62,19 +62,25 @@ void	redir_to_arrays(t_full_cmd *jacopo, t_redirect *redir_list)
 	jacopo->targets[count] = NULL;
 }
 
-t_full_cmd	*jacopize(t_node *full_cmd)
+t_full_cmd	*jacopize(t_node *pipeline)
 {
 	t_full_cmd	*jacopo;
+	t_node		*full_cmd;
 
+	if (!pipeline)
+		return (NULL);
 	jacopo = malloc(sizeof(t_full_cmd));
 	if (!jacopo)
 		return (NULL);
+	full_cmd = pipeline->pair->left;
 	jacopo->cmd = ft_strdup(full_cmd->pair->left->simp_cmd->command);
 	jacopo->args = args_to_array(full_cmd->pair->left->simp_cmd->arg);
 	jacopo->args[0] = ft_strdup(jacopo->cmd);
 	jacopo->redirections = NULL;
 	jacopo->targets = NULL;
+	jacopo->operator = ft_strdup("|");
 	redir_to_arrays(jacopo, full_cmd->pair->right->redirect);
+	jacopo->next = jacopize(pipeline->pair->right);
 	
 	return (jacopo);
 }
