@@ -20,7 +20,7 @@ void	print_node(t_node *node)
 
 	if (!node)
 	{
-		printf("\nempty");
+		printf("\n\t(empty)");
 		return ;
 	}
 	if (node->type == PIPELINE)
