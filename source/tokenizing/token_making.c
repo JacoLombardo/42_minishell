@@ -6,11 +6,10 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:32:30 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 10:38:36 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:54:40 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "../../includes/tokenizing.h"
 #include "../../includes/parsing.h"
 
 t_token	*new_token(char *value, t_type type)

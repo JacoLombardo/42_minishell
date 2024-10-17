@@ -1,4 +1,4 @@
-#include "../includes/parsing.h"
+#include "../minishell.h"
 
 void	print_node(t_node *node)
 {

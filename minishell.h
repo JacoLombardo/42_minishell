@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 11:48:29 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:00:21 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,9 @@
 # define TRUE 1
 
 extern int g_program;
+
+/* TESTING */
+void	print_node(t_node *node);
+void	print_jacopo(t_full_cmd *jacopo);
 
 #endif
