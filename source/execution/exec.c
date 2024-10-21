@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/21 17:29:02 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:39:12 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,9 @@ int	ft_check_operators2(t_full_cmd *cmd, t_data *data)
 
 int	ft_check_operators(t_ast *ast, t_data *data)
 {
-	int		status;
+	int			status;
 	t_full_cmd	*cmd;
-	char	**operators;
+	char		**operators;
 
 	cmd = *ast->cmds;
 	operators = ast->operators;

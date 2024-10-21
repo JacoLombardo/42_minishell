@@ -81,6 +81,9 @@ t_full_cmd	*jacopize(t_node *pipeline)
 	jacopo->args[0] = ft_strdup(jacopo->cmd);
 	jacopo->redirections = NULL;
 	jacopo->targets = NULL;
+	jacopo->operator = NULL;
+	if (jacopo->next)
+		jacopo->operator = ft_strdup("|");
 	redir_to_arrays(jacopo, full_cmd->pair->right->redirect);
 	jacopo->next = jacopize(pipeline->pair->right);
 	if (jacopo->next)

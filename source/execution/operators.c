@@ -15,7 +15,7 @@
 void	ft_skip_pipe2(t_full_cmd **cmd, t_data *data)
 {
 	(void)data;
-	if ((*cmd)->operator&& !ft_strcmp((*cmd)->operator, "|"))
+	if ((*cmd)->operator && !ft_strcmp((*cmd)->operator, "|"))
 	{
 		while (*cmd && !ft_strcmp((*cmd)->operator, "|"))
 			*cmd = (*cmd)->next;
@@ -26,8 +26,8 @@ void	ft_skip_pipe2(t_full_cmd **cmd, t_data *data)
 
 int	ft_handle_pipe2(t_full_cmd **cmd, t_data *data)
 {
-	int		cmd_count;
-	int		status;
+	int			cmd_count;
+	int			status;
 	t_full_cmd	*temp;
 
 	cmd_count = 1;
@@ -105,7 +105,8 @@ int	ft_handle_pipe(t_full_cmd **cmd, t_data *data, char ***operators)
 	return (status);
 }
 
-int	ft_logical_and(t_full_cmd **cmd, t_data *data, char ***operators, int status)
+int	ft_logical_and(t_full_cmd **cmd, t_data *data, char ***operators,
+		int status)
 {
 	(*operators)++;
 	if (!status)

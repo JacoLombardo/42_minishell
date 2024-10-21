@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int g_program;
+int		g_program;
 
 char	*ft_pwd_name(t_data *data)
 {
@@ -31,7 +31,7 @@ char	*ft_pwd_name(t_data *data)
 
 t_ast	*ft_set(void)
 {
-	t_ast	*ast;
+	t_ast		*ast;
 	t_full_cmd	*cmd1;
 	t_full_cmd	*cmd2;
 	t_full_cmd	*cmd3;
@@ -138,23 +138,18 @@ t_ast	*ft_set(void)
 	return (ast);
 }
 
-void	ft_check(t_ast *ast)
+void	ft_check(t_full_cmd *cmd)
 {
-	t_full_cmd	*cmd;
-	char	**operators;
+	int	i;
 
-	cmd = *ast->cmds;
-	operators = ast->operators;
-	while (*operators)
-	{
-		printf("%s\n", *operators);
-		operators++;
-	}
+	i = 0;
 	while (cmd)
 	{
-		printf("%s\n", cmd->cmd);
+		print_jacopo(cmd, i);
 		cmd = cmd->next;
+		i++;
 	}
+	printf("\n");
 }
 
 t_data	ft_init(char **env)
@@ -173,9 +168,9 @@ t_data	ft_init(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data	data;
-	char	*line;
-	char	*prompt;
+	t_data		data;
+	char		*line;
+	char		*prompt;
 	t_full_cmd	*cmd;
 
 	(void)argv;
@@ -202,7 +197,7 @@ int	main(int argc, char **argv, char **env)
 			add_history(line);
 			data.history = history_list();
 			free(prompt);
-			//printf("%s\n", line);
+			// printf("%s\n", line);
 		}
 	}
 	else
