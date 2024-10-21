@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:32:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/17 17:16:47 by csilva-r         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:16:32 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,20 @@ void	redir_to_arrays(t_full_cmd *jacopo, t_redirect *redir_list)
 		count++;
 		redir_list = redir_list->next;
 	}
-	jacopo->redirections = malloc(sizeof(t_redir_type) * count);
-	jacopo->targets = malloc(sizeof(char *) * (count + 1));
-	count = 0;
-	while (first->next)
+	if (count)
 	{
-		first = first->next;
-		jacopo->redirections[count] = first->type;
-		jacopo->targets[count] = ft_strdup(first->target);
-		count++;
+		jacopo->redirections = malloc(sizeof(t_redir_type) * count);
+		jacopo->targets = malloc(sizeof(char *) * (count + 1));
+		count = 0;
+		while (first->next)
+		{
+			first = first->next;
+			jacopo->redirections[count] = first->type;
+			jacopo->targets[count] = ft_strdup(first->target);
+			count++;
+		}
+		jacopo->targets[count] = NULL;
 	}
-	jacopo->targets[count] = NULL;
 }
 
 t_full_cmd	*jacopize(t_node *pipeline)

@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/17 18:15:47 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:29:02 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,8 @@ int	ft_external(t_full_cmd *cmd, t_data *data)
 
 int	ft_exec(t_full_cmd *cmd, t_data *data)
 {
-	//printf("before redirection\n");
 	if (cmd->redirections)
 		ft_redirect(cmd->redirections, cmd->targets);
-	//printf("after redirection\n");
 	if (!ft_strcmp(cmd->cmd, "echo"))
 		data->last_exit = ft_echo(cmd, data);
 	else if (!ft_strcmp(cmd->cmd, "cd"))
@@ -104,7 +102,6 @@ int	ft_check_operators2(t_full_cmd *cmd, t_data *data)
 		status = ft_exec(cmd, data);
 	else
 	{
-		//printf("inside pipe loop\n");
 		status = ft_handle_pipe2(&cmd, data);
 		while (cmd)
 		{

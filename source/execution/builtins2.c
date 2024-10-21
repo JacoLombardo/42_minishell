@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:30:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/15 11:04:53 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:19:00 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_cd(t_full_cmd *cmd, t_data *data)
 
 	cwd = ft_getenv("PWD", data->env);
 	if (cmd->args[0][0] != '~')
-		path = ft_strjoinjoin(cwd, "/", cmd->args[0]);
+		path = ft_strjoinjoin(cwd, "/", cmd->args[1]);
 	else
 		path = ft_strdup(cmd->args[0] + 1);
 	if (chdir(path))
