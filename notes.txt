@@ -1,0 +1,18 @@
+
+// echo with no args segfaults
+// unset 
+🫠 :~/..  export FRIEND=calamardo
+🫠 :~/..  echo $FRIEND
+calamardo
+🫠 :~/..  unset FRIEND
+🫠 :~/..  echo $FRIEND
+calamardo
+🫠 :~/..  unset $FRIEND
+free(): invalid pointer
+Aborted (core dumped)
+
+// cd .. breaks the path. you can go up but then not into anything
+
+// exit
+free(): invalid pointer
+Aborted (core dumped)

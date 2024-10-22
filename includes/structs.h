@@ -86,6 +86,7 @@ typedef struct s_ast
 
 typedef struct s_full_cmd
 {
+	int						built_in;
 	char					*cmd;
 	char					**args;
 	t_redir_type			*redirections;

@@ -43,3 +43,19 @@ t_redir_type	get_redirect_type(t_type token_type)
 	else
 		return (R_ERR);
 }
+
+int		is_builtin(char *cmd)
+{
+	int	len;
+
+	len = ft_strlen(cmd);
+	if (!ft_strncmp(cmd, "echo", len) || !ft_strncmp(cmd, "pwd", len))
+		return (TRUE);
+	else if (!ft_strncmp(cmd, "env", len) || !ft_strncmp(cmd, "cd", len))
+		return (TRUE);
+	else if (!ft_strncmp(cmd, "export", len) || !ft_strncmp(cmd, "unset", len))
+		return (TRUE);
+	else if (!ft_strncmp(cmd, "exit", len))
+		return (TRUE);
+	return (FALSE);
+}

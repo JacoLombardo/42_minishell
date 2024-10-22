@@ -69,8 +69,11 @@ void	print_jacopo(t_full_cmd *jacopo, int index)
 	int			i;
 	int			j;
 
+	if (!jacopo)
+		return ;
 	printf("command %i\n", index);
 	printf("jacopo's command: %s\n", jacopo->cmd);
+	printf("\t\tbuilt_in flag: %i\n", jacopo->built_in);
 	printf("jacopo's args: ");
 	i = 0;
 	while (jacopo->args[i])

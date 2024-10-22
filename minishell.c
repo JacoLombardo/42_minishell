@@ -193,6 +193,7 @@ int	main(int argc, char **argv, char **env)
 			}
 			cmd = parse(line, data.env);
 			//print_jacopo(cmd, 0);
+			printf("\t\tflag: %d\n", is_builtin(cmd->cmd));
 			ft_check_operators2(cmd, &data);
 			add_history(line);
 			data.history = history_list();
