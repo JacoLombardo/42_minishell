@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:56:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/21 17:28:03 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:09:22 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	ft_heredoc(char *delimiter)
 
 	fd = open("/tmp/heredoc_temp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd < 0)
-	{
-		perror("open");
-		exit(1);
-	}
+		ft_error("open", 1);
 	while (1)
 	{
 		line = readline("heredoc> ");
@@ -37,7 +34,8 @@ void	ft_heredoc(char *delimiter)
 	}
 }
 
-void	ft_in_redirect(t_redir_type redirection, char *target, int *from_fd, int *to_fd)
+void	ft_in_redirect(t_redir_type redirection, char *target, int *from_fd,
+		int *to_fd)
 {
 	if (redirection == R_IN)
 	{
@@ -51,7 +49,8 @@ void	ft_in_redirect(t_redir_type redirection, char *target, int *from_fd, int *t
 	}
 }
 
-void	ft_out_redirect(t_redir_type redirection, char *target,  int *from_fd, int *to_fd)
+void	ft_out_redirect(t_redir_type redirection, char *target, int *from_fd,
+		int *to_fd)
 {
 	if (redirection == R_OUT)
 	{
@@ -81,11 +80,9 @@ void	ft_redirect(t_redir_type *redirections, char **targets)
 		else if (redirections[i] == R_OUT || redirections[i] == R_APPEND)
 			ft_out_redirect(redirections[i], targets[i], &from_fd, &to_fd);
 		if (to_fd == -1)
-		{
-			perror(targets[i]);
-			exit(1);
-		}
+			ft_error(targets[i], 1);
 		dup2(to_fd, from_fd);
+		close(to_fd);
 		i++;
 	}
 }
@@ -106,10 +103,7 @@ void	ft_reset_redirect(t_redir_type *redirections, char **targets)
 		else if (redirections[i] == R_OUT || redirections[i] == R_APPEND)
 			ft_out_redirect(redirections[i], targets[i], &to_fd, &from_fd);
 		if (to_fd == -1)
-		{
-			perror(targets[i]);
-			exit(1);
-		}
+			ft_error(targets[i], 1);
 		dup2(to_fd, from_fd);
 		i++;
 	}
