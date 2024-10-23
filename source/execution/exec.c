@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/22 13:54:09 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:59:53 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int	ft_builtins(t_full_cmd *cmd, t_data *data)
 			ft_redirect(cmd->redirections, cmd->targets);
 		if (ft_builtins_handler(cmd, data))
 			ft_error(cmd->cmd, 1);
+		// else
+		// 	exit(0);
 	}
 	else
 	{
