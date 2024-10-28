@@ -61,12 +61,29 @@ char	*append_char(char *new_line, char c)
 	return (new_line);
 }
 
-char	*expand_vars(char *line, char *env[])
+char	*expand_single_var(char *new_line, char *var_name, char *env[])
 {
 	int		j;
+	char	*var_value;
+
+	j = 0;
+	while (env[j])
+	{
+		var_value = ft_strnstr(env[j], var_name, ft_strlen(env[j]));
+		if (var_value)
+		{
+			new_line = append_value(new_line, var_value, var_name);
+			break ;
+		}
+		j++;
+	}
+	return (new_line);
+}
+
+char	*expand_vars(char *line, char *env[])
+{
 	int		i;
 	char	*var_name;
-	char	*var_value;
 	char	*new_line;
 
 	i = 0;
@@ -77,18 +94,7 @@ char	*expand_vars(char *line, char *env[])
 		{
 			i++;
 			var_name = get_var_name(i, line);
-			j = 0;
-			while (env[j])
-			{
-				var_value = ft_strnstr(env[j], var_name, ft_strlen(env[j]));
-				if (var_value)
-				{
-					new_line = append_value(new_line, var_value, var_name);
-					break ;
-				}
-				j++;
-			}
-			//free(var_name);
+			new_line = expand_single_var(new_line, var_name, env);
 		}
 		new_line = append_char(new_line, line[i]);
 		i++;
