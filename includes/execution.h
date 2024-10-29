@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/17 18:21:09 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:03:50 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	ft_handle_sigint(int signal);
 void	ft_sig_init(void);
 
 /* utils */
+void	ft_error(char *error, int status);
 int		ft_tablen(char **tab);
 int		ft_find_var(char *env, char *name);
 
