@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/23 19:59:53 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:57:16 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,99 +68,44 @@ int	ft_external(t_full_cmd *cmd, t_data *data)
 	return (status);
 }
 
-int	ft_builtins_handler(t_full_cmd *cmd, t_data *data)
-{
-	if (!ft_strcmp(cmd->cmd, "echo"))
-		return (ft_echo(cmd, data));
-	else if (!ft_strcmp(cmd->cmd, "cd"))
-		return (ft_cd(cmd, data));
-	else if (!ft_strcmp(cmd->cmd, "pwd"))
-		return (ft_pwd(cmd, data));
-	else if (!ft_strcmp(cmd->cmd, "export"))
-		return (ft_export(cmd, data));
-	else if (!ft_strcmp(cmd->cmd, "unset"))
-		return (ft_unset(cmd, data));
-	else if (!ft_strcmp(cmd->cmd, "env"))
-		return (ft_env(cmd, data));
-	else
-		return (1);
-}
-
 int	ft_builtins(t_full_cmd *cmd, t_data *data)
 {
-	pid_t	pid;
-	int		status;
+	int	status;
+	int	saved_stdin;
+	int	saved_stdout;
 
-	pid = fork();
 	status = 0;
-	if (pid == -1)
-		exit(-1);
-	if (!pid)
-	{
-		if (cmd->redirections)
-			ft_redirect(cmd->redirections, cmd->targets);
-		if (ft_builtins_handler(cmd, data))
-			ft_error(cmd->cmd, 1);
-		// else
-		// 	exit(0);
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			return (WEXITSTATUS(status));
-	}
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (cmd->redirections)
+		ft_redirect(cmd->redirections, cmd->targets);
+	if (!ft_strcmp(cmd->cmd, "echo"))
+		status = ft_echo(cmd, data);
+	else if (!ft_strcmp(cmd->cmd, "cd"))
+		status = ft_cd(cmd, data);
+	else if (!ft_strcmp(cmd->cmd, "pwd"))
+		status = ft_pwd(cmd, data);
+	else if (!ft_strcmp(cmd->cmd, "export"))
+		status = ft_export(cmd, data);
+	else if (!ft_strcmp(cmd->cmd, "unset"))
+		status = ft_unset(cmd, data);
+	else if (!ft_strcmp(cmd->cmd, "env"))
+		status = ft_env(cmd, data);
+	if (cmd->redirections)
+		ft_reset_redirect(cmd->redirections, saved_stdin, saved_stdout);
 	return (status);
 }
 
 int	ft_exec(t_full_cmd *cmd, t_data *data)
 {
-	if (!ft_strcmp(cmd->cmd, "echo"))
-		data->last_exit = ft_builtins(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "cd"))
-		data->last_exit = ft_builtins(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "pwd"))
-		data->last_exit = ft_builtins(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "export"))
-		data->last_exit = ft_builtins(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "unset"))
-		data->last_exit = ft_builtins(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "env"))
-		data->last_exit = ft_builtins(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "exit"))
+	if (!ft_strcmp(cmd->cmd, "exit"))
 		ft_exit(0, data);
+	else if (cmd->built_in == TRUE)
+		data->last_exit = ft_builtins(cmd, data);
 	else
 		data->last_exit = ft_external(cmd, data);
 	return (data->last_exit);
 }
-
-/* int	ft_exec(t_full_cmd *cmd, t_data *data)
-{
-	t_redirect *redir;
-
-	redir = NULL;
-	if (cmd->redirections)
-		ft_redirect2(cmd->redirections, cmd->targets, &redir);
-	if (!ft_strcmp(cmd->cmd, "echo"))
-		data->last_exit = ft_echo(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "cd"))
-		data->last_exit = ft_cd(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "pwd"))
-		data->last_exit = ft_pwd(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "export"))
-		data->last_exit = ft_export(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "unset"))
-		data->last_exit = ft_unset(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "env"))
-		data->last_exit = ft_env(cmd, data);
-	else if (!ft_strcmp(cmd->cmd, "exit"))
-		ft_exit(0, data);
-	else
-		data->last_exit = ft_external(cmd, data);
-	if (cmd->redirections)
-		ft_reset_redirect2(cmd->redirections, &redir);
-	return (data->last_exit);
-} */
 
 int	ft_check_operators2(t_full_cmd *cmd, t_data *data)
 {

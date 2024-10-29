@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/22 12:03:50 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:06:58 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		ft_pipe(t_full_cmd **cmd, t_data *data, int count);
 /* redirections */
 void	ft_heredoc(char *delimiter);
 void	ft_redirect(t_redir_type *redirections, char **targets);
-void	ft_reset_redirect(t_redir_type *redirections, char **targets);
+void	ft_reset_redirect(t_redir_type *redirections, int saved_std_in, int saved_std_out);
 
 /* signals */
 void	ft_handle_sigint(int signal);

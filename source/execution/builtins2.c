@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:30:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/23 11:39:10 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:17:34 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	ft_cd(t_full_cmd *cmd, t_data *data)
 
 	cwd = ft_getenv("PWD", data->env);
 	path = ft_move(cwd, cmd->args[1]);
-	printf("path: %s\n", path);
 	if (chdir(path))
 	{
 		perror(path);
