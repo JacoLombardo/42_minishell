@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/29 16:57:16 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:48:57 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ char	*ft_get_path(char *cmd, char **env)
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
 		{
-			ft_free_tab(s_cmd);
+			ft_free_both_tab(allpath, s_cmd);
 			return (exec);
 		}
 		free(exec);
 		i++;
 	}
-	ft_free_tab(allpath);
-	ft_free_tab(s_cmd);
+	ft_free_both_tab(allpath, s_cmd);
 	return (cmd);
 }
 
@@ -62,6 +61,7 @@ int	ft_external(t_full_cmd *cmd, t_data *data)
 	else
 	{
 		waitpid(pid, &status, 0);
+		free(path);
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 	}
@@ -99,7 +99,7 @@ int	ft_builtins(t_full_cmd *cmd, t_data *data)
 int	ft_exec(t_full_cmd *cmd, t_data *data)
 {
 	if (!ft_strcmp(cmd->cmd, "exit"))
-		ft_exit(0, data);
+		ft_exit(cmd, data);
 	else if (cmd->built_in == TRUE)
 		data->last_exit = ft_builtins(cmd, data);
 	else

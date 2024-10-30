@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:47:39 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/22 11:21:05 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:43:30 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_data
 	char					**env;
 	HIST_ENTRY				**history;
 	int						last_exit;
-	struct s_ast			*ast;
+	//struct s_ast			*ast;
 }							t_data;
 
 #endif

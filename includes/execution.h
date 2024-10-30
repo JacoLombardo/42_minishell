@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/29 16:06:58 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:36:42 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,15 @@
 # include <signal.h>
 
 /* builtins */
-int		ft_echo(t_full_cmd *cmd, t_data *data);
-int		ft_pwd(t_full_cmd *cmd, t_data *data);
-int		ft_env(t_full_cmd *cmd, t_data *data);
-
-/* builtins2 */
 int		ft_cd(t_full_cmd *cmd, t_data *data);
+int		ft_echo(t_full_cmd *cmd, t_data *data);
+int		ft_env(t_full_cmd *cmd, t_data *data);
+void	ft_exit(t_full_cmd *cmd, t_data *data);
 int		ft_export(t_full_cmd *cmd, t_data *data);
+int		ft_pwd(t_full_cmd *cmd, t_data *data);
 int		ft_unset(t_full_cmd *cmd, t_data *data);
-void	ft_exit(int status, t_data *data);
 
 /* env */
-char	**ft_deallocenv(char **env, int size, char *name);
-char	**ft_reallocenv(char **env, int size);
 char	**ft_cpyenv(char **env);
 char	*ft_getenv(char *name, char **env);
 char	*ft_setenv(char *name, char *value, char **env);
@@ -45,10 +41,11 @@ int		ft_exec(t_full_cmd *cmd, t_data *data);
 int		ft_check_operators(t_ast *ast, t_data *data);
 
 /* free */
-int		ft_free_tab(char **tab);
-int		ft_free_cmd(t_full_cmd *cmd);
-int		ft_free_ast(t_ast *ast);
-int		ft_free_data(t_data *data);
+void		ft_free_both_tab(char **tab1, char **tab2);
+void		ft_free_tab(char **tab);
+void		ft_free_cmd(t_full_cmd *cmd);
+//void		ft_free_ast(t_ast *ast);
+void		ft_free_data(t_data *data);
 
 /* operators */
 void	ft_skip_pipe(t_full_cmd **cmd, t_data *data, char ***operators);
@@ -72,7 +69,6 @@ int		ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag);
 int		ft_pipe(t_full_cmd **cmd, t_data *data, int count);
 
 /* redirections */
-void	ft_heredoc(char *delimiter);
 void	ft_redirect(t_redir_type *redirections, char **targets);
 void	ft_reset_redirect(t_redir_type *redirections, int saved_std_in, int saved_std_out);
 

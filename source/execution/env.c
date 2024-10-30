@@ -6,63 +6,11 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/11 13:51:38 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:32:12 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
-
-/* Reduces the memory allocation of env and remove a specific VAR */
-
-char	**ft_deallocenv(char **env, int size, char *name)
-{
-	char	**new_env;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	new_env = (char **)malloc((size - 1 + 1) * sizeof(char *));
-	if (!new_env)
-		return (NULL);
-	while (env[i])
-	{
-		if (!ft_find_var(env[i], name))
-		{
-			new_env[j] = ft_strdup(env[i]);
-			if (!new_env[j])
-				return (NULL);
-			j++;
-		}
-		i++;
-	}
-	new_env[i] = NULL;
-	ft_free_tab(env);
-	return (new_env);
-}
-
-/* Increses the memory allocation of env by one */
-
-char	**ft_reallocenv(char **env, int size)
-{
-	char	**new_env;
-	int		i;
-
-	i = 0;
-	new_env = (char **)malloc((size + 1 + 1) * sizeof(char *));
-	if (!new_env)
-		return (NULL);
-	while (env[i])
-	{
-		new_env[i] = ft_strdup(env[i]);
-		if (!new_env)
-			return (NULL);
-		i++;
-	}
-	new_env[i] = NULL;
-	ft_free_tab(env);
-	return (new_env);
-}
 
 /* Copies the original env to be able to manipulate it */
 
@@ -89,7 +37,7 @@ char	**ft_cpyenv(char **env)
 		}
 		i++;
 	}
-	new_env[i] = NULL;
+	new_env[i + j] = NULL;
 	return (new_env);
 }
 

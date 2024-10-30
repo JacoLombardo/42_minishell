@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:56:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/29 16:57:41 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:34:48 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_redirect(t_redir_type *redirections, char **targets)
 	i = 0;
 	from_fd = 0;
 	to_fd = -1;
-	while (redirections[i])
+	while (targets[i])
 	{
 		if (redirections[i] == R_IN || redirections[i] == R_HEREDOC)
 			ft_in_redirect(redirections[i], targets[i], &from_fd, &to_fd);
