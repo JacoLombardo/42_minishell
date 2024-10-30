@@ -43,6 +43,7 @@ void	ft_heredoc(char *delimiter, char **env, int flag)
 	while (1)
 	{
 		line = readline("heredoc> ");
+		/* todo: when delimiter is between quotes, the quotes shouldnt be needed to end heredoc */
 		if (!line || !ft_strcmp(line, delimiter))
 		{
 			free(line);

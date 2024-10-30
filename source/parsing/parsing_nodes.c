@@ -54,7 +54,7 @@ void	append_redirect(t_parser *parser, t_redirect *redir_list)
 	t_redirect	*redir;
 	int			exp_heredoc;
 
-	exp_heredoc = FALSE;
+	exp_heredoc = TRUE;
 	redir = malloc(sizeof(t_redirect));
 	redir->type = get_redirect_type(parser->curr_token->type);
 	redir->next = NULL;
@@ -63,7 +63,7 @@ void	append_redirect(t_parser *parser, t_redirect *redir_list)
 	if (redir->type == R_HEREDOC)
 	{
 		if (redir->target[0] == '\'' || redir->target[0] == '\"')
-			exp_heredoc = TRUE;
+			exp_heredoc = FALSE;
 		ft_heredoc(redir->target, parser->env, exp_heredoc);
 	}
 	find_last(redir_list)->next = redir;
