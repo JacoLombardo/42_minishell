@@ -166,7 +166,7 @@ t_data	ft_init(char **env)
 	return (data);
 }
 
-int	main2(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_data		data;
 	char		*line;

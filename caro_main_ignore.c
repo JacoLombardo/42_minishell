@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **env)
+int	main2(int argc, char **argv, char **env)
 {
 	//char	*line;
 	//t_full_cmd	*full_cmd;
@@ -16,10 +16,17 @@ int	main(int argc, char **argv, char **env)
 	// 	print_ttoken(token_list);
 	// 	token_list = token_list->next;
 	// }
-	//ft_heredoc("EOF", env, 1);
+	ft_heredoc("EOF", env, 0);
 
-	printf("%s\n", expand_vars("hola $USER", env));
-	printf("%s\n", expand_vars("hola $USER soy $FRIEND", env));
+	//line = expand_vars("hola $PEPITO", env);
+	//printf("%s\n", line);
+	//free(line);
+	//line = expand_vars("hola $USER soy $FRIEND", env);
+	//printf("%s\n", line);
+	//free(line);
+	//line = expand_vars("$PATH is the path", env);
+	//printf("%s\n", line);
+	//free(line);
 
 	//line = ft_strdup(argv[1]);
 	//full_cmd = parse(line, env);

@@ -31,7 +31,7 @@ static char	*get_var_name(int i, char *line)
 		var_name_len++;
 		i++;
 	}
-	temp = ft_strjoin(ft_substr(line, i - var_name_len, var_name_len), "=");
+	temp = ft_substr(line, i - var_name_len, var_name_len);
 	var_name = ft_strjoin(temp, "=");
 	free(temp);
 	return (var_name);
@@ -43,10 +43,10 @@ static char	*append_value(char *new_line, char *var_value, char *var_name)
 
 	temp = ft_strdup(new_line);
 	free(new_line);
-	new_line = ft_strjoin(temp, var_value + ft_strlen(var_name) + 1);
+	new_line = ft_strjoin(temp, var_value + ft_strlen(var_name));
 	free(temp);
 	free(var_name);
-	free(var_value);
+	//free(var_value);
 	return (new_line);
 }
 
@@ -69,7 +69,7 @@ static char	*expand_single_var(char *new_line, char *var_name, char *env[])
 	j = 0;
 	while (env[j])
 	{
-		var_value = ft_strnstr(env[j], var_name, ft_strlen(env[j]));
+		var_value = ft_better_strnstr(env[j], var_name, ft_strlen(env[j]));
 		if (var_value)
 		{
 			new_line = append_value(new_line, var_value, var_name);
@@ -94,10 +94,14 @@ char	*expand_vars(char *line, char *env[])
 		{
 			i++;
 			var_name = get_var_name(i, line);
+			i += (ft_strlen(var_name) - 1);
 			new_line = expand_single_var(new_line, var_name, env);
 		}
-		new_line = append_char(new_line, line[i]);
-		i++;
+		else {
+			new_line = append_char(new_line, line[i]);
+			i++;
+		}
 	}
+	new_line = append_char(new_line, '\0');
 	return (new_line);
 }

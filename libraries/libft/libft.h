@@ -45,6 +45,8 @@ size_t					ft_strlen(const char *s);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);
 char					*ft_strnstr(const char *big, const char *little,
 							size_t len);
+char					*ft_better_strnstr(const char *big, const char *little,
+							size_t len);
 char					*ft_strrchr(const char *s, int c);
 char					*ft_strtrim(char const *s1, char const *set);
 char					*ft_substr(char const *s, unsigned int start,

@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC = cc
-FLAGS = -Wall -Werror -Wextra -I -g
+FLAGS = -I -g #-Wall -Werror -Wextra
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
 RL_FLAGS = -L/path/to/readline-8.2/.libs -lreadline
 SRCS = minishell.c caro_main_ignore.c $(EXEC) $(PARSING) $(TOKEN) $(EXPAND) testing/testing_funcs.c
