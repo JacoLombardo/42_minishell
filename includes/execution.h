@@ -72,7 +72,7 @@ int		ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag);
 int		ft_pipe(t_full_cmd **cmd, t_data *data, int count);
 
 /* redirections */
-void	ft_heredoc(char *delimiter);
+void	ft_heredoc(char *delimiter, char **env, int flag);
 void	ft_redirect(t_redir_type *redirections, char **targets);
 void	ft_reset_redirect(t_redir_type *redirections, char **targets);
 

@@ -16,3 +16,12 @@ Aborted (core dumped)
 // exit
 free(): invalid pointer
 Aborted (core dumped)
+
+// what happens -what is supposed to happen- when not completing inside a quote like
+echo "hola
+
+real bash gives a prompt to complete it. what do we have to do?
+also this + heredoc
+
+
+Variable expansion is the default behavior inside of here-docs. You disable that behavior by quoting the label (with single or double quotes).

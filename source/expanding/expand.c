@@ -12,14 +12,14 @@
 
 #include "../../includes/parsing.h"
 
-int	is_bash_valid(char c)
+static int	is_bash_valid(char c)
 {
 	if (ft_isalnum(c) || c == '_')
 		return (TRUE);
 	return (FALSE);
 }
 
-char	*get_var_name(int i, char *line)
+static char	*get_var_name(int i, char *line)
 {
 	int		var_name_len;
 	char	*temp;
@@ -37,7 +37,7 @@ char	*get_var_name(int i, char *line)
 	return (var_name);
 }
 
-char	*append_value(char *new_line, char *var_value, char *var_name)
+static char	*append_value(char *new_line, char *var_value, char *var_name)
 {
 	char	*temp;
 
@@ -50,7 +50,7 @@ char	*append_value(char *new_line, char *var_value, char *var_name)
 	return (new_line);
 }
 
-char	*append_char(char *new_line, char c)
+static char	*append_char(char *new_line, char c)
 {
 	char	*temp;
 
@@ -61,7 +61,7 @@ char	*append_char(char *new_line, char c)
 	return (new_line);
 }
 
-char	*expand_single_var(char *new_line, char *var_name, char *env[])
+static char	*expand_single_var(char *new_line, char *var_name, char *env[])
 {
 	int		j;
 	char	*var_value;

@@ -25,6 +25,11 @@ t_token	*tokenize(char *line)
 	t_token	*dummy_first;
 	int		i;
 
+	if (what_quotes(line) != 0)
+	{
+		printf("invalid quote situation\n");
+		return (NULL);
+	}
 	token_list = malloc(sizeof(t_token));
 	token_list->next = NULL;
 	token_list->prev = NULL;

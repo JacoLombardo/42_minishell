@@ -12,11 +12,28 @@
 
 #include "../../includes/execution.h"
 
-void	ft_heredoc(char *delimiter)
+static void		write_heredoc(int fd, char *line, int flag, char **env)
+{
+	char	*temp;
+
+	if (flag)
+	{
+		temp = expand_vars(line, env);
+		ft_putstr_fd(temp, fd);
+		free(temp);
+	}
+	else
+		ft_putstr_fd(line, fd);
+	ft_putchar_fd('\n', fd);
+}
+
+void	ft_heredoc(char *delimiter, char **env, int flag)
 {
 	int		fd;
 	char	*line;
 
+	if (!env)
+		return ;
 	fd = open("/tmp/heredoc_temp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd < 0)
 	{
@@ -31,8 +48,7 @@ void	ft_heredoc(char *delimiter)
 			free(line);
 			break ;
 		}
-		ft_putstr_fd(line, fd);
-		ft_putchar_fd('\n', fd);
+		write_heredoc(fd, line, flag, env);
 		free(line);
 	}
 }

@@ -41,6 +41,7 @@ typedef struct s_token
 typedef struct s_parser
 {
 	int						err_num;
+	char					**env;
 	t_token					*curr_token;
 	t_node					*node;
 }							t_parser;
