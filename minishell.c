@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/31 16:46:30 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/31 19:55:10 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,28 +87,20 @@ int	ft_readline(t_data *data)
 	char		*prompt;
 	t_full_cmd	*cmd;
 
-	//printf("new\n");
-	//print_env(data);
 	prompt = ft_create_prompt(data);
-	//printf("prompt\n");
 	line = readline(prompt);
-	//printf("read\n");
 	if (!line)
 	{
 		free(prompt);
-		ft_free_data(data);
+		ft_free_data_temps(data);
 		return (1);
 	}
 	add_history(line);
 	data->history = history_list();
 	cmd = parse(line, data->env);
 	ft_check_operators3(cmd, data);
-	//printf("after\n");
 	ft_free_cmd(cmd);
-	//printf("cleaned\n");
 	free(prompt);
-	//print_env(data);
-	//printf("cleaned prompt\n");
 	return (0);
 }
 

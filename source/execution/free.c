@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:39:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/31 16:53:45 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/31 19:54:19 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ void	ft_free_cmd(t_full_cmd *cmd)
 	}
 }
 
-void	ft_free_data(t_data *data)
+void	ft_free_data_temps(t_data *data)
 {
 	ft_free_tab(data->env);
 	rl_clear_history();
-	// free(data->history);
-	// data->history = NULL;
+	unlink("/tmp/heredoc_temp");
+	unlink("/tmp/vars_temp");
 }
 
 // void	ft_free_ast(t_ast *ast)
