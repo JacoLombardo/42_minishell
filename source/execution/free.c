@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:39:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/30 16:53:26 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:53:45 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	ft_free_cmd(t_full_cmd *cmd)
 	{
 		if (cmd->next)
 			temp = cmd->next;
+		else
+			temp = NULL;
 		free(cmd->cmd);
 		ft_free_tab(cmd->args);
 		if (cmd->redirections)
@@ -59,8 +61,8 @@ void	ft_free_data(t_data *data)
 {
 	ft_free_tab(data->env);
 	rl_clear_history();
-	free(data->history);
-	data->history = NULL;
+	// free(data->history);
+	// data->history = NULL;
 }
 
 // void	ft_free_ast(t_ast *ast)

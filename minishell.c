@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/30 16:15:04 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:46:30 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,46 @@ t_data	ft_init(char **env)
 	return (data);
 }
 
-int	ft_readline(t_data data)
+void	print_env(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->env[i])
+	{
+		printf("%i: %s\n", i, data->env[i]);
+		i++;
+	}
+}
+
+int	ft_readline(t_data *data)
 {
 	char		*line;
 	char		*prompt;
 	t_full_cmd	*cmd;
 
-	prompt = ft_create_prompt(&data);
+	//printf("new\n");
+	//print_env(data);
+	prompt = ft_create_prompt(data);
+	//printf("prompt\n");
 	line = readline(prompt);
+	//printf("read\n");
 	if (!line)
 	{
 		free(prompt);
-		ft_free_data(&data);
+		ft_free_data(data);
 		return (1);
 	}
 	add_history(line);
-	data.history = history_list();
-	cmd = parse(line, data.env);
-	ft_check_operators2(cmd, &data);
+	data->history = history_list();
+	cmd = parse(line, data->env);
+	ft_check_operators3(cmd, data);
+	//printf("after\n");
 	ft_free_cmd(cmd);
+	//printf("cleaned\n");
 	free(prompt);
+	//print_env(data);
+	//printf("cleaned prompt\n");
 	return (0);
 }
 
@@ -102,7 +122,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		data = ft_init(env);
 		while (!status)
-			status = ft_readline(data);
+			status = ft_readline(&data);
 	}
 	else
 		printf("Too many args\n");

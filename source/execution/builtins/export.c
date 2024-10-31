@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:32 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/30 17:32:28 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:56:18 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	**ft_reallocenv(char **env, int size)
 		i++;
 	}
 	new_env[i] = NULL;
+	new_env[i + 1] = NULL;
 	ft_free_tab(env);
 	return (new_env);
 }
@@ -43,7 +44,6 @@ int	ft_export(t_full_cmd *cmd, t_data *data)
 	data->env = ft_reallocenv(data->env, len);
 	if (!data->env)
 		return (1);
-	data->env[len] = ft_strjoinjoin(cmd->args[0], "=", cmd->args[1]);
-	data->env[len + 1] = NULL;
+	data->env[len] = ft_strjoinjoin(cmd->args[1], "=", cmd->args[2]);
 	return (0);
 }
