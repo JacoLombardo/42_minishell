@@ -59,4 +59,7 @@ void			free_token_list(t_token *current);
 int				what_quotes(char const *string);
 int				is_operator_char(char c);
 
+/* CLEANUP */
+void			cleanup_nodes(t_node *top_node);
+
 #endif
