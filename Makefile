@@ -34,7 +34,8 @@ PARSING = source/parsing/parse.c \
 TOKEN = source/tokenizing/token_making.c \
 		source/tokenizing/token_utils.c \
 		source/tokenizing/tokenize.c
-EXPAND = source/expanding/expand.c
+EXPAND = source/expanding/expand.c \
+		source/expanding/expanding_utils.c
 HEADER = minishell.h
 NAME = minishell
 LIBFT_PATH = libraries/libft

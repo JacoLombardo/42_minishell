@@ -51,6 +51,9 @@ int				is_quote(char c);
 /* EXPANDING */
 int				what_quotes(char const *string);
 char			*expand_vars(char *line, char *env[]);
+int				is_bash_valid(char c);
+char			*append_value(char *new_line, char *var_value, char *var_name);
+char			*append_char(char *new_line, char c);
 
 /* UTILS */
 t_type			get_type(char *str);
