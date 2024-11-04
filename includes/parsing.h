@@ -54,6 +54,7 @@ char			*expand_vars(char *line, char *env[]);
 int				is_bash_valid(char c);
 char			*append_value(char *new_line, char *var_value, char *var_name);
 char			*append_char(char *new_line, char c);
+char			*ft_better_strnstr(const char *big, const char *little, size_t len);
 
 /* UTILS */
 t_type			get_type(char *str);

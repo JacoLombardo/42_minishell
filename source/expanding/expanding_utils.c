@@ -42,3 +42,21 @@ char	*append_char(char *new_line, char c)
 	free(temp);
 	return (new_line);
 }
+
+/* Like strnstr but only looks at the beginning of big string */
+char	*ft_better_strnstr(const char *big, const char *little, size_t len)
+{
+	size_t	i;
+
+	if (!big || !little)
+		return (NULL);
+	i = 0;
+	while (big[i] && big[i] == little[i] && i < len)
+	{
+		i++;
+	}
+	if (little[i] == '\0')
+		return ((char *)(big));
+	return (NULL);
+}
+
