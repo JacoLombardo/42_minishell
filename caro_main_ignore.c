@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-int	main2(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	//char	*line;
-	//t_full_cmd	*full_cmd;
+	char	*line;
+	t_full_cmd	*full_cmd;
 
 	if (!argc && !argv && !env)
 		return (1);
@@ -16,7 +16,7 @@ int	main2(int argc, char **argv, char **env)
 	// 	print_ttoken(token_list);
 	// 	token_list = token_list->next;
 	// }
-	ft_heredoc("EOF", env, 0);
+	//ft_heredoc("EOF", env, 0);
 
 	//line = expand_vars("hola $PEPITO", env);
 	//printf("%s\n", line);
@@ -28,7 +28,8 @@ int	main2(int argc, char **argv, char **env)
 	//printf("%s\n", line);
 	//free(line);
 
-	//line = ft_strdup(argv[1]);
-	//full_cmd = parse(line, env);
+	line = ft_strdup(argv[1]);
+	full_cmd = parse(line, env);
+	print_jacopo(full_cmd, 0);
 	return (0);
 }
