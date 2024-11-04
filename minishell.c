@@ -166,7 +166,7 @@ t_data	ft_init(char **env)
 	return (data);
 }
 
-int	main2(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_data		data;
 	char		*line;
@@ -200,6 +200,8 @@ int	main2(int argc, char **argv, char **env)
 			// printf("%s\n", line);
 		}
 	}
+	// after "cmd" is no longer used, call 
+	// cleanup_jacopo(cmd);
 	else
 		printf("Too many args\n");
 	return (0);

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **env)
+int	main2(int argc, char **argv, char **env)
 {
 	char	*line;
 	t_full_cmd	*full_cmd;

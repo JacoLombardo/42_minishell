@@ -28,6 +28,11 @@ also this + heredoc
 
 🫠 :~/minish  
 
+// when a command doesnt exist minishell exits 
+// after heredoc it also exits
+
+todo HEREDOC: when <<"EOF" exit condition should be EOF not "EOF"
+
 done:
 
 Variable expansion is the default behavior inside of here-docs. You disable that behavior by quoting the label (with single or double quotes).
