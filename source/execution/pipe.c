@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/16 14:12:02 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:08:20 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 	status = 0;
 	pipex.pid = fork();
 	if (pipex.pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
+		ft_error("fork", EXIT_FAILURE);
 	if (!pipex.pid)
 		ft_child(cmd, data, pipex, flag);
 	else
@@ -81,10 +78,7 @@ int	ft_pipe2(t_full_cmd **cmd, t_data *data, int count)
 		if (i < count - 1)
 		{
 			if (pipe(pipex.pipe_fd) == -1)
-			{
-				perror("pipe");
-				exit(EXIT_FAILURE);
-			}
+				ft_error("pipe", EXIT_FAILURE);
 			status = ft_fork(*cmd, data, pipex, 1);
 			*cmd = (*cmd)->next;
 		}
@@ -110,10 +104,7 @@ int	ft_pipe(t_full_cmd **cmd, t_data *data, int count)
 		if (i < count - 1)
 		{
 			if (pipe(pipex.pipe_fd) == -1)
-			{
-				perror("pipe");
-				exit(EXIT_FAILURE);
-			}
+				ft_error("pipe", EXIT_FAILURE);
 			status = ft_fork(*cmd, data, pipex, 1);
 		}
 		else
