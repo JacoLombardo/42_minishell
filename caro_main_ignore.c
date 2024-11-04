@@ -31,5 +31,6 @@ int	main(int argc, char **argv, char **env)
 	line = ft_strdup(argv[1]);
 	full_cmd = parse(line, env);
 	print_jacopo(full_cmd, 0);
+	cleanup_jacopo(full_cmd);
 	return (0);
 }
