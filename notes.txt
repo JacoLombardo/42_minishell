@@ -11,11 +11,23 @@ calamardo
 free(): invalid pointer
 Aborted (core dumped)
 
-// cd .. breaks the path. you can go up but then not into anything
+// cd .. breaks the path. you can go up but then not into anything.
+still happens as of nov 4 in this branch (caro cleanup)
+🫠 :~/minish  ls
+caro_main_ignore.c  includes  libraries  Makefile  minishell  minishell.c  minishell.h  notes.txt  source  testing
+🫠 :~/minish  cd includes/
+🫠 :~/  ls
+execution.h  parsing.h  structs.h  types.h
+🫠 :~/  cd ..
+🫠 :~/..  ls
+caro_main_ignore.c  includes  libraries  Makefile  minishell  minishell.c  minishell.h  notes.txt  source  testing
 
 // exit
 free(): invalid pointer
 Aborted (core dumped)
+
+// exit
+Segmentation fault
 
 // what happens -what is supposed to happen- when not completing inside a quote like
 echo "hola
@@ -24,4 +36,9 @@ real bash gives a prompt to complete it. what do we have to do?
 also this + heredoc
 
 
+
+done:
+
 Variable expansion is the default behavior inside of here-docs. You disable that behavior by quoting the label (with single or double quotes).
+
+
