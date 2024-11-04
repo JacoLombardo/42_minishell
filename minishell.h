@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/17 10:21:13 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:25:27 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,8 @@ extern  int g_program;
 /* TESTING */
 void	print_node(t_node *node);
 void	print_jacopo(t_full_cmd *jacopo, int index);
+
+t_ast   *ft_set(void);
+void	ft_check(t_full_cmd *cmd);
 
 #endif

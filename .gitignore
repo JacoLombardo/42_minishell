@@ -5,5 +5,4 @@ minishell
 
 old_*
 *.swp
-
-.txt
+*.txt
