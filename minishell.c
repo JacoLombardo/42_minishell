@@ -116,6 +116,8 @@ int	main(int argc, char **argv, char **env)
 		while (!status)
 			status = ft_readline(&data);
 	}
+	// after "cmd" is no longer used, call 
+	// cleanup_jacopo(cmd);
 	else
 		printf("Too many args\n");
 	return (0);

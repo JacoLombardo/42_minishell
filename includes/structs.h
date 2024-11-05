@@ -24,7 +24,6 @@ typedef struct s_node
 	union
 	{
 		struct s_pair		*pair;
-		struct s_full_cmd	*full_cmd;
 		struct s_simple_cmd	*simp_cmd;
 		struct s_redirect	*redirect;
 	};
@@ -41,6 +40,7 @@ typedef struct s_token
 typedef struct s_parser
 {
 	int						err_num;
+	char					**env;
 	t_token					*curr_token;
 	t_node					*node;
 }							t_parser;

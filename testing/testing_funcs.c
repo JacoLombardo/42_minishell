@@ -84,7 +84,7 @@ void	print_jacopo(t_full_cmd *jacopo, int index)
 	printf("\n");
 	printf("jacopo's targets: ");
 	i = 0;
-	while (jacopo->targets[i])
+	while (jacopo->targets && jacopo->targets[i])
 	{
 		printf("%s, ", jacopo->targets[i]);
 		i++;
@@ -92,7 +92,7 @@ void	print_jacopo(t_full_cmd *jacopo, int index)
 	printf("\n");
 	printf("jacopo's redirection types: ");
 	j = i;
-	while (i > 0)
+	while (i > 0 && jacopo->redirections[j - i])
 	{
 		printf("%s, ", types[jacopo->redirections[j - i]]);
 		i--;
