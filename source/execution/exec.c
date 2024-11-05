@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/17 14:39:12 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:55:08 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ char	*ft_get_path(char *cmd, char **env)
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
 		{
-			ft_free_tab(s_cmd);
+			ft_free_both_tab(allpath, s_cmd);
 			return (exec);
 		}
 		free(exec);
 		i++;
 	}
-	ft_free_tab(allpath);
-	ft_free_tab(s_cmd);
+	ft_free_both_tab(allpath, s_cmd);
 	return (cmd);
 }
 
@@ -54,44 +53,69 @@ int	ft_external(t_full_cmd *cmd, t_data *data)
 		exit(-1);
 	if (!pid)
 	{
+		if (cmd->redirections)
+			ft_redirect(cmd->redirections, cmd->targets);
 		if (execve(path, cmd->args, data->env) == -1)
-		{
-			perror(cmd->cmd);
-			exit(1);
-		}
+			ft_error(cmd->cmd, 1);
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
+		free(path);
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 	}
 	return (status);
 }
 
-int	ft_exec(t_full_cmd *cmd, t_data *data)
+int	ft_builtins(t_full_cmd *cmd, t_data *data)
 {
+	int	status;
+	int	saved_stdin;
+	int	saved_stdout;
+
+	status = 0;
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
 	if (cmd->redirections)
 		ft_redirect(cmd->redirections, cmd->targets);
 	if (!ft_strcmp(cmd->cmd, "echo"))
-		data->last_exit = ft_echo(cmd, data);
+		status = ft_echo(cmd, data);
 	else if (!ft_strcmp(cmd->cmd, "cd"))
-		data->last_exit = ft_cd(cmd, data);
+		status = ft_cd(cmd, data);
 	else if (!ft_strcmp(cmd->cmd, "pwd"))
-		data->last_exit = ft_pwd(cmd, data);
+		status = ft_pwd(cmd, data);
 	else if (!ft_strcmp(cmd->cmd, "export"))
-		data->last_exit = ft_export(cmd, data);
+		status = ft_export(cmd, data);
 	else if (!ft_strcmp(cmd->cmd, "unset"))
-		data->last_exit = ft_unset(cmd, data);
+		status = ft_unset(cmd, data);
 	else if (!ft_strcmp(cmd->cmd, "env"))
-		data->last_exit = ft_env(cmd, data);
+		status = ft_env(cmd, data);
 	else if (!ft_strcmp(cmd->cmd, "exit"))
-		ft_exit(0, data);
+		ft_exit(cmd, data);
+	if (cmd->redirections)
+		ft_reset_redirect(cmd->redirections, saved_stdin, saved_stdout);
+	return (status);
+}
+
+int	ft_exec(t_full_cmd *cmd, t_data *data)
+{
+	if (cmd->built_in == TRUE)
+		data->last_exit = ft_builtins(cmd, data);
 	else
 		data->last_exit = ft_external(cmd, data);
-	if (cmd->redirections)
-		ft_reset_redirect(cmd->redirections, cmd->targets);
 	return (data->last_exit);
+}
+
+int	ft_check_operators3(t_full_cmd *cmd, t_data *data)
+{
+	int	status;
+
+	if (!cmd->operator)
+		status = ft_exec(cmd, data);
+	else
+		status = ft_handle_pipe2(&cmd, data);
+	return (status);
 }
 
 int	ft_check_operators2(t_full_cmd *cmd, t_data *data)
@@ -108,7 +132,7 @@ int	ft_check_operators2(t_full_cmd *cmd, t_data *data)
 			if (!ft_strcmp(cmd->operator, "&&"))
 				status = ft_logical_and2(&cmd, data, status);
 			else if (!ft_strcmp(cmd->operator, "||"))
-				ft_logical_or2(&cmd, data, status);
+				status = ft_logical_or2(&cmd, data, status);
 		}
 	}
 	return (status);

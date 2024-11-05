@@ -6,11 +6,17 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/14 10:39:32 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:05:33 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
+
+void	ft_error(char *error, int status)
+{
+	perror(error);
+	exit(status);
+}
 
 int	ft_tablen(char **tab)
 {

@@ -15,8 +15,13 @@ FLAGS = -I -g #-Wall -Werror -Wextra
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
 RL_FLAGS = -L/path/to/readline-8.2/.libs -lreadline
 SRCS = minishell.c caro_main_ignore.c $(EXEC) $(PARSING) $(TOKEN) $(EXPAND) testing/testing_funcs.c
-EXEC = source/execution/builtins.c \
-		source/execution/builtins2.c \
+EXEC = source/execution/builtins/cd.c \
+		source/execution/builtins/echo.c \
+		source/execution/builtins/env.c \
+		source/execution/builtins/exit.c \
+		source/execution/builtins/export.c \
+		source/execution/builtins/pwd.c \
+		source/execution/builtins/unset.c \
 		source/execution/env.c \
 		source/execution/exec.c \
 		source/execution/free.c \
