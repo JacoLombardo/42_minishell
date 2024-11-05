@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 19:32:52 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/17 10:27:04 by jalombar         ###   ########.fr       */
+/*   Created: 2024/10/14 19:32:52 by csilva-r          #+#    #+#             */
+/*   Updated: 2024/10/24 17:32:36 by csilva-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ t_token	*tokenize(char *line)
 	t_token	*dummy_first;
 	int		i;
 
+	if (what_quotes(line) != 0)
+	{
+		printf("invalid quote situation\n");
+		return (NULL);
+	}
 	token_list = malloc(sizeof(t_token));
 	token_list->next = NULL;
 	token_list->prev = NULL;

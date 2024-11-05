@@ -52,12 +52,20 @@ t_node	*make_redirect(t_redirect *redir_list)
 void	append_redirect(t_parser *parser, t_redirect *redir_list)
 {
 	t_redirect	*redir;
+	int			exp_heredoc;
 
+	exp_heredoc = TRUE;
 	redir = malloc(sizeof(t_redirect));
 	redir->type = get_redirect_type(parser->curr_token->type);
 	redir->next = NULL;
 	expect(parser, T_THING);
 	redir->target = ft_strdup(parser->curr_token->value);
+	if (redir->type == R_HEREDOC)
+	{
+		if (redir->target[0] == '\'' || redir->target[0] == '\"')
+			exp_heredoc = FALSE;
+		ft_heredoc(redir->target, parser->env, exp_heredoc);
+	}
 	find_last(redir_list)->next = redir;
 	advance(parser);
 }
