@@ -6,3 +6,5 @@ minishell
 old_*
 *.swp
 *.txt
+
+/minishell_tester
