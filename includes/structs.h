@@ -17,6 +17,14 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+/* DATA */
+typedef struct s_data
+{
+	char					**env;
+	HIST_ENTRY				**history;
+	int						last_exit;
+}							t_data;
+
 /* PARSING */
 typedef struct s_node
 {
@@ -40,7 +48,7 @@ typedef struct s_token
 typedef struct s_parser
 {
 	int						err_num;
-	char					**env;
+	t_data					*data;
 	t_token					*curr_token;
 	t_node					*node;
 }							t_parser;

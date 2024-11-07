@@ -4,6 +4,8 @@
 *.a
 
 minishell
+minishell_tester/*
+minishell_tester
 
 old_*
 *.swp

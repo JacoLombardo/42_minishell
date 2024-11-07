@@ -55,7 +55,7 @@ int		ft_pipe(t_full_cmd **cmd, t_data *data, int count);
 int		ft_handle_pipe(t_full_cmd **cmd, t_data *data);
 
 /* redirections */
-void	ft_heredoc(char *delimiter, char **env, int flag);
+void	ft_heredoc(char *delimiter, t_data *data, int flag);
 void	ft_redirect(t_redir_type *redirections, char **targets);
 void	ft_reset_redirect(t_redir_type *redirections, int saved_std_in,
 			int saved_std_out);

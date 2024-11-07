@@ -18,7 +18,7 @@
 # include "types.h"
 
 /* PARSING */
-t_full_cmd		*parse(char *line, char *env[]);
+t_full_cmd		*parse(char *line, t_data *data);
 t_node			*make_pipeline(t_parser *parser);
 t_node			*make_full_command(t_parser *parser);
 t_node			*make_redirect(t_redirect *redir_list);
@@ -50,7 +50,7 @@ int				is_quote(char c);
 
 /* EXPANDING */
 int				what_quotes(char const *string);
-char			*expand_vars(char *line, char *env[]);
+char			*expand_vars(char *line, t_data *data);
 int				is_bash_valid(char c);
 char			*append_value(char *new_line, char *var_value, char *var_name);
 char			*append_char(char *new_line, char c);

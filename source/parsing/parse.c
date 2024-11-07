@@ -12,7 +12,7 @@
 
 #include "../../includes/parsing.h"
 
-static t_parser	*parser_init(t_token *token_list, char **env)
+static t_parser	*parser_init(t_token *token_list, t_data *data)
 {
 	t_parser	*parser;
 
@@ -20,11 +20,11 @@ static t_parser	*parser_init(t_token *token_list, char **env)
 	parser->err_num = 0;
 	parser->curr_token = token_list;
 	parser->node = NULL;
-	parser->env = env;
+	parser->data = data;
 	return (parser);
 }
 
-t_full_cmd	*parse(char *line, char *env[])
+t_full_cmd	*parse(char *line, t_data *data)
 {
 	t_parser	*parser;
 	t_node		*top_node;
@@ -32,11 +32,11 @@ t_full_cmd	*parse(char *line, char *env[])
 	char		*expanded;
 	t_token		*token_list;
 
-	expanded = expand_vars(line, env);
+	expanded = expand_vars(line, data);
 	token_list = tokenize(expanded);
 	free(line);
 	free(expanded);
-	parser = parser_init(token_list, env);
+	parser = parser_init(token_list, data);
 	top_node = make_pipeline(parser);
 	jacopo = jacopize(top_node);
 	free_token_list(find_first(token_list));
