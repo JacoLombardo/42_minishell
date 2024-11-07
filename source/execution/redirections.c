@@ -6,13 +6,13 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:56:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/30 16:34:48 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:51:52 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-static void		write_heredoc(int fd, char *line, int flag, t_data *data)
+static void	ft_write_heredoc(int fd, char *line, int flag, char **env)
 {
 	char	*temp;
 
@@ -40,13 +40,14 @@ void	ft_heredoc(char *delimiter, t_data *data, int flag)
 	while (1)
 	{
 		line = readline("heredoc> ");
-		/* todo: when delimiter is between quotes, the quotes shouldnt be needed to end heredoc */
+		/* todo: when delimiter is between quotes,
+			the quotes shouldnt be needed to end heredoc */
 		if (!line || !ft_strcmp(line, delimiter))
 		{
 			free(line);
 			break ;
 		}
-		write_heredoc(fd, line, flag, data);
+		ft_write_heredoc(fd, line, flag, env);
 		free(line);
 	}
 }
@@ -104,7 +105,8 @@ void	ft_redirect(t_redir_type *redirections, char **targets)
 	}
 }
 
-void	ft_reset_redirect(t_redir_type *redirections, int saved_std_in, int saved_std_out)
+void	ft_reset_redirect(t_redir_type *redirections, int saved_std_in,
+		int saved_std_out)
 {
 	int	i;
 
@@ -114,12 +116,12 @@ void	ft_reset_redirect(t_redir_type *redirections, int saved_std_in, int saved_s
 		if (redirections[i] == R_IN || redirections[i] == R_HEREDOC)
 		{
 			dup2(saved_std_in, STDIN_FILENO);
-    		close(saved_std_in);
+			close(saved_std_in);
 		}
 		else if (redirections[i] == R_OUT || redirections[i] == R_APPEND)
 		{
 			dup2(saved_std_out, STDOUT_FILENO);
-    		close(saved_std_out);
+			close(saved_std_out);
 		}
 		i++;
 	}

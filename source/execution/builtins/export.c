@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:32 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/31 19:54:46 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:49:24 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_var_to_temp(char *var)
 {
-	int		fd;
+	int	fd;
 
 	fd = open("/tmp/vars_temp", O_CREAT | O_WRONLY | O_APPEND, 0777);
 	ft_putstr_fd(var, fd);
@@ -34,7 +34,7 @@ char	*ft_temp_to_env(char *var)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break;
+			break ;
 		if (ft_find_var(line, var))
 			content = ft_strndup(line, (ft_strlen(line) - 1));
 		free(line);
@@ -69,7 +69,7 @@ char	**ft_reallocenv(char **env, int size)
 
 int	ft_export(t_full_cmd *cmd, t_data *data)
 {
-	int	len;
+	int		len;
 	char	*var;
 
 	len = ft_tablen(data->env);

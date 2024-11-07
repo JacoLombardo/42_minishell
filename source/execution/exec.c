@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/31 16:55:08 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:27:08 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,11 @@ int	ft_external(t_full_cmd *cmd, t_data *data)
 	return (status);
 }
 
-int	ft_builtins(t_full_cmd *cmd, t_data *data)
+int	ft_builtins(t_full_cmd *cmd, t_data *data, int status)
 {
-	int	status;
 	int	saved_stdin;
 	int	saved_stdout;
 
-	status = 0;
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	if (cmd->redirections)
@@ -100,64 +98,25 @@ int	ft_builtins(t_full_cmd *cmd, t_data *data)
 
 int	ft_exec(t_full_cmd *cmd, t_data *data)
 {
+	int	status;
+
+	status = 0;
 	if (cmd->built_in == TRUE)
-		data->last_exit = ft_builtins(cmd, data);
+		status = ft_builtins(cmd, data, status);
 	else
-		data->last_exit = ft_external(cmd, data);
-	return (data->last_exit);
-}
-
-int	ft_check_operators3(t_full_cmd *cmd, t_data *data)
-{
-	int	status;
-
-	if (!cmd->operator)
-		status = ft_exec(cmd, data);
-	else
-		status = ft_handle_pipe2(&cmd, data);
+		status = ft_external(cmd, data);
 	return (status);
 }
 
-int	ft_check_operators2(t_full_cmd *cmd, t_data *data)
+int	ft_if_pipes(t_full_cmd *cmd, t_data *data)
 {
 	int	status;
 
+	status = 0;
 	if (!cmd->operator)
 		status = ft_exec(cmd, data);
 	else
-	{
-		status = ft_handle_pipe2(&cmd, data);
-		while (cmd)
-		{
-			if (!ft_strcmp(cmd->operator, "&&"))
-				status = ft_logical_and2(&cmd, data, status);
-			else if (!ft_strcmp(cmd->operator, "||"))
-				status = ft_logical_or2(&cmd, data, status);
-		}
-	}
-	return (status);
-}
-
-int	ft_check_operators(t_ast *ast, t_data *data)
-{
-	int			status;
-	t_full_cmd	*cmd;
-	char		**operators;
-
-	cmd = *ast->cmds;
-	operators = ast->operators;
-	if (!operators)
-		status = ft_exec(*ast->cmds, data);
-	else
-	{
-		status = ft_handle_pipe(&cmd, data, &operators);
-		while (*operators && cmd)
-		{
-			if (!ft_strcmp(*operators, "&&"))
-				status = ft_logical_and(&cmd, data, &operators, status);
-			else if (!ft_strcmp(*operators, "||"))
-				ft_logical_or(&cmd, data, &operators, status);
-		}
-	}
+		status = ft_handle_pipe(&cmd, data);
+	data->last_exit = status;
 	return (status);
 }

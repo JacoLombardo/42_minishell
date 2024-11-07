@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_cleanup.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csilva-r <csilva-r@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:18:24 by csilva-r          #+#    #+#             */
-/*   Updated: 2024/11/04 18:18:28 by csilva-r         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:54:28 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ void	cleanup_string_array(char **array)
 
 void	cleanup_jacopo(t_full_cmd *jacopo)
 {
-	int	i;
-
 	if (!jacopo)
 		return ;
 	if (jacopo->cmd)
