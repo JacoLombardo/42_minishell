@@ -54,6 +54,7 @@ t_data	ft_init(char **env)
 
 	data.env = ft_cpyenv(env);
 	data.history = NULL;
+	data.last_exit = 0;
 	//ast.cmds = NULL;
 	//ast.operators = NULL;
 	//data.ast = &ast;
