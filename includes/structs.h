@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:47:39 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/30 15:43:30 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:56:17 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,6 @@ typedef struct s_pipe
 	int						pipe_fd[2];
 }							t_pipe;
 
-typedef struct s_ast
-{
-	struct s_full_cmd		**cmds;
-	char					**operators;
-}							t_ast;
-
 typedef struct s_full_cmd
 {
 	int						built_in;
@@ -100,7 +94,6 @@ typedef struct s_data
 	char					**env;
 	HIST_ENTRY				**history;
 	int						last_exit;
-	//struct s_ast			*ast;
 }							t_data;
 
 #endif

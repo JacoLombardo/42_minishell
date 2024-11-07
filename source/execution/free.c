@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:39:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/31 19:54:19 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:55:55 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_free_tab(char **tab)
 
 void	ft_free_cmd(t_full_cmd *cmd)
 {
-	t_full_cmd *temp;
+	t_full_cmd	*temp;
 
 	temp = NULL;
 	while (cmd)
@@ -64,20 +64,3 @@ void	ft_free_data_temps(t_data *data)
 	unlink("/tmp/heredoc_temp");
 	unlink("/tmp/vars_temp");
 }
-
-// void	ft_free_ast(t_ast *ast)
-// {
-// 	t_full_cmd	*cmds;
-// 	t_full_cmd	*temp;
-
-// 	cmds = *ast->cmds;
-// 	while (cmds->next)
-// 	{
-// 		temp = cmds;
-// 		cmds = cmds->next;
-// 		ft_free_cmd(temp);
-// 	}
-// 	free(ast->cmds);
-// 	ft_free_tab(ast->operators);
-// 	free(ast);
-// }
