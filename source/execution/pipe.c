@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/22 12:08:20 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:27:26 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 	return (status);
 }
 
-int	ft_pipe2(t_full_cmd **cmd, t_data *data, int count)
+int	ft_pipe(t_full_cmd **cmd, t_data *data, int count)
 {
 	int		i;
 	t_pipe	pipex;
@@ -89,28 +89,24 @@ int	ft_pipe2(t_full_cmd **cmd, t_data *data, int count)
 	return (WEXITSTATUS(status));
 }
 
-int	ft_pipe(t_full_cmd **cmd, t_data *data, int count)
+int	ft_handle_pipe(t_full_cmd **cmd, t_data *data)
 {
-	int		i;
-	t_pipe	pipex;
-	int		status;
-	int		prev_fd;
+	int			cmd_count;
+	int			status;
+	t_full_cmd	*temp;
 
-	prev_fd = -1;
-	pipex.prev_fd = &prev_fd;
-	i = 0;
-	while (i < count)
+	cmd_count = 1;
+	temp = *cmd;
+	if (temp->operator && !ft_strcmp(temp->operator, "|"))
 	{
-		if (i < count - 1)
+		while (temp->operator && !ft_strcmp(temp->operator, "|"))
 		{
-			if (pipe(pipex.pipe_fd) == -1)
-				ft_error("pipe", EXIT_FAILURE);
-			status = ft_fork(*cmd, data, pipex, 1);
+			temp = temp->next;
+			cmd_count++;
 		}
-		else
-			status = ft_fork(*cmd, data, pipex, 0);
-		i++;
-		*cmd = (*cmd)->next;
+		status = ft_pipe(cmd, data, cmd_count);
 	}
-	return (WEXITSTATUS(status));
+	else
+		status = ft_exec(*cmd, data);
+	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:28:13 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/30 17:28:45 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:01:34 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,25 @@
 int	ft_echo(t_full_cmd *cmd, t_data *data)
 {
 	int		i;
-	char	*line;
-	char	*temp;
+	int	n_flag;
 
 	(void)data;
-	if (!ft_strcmp(cmd->args[1], "-n"))
+	n_flag = 0;
+	if (cmd->args[1] && !ft_strcmp(cmd->args[1], "-n"))
+	{
+		n_flag = 1;
 		i = 2;
+	}
 	else
 		i = 1;
-	line = ft_strdup(cmd->args[i++]);
 	while (cmd->args[i])
 	{
-		temp = line;
-		line = ft_strjoin(temp, cmd->args[i]);
-		if (!line)
-			return (1);
-		free(temp);
+		printf("%s", cmd->args[i]);
 		i++;
+		if (cmd->args[i])
+			printf(" ");
 	}
-	if (!ft_strcmp(cmd->args[1], "-n"))
-		printf("%s", line);
-	else
-		printf("%s\n", line);
-	free(line);
+	if (!n_flag)
+		printf("\n");
 	return (0);
 }

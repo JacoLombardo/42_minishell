@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:50:02 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/21 13:58:54 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:56:41 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 # define TYPES_H
 
 # include "structs.h"
-
-typedef enum e_op_type
-{
-	R_PIPE,
-	R_AND,
-	R_OR,
-}	t_op_type;
 
 typedef enum e_redir_type
 {

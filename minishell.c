@@ -6,13 +6,11 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/31 19:55:10 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:35:07 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		g_program;
 
 char	*ft_pwd_name(t_data *data)
 {
@@ -34,7 +32,7 @@ char	*ft_create_prompt(t_data *data)
 	int		i;
 	int		len;
 	char	*cwd;
-	char		*prompt;
+	char	*prompt;
 
 	i = 0;
 	cwd = ft_getenv("PWD", data->env);
@@ -50,35 +48,11 @@ char	*ft_create_prompt(t_data *data)
 t_data	ft_init(char **env)
 {
 	t_data	data;
-	//t_ast	ast;
 
 	data.env = ft_cpyenv(env);
 	data.history = NULL;
-	//ast.cmds = NULL;
-	//ast.operators = NULL;
-	//data.ast = &ast;
 	ft_sig_init();
-
-	// int	i;
-	// i = 0;
-	// while (data.env[i])
-	// {
-	// 	printf("%i: %s\n", i, data.env[i]);
-	// 	i++;
-	// }
 	return (data);
-}
-
-void	print_env(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (data->env[i])
-	{
-		printf("%i: %s\n", i, data->env[i]);
-		i++;
-	}
 }
 
 int	ft_readline(t_data *data)
@@ -95,65 +69,34 @@ int	ft_readline(t_data *data)
 		ft_free_data_temps(data);
 		return (1);
 	}
-	add_history(line);
-	data->history = history_list();
-	cmd = parse(line, data->env);
-	ft_check_operators3(cmd, data);
-	ft_free_cmd(cmd);
+	if (ft_strlen(line))
+	{
+		add_history(line);
+		data->history = history_list();
+		cmd = parse(line, data->env);
+		ft_if_pipes(cmd, data);
+		ft_free_cmd(cmd);
+	}
+	else
+		free(line);
 	free(prompt);
 	return (0);
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data		data;
-	int			status;
+	t_data	data;
+	int		status;
 
 	(void)argv;
+	status = 0;
 	if (argc == 1)
 	{
 		data = ft_init(env);
 		while (!status)
 			status = ft_readline(&data);
 	}
-	// after "cmd" is no longer used, call 
-	// cleanup_jacopo(cmd);
 	else
 		printf("Too many args\n");
 	return (0);
 }
-
-// int	main(int argc, char **argv, char **env)
-// {
-// 	t_data		data;
-// 	char		*line;
-// 	char		*prompt;
-// 	t_full_cmd	*cmd;
-
-// 	(void)argv;
-// 	if (argc == 1)
-// 	{
-// 		data = ft_init(env);
-// 		while (!g_program)
-// 		{
-// 			prompt = ft_strjoinjoin("🫠 \033[1;36m:~", ft_pwd_name(&data),
-// 					"  \033[0m");
-// 			line = readline(prompt);
-// 			if (!line)
-// 			{
-// 				free(prompt);
-// 				// ft_free_data(&data);
-// 				break ;
-// 			}
-// 			add_history(line);
-// 			data.history = history_list();
-// 			cmd = parse(line, data.env);
-// 			ft_check_operators2(cmd, &data);
-// 			free(prompt);
-// 			// printf("%s\n", line);
-// 		}
-// 	}
-// 	else
-// 		printf("Too many args\n");
-// 	return (0);
-// }
