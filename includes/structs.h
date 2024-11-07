@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:47:39 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/06 15:56:17 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/07 18:29:17 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,5 @@ typedef struct s_full_cmd
 	char					*operator;
 	struct s_full_cmd		*next;
 }							t_full_cmd;
-
-typedef struct s_data
-{
-	char					**env;
-	HIST_ENTRY				**history;
-	int						last_exit;
-}							t_data;
 
 #endif

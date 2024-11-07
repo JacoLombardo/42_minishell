@@ -6,13 +6,13 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:56:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/06 15:51:52 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/07 18:31:09 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-static void	ft_write_heredoc(int fd, char *line, int flag, char **env)
+static void	ft_write_heredoc(int fd, char *line, int flag, t_data *data)
 {
 	char	*temp;
 
@@ -47,7 +47,7 @@ void	ft_heredoc(char *delimiter, t_data *data, int flag)
 			free(line);
 			break ;
 		}
-		ft_write_heredoc(fd, line, flag, env);
+		ft_write_heredoc(fd, line, flag, data);
 		free(line);
 	}
 }
