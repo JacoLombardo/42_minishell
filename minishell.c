@@ -51,6 +51,7 @@ t_data	ft_init(char **env)
 
 	data.env = ft_cpyenv(env);
 	data.history = NULL;
+	data.last_exit = 0;
 	ft_sig_init();
 	return (data);
 }
@@ -73,7 +74,7 @@ int	ft_readline(t_data *data)
 	{
 		add_history(line);
 		data->history = history_list();
-		cmd = parse(line, data->env);
+		cmd = parse(line, data);
 		ft_if_pipes(cmd, data);
 		ft_free_cmd(cmd);
 	}

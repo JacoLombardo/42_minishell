@@ -19,12 +19,17 @@ static char	*get_var_name(int i, char *line)
 	char	*var_name;
 
 	var_name_len = 0;
-	while (is_bash_valid(line[i]))
+	if (line[i] == '?')
+		temp = ft_strdup("?");
+	else
 	{
-		var_name_len++;
-		i++;
+		while (is_bash_valid(line[i]))
+		{
+			var_name_len++;
+			i++;
+		}
+		temp = ft_substr(line, i - var_name_len, var_name_len);
 	}
-	temp = ft_substr(line, i - var_name_len, var_name_len);
 	var_name = ft_strjoin(temp, "=");
 	free(temp);
 	return (var_name);
@@ -49,7 +54,21 @@ static char	*expand_single_var(char *new_line, char *var_name, char *env[])
 	return (new_line);
 }
 
-char	*expand_vars(char *line, char *env[])
+static char	*expand_last_exit(char *new_line, int last_exit)
+{
+	char	*temp;
+	char	*exit_str;
+
+	temp = ft_strdup(new_line);
+	free(new_line);
+	exit_str = ft_itoa(last_exit);
+	new_line = ft_strjoin(temp, exit_str);
+	free(temp);
+	free(exit_str);
+	return (new_line);
+}
+
+char	*expand_vars(char *line, t_data *data)
 {
 	int		i;
 	char	*var_name;
@@ -64,9 +83,13 @@ char	*expand_vars(char *line, char *env[])
 			i++;
 			var_name = get_var_name(i, line);
 			i += (ft_strlen(var_name) - 1);
-			new_line = expand_single_var(new_line, var_name, env);
+			if (!ft_strncmp(var_name, "?", 1))
+				new_line = expand_last_exit(new_line, data->last_exit);
+			else
+				new_line = expand_single_var(new_line, var_name, data->env);
 		}
-		else {
+		else
+		{
 			new_line = append_char(new_line, line[i]);
 			i++;
 		}

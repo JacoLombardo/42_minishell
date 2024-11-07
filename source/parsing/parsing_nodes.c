@@ -64,7 +64,7 @@ void	append_redirect(t_parser *parser, t_redirect *redir_list)
 	{
 		if (redir->target[0] == '\'' || redir->target[0] == '\"')
 			exp_heredoc = FALSE;
-		ft_heredoc(redir->target, parser->env, exp_heredoc);
+		ft_heredoc(redir->target, parser->data, exp_heredoc);
 	}
 	find_last(redir_list)->next = redir;
 	advance(parser);
