@@ -12,13 +12,13 @@
 
 #include "../../includes/execution.h"
 
-static void		write_heredoc(int fd, char *line, int flag, char **env)
+static void		write_heredoc(int fd, char *line, int flag, t_data *data)
 {
 	char	*temp;
 
 	if (flag)
 	{
-		temp = expand_vars(line, env);
+		temp = expand_vars(line, data);
 		ft_putstr_fd(temp, fd);
 		free(temp);
 	}
@@ -27,12 +27,12 @@ static void		write_heredoc(int fd, char *line, int flag, char **env)
 	ft_putchar_fd('\n', fd);
 }
 
-void	ft_heredoc(char *delimiter, char **env, int flag)
+void	ft_heredoc(char *delimiter, t_data *data, int flag)
 {
 	int		fd;
 	char	*line;
 
-	if (!env)
+	if (!data || !data->env)
 		return ;
 	fd = open("/tmp/heredoc_temp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd < 0)
@@ -46,7 +46,7 @@ void	ft_heredoc(char *delimiter, char **env, int flag)
 			free(line);
 			break ;
 		}
-		write_heredoc(fd, line, flag, env);
+		write_heredoc(fd, line, flag, data);
 		free(line);
 	}
 }

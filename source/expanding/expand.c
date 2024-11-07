@@ -49,7 +49,7 @@ static char	*expand_single_var(char *new_line, char *var_name, char *env[])
 	return (new_line);
 }
 
-char	*expand_vars(char *line, char *env[])
+char	*expand_vars(char *line, t_data *data)
 {
 	int		i;
 	char	*var_name;
@@ -64,7 +64,7 @@ char	*expand_vars(char *line, char *env[])
 			i++;
 			var_name = get_var_name(i, line);
 			i += (ft_strlen(var_name) - 1);
-			new_line = expand_single_var(new_line, var_name, env);
+			new_line = expand_single_var(new_line, var_name, data->env);
 		}
 		else {
 			new_line = append_char(new_line, line[i]);

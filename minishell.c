@@ -97,7 +97,7 @@ int	ft_readline(t_data *data)
 	}
 	add_history(line);
 	data->history = history_list();
-	cmd = parse(line, data->env);
+	cmd = parse(line, data);
 	ft_check_operators3(cmd, data);
 	ft_free_cmd(cmd);
 	free(prompt);
