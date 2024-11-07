@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/06 17:11:20 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:35:07 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,16 @@ int	ft_readline(t_data *data)
 		ft_free_data_temps(data);
 		return (1);
 	}
-	add_history(line);
-	data->history = history_list();
-	cmd = parse(line, data->env);
-	ft_if_pipes(cmd, data);
-	ft_free_cmd(cmd);
+	if (ft_strlen(line))
+	{
+		add_history(line);
+		data->history = history_list();
+		cmd = parse(line, data->env);
+		ft_if_pipes(cmd, data);
+		ft_free_cmd(cmd);
+	}
+	else
+		free(line);
 	free(prompt);
 	return (0);
 }
@@ -90,8 +95,6 @@ int	main(int argc, char **argv, char **env)
 		data = ft_init(env);
 		while (!status)
 			status = ft_readline(&data);
-		// after "cmd" is no longer used, call
-		// cleanup_jacopo(cmd);
 	}
 	else
 		printf("Too many args\n");
