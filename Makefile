@@ -28,7 +28,8 @@ EXEC = source/execution/builtins/cd.c \
 		source/execution/pipe.c \
 		source/execution/redirections.c \
 		source/execution/signals.c \
-		source/execution/utils.c
+		source/execution/utils.c \
+		source/execution/var.c
 PARSING = source/parsing/parse.c \
 			source/parsing/parsing_nodes.c \
 			source/parsing/parsing_utils.c \

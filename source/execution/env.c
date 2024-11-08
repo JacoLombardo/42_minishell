@@ -6,36 +6,13 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/08 15:29:18 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/08 15:57:08 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-/* Checks if this specific env is the var looked for, and return its value if so */
-
-int	ft_find_var(char *env, char *name)
-{
-	int		j;
-	char	*sub;
-
-	j = 0;
-	while (env[j] && env[j] != '=')
-		j++;
-	sub = ft_substr(env, 0, j);
-	if (!ft_strcmp(sub, name))
-	{
-		free(sub);
-		return (j + 1);
-	}
-	else
-	{
-		free(sub);
-		return (0);
-	}
-}
-
-/* Finds a VAR in the env and returns its value */
+/* Finds a VAR in ENV and returns its value */
 
 char	*ft_getenv(char *name, char **env)
 {
@@ -53,21 +30,17 @@ char	*ft_getenv(char *name, char **env)
 	return (NULL);
 }
 
-/* Adds a new VAR to the env */
+/* Adds a new VAR to ENV */
 
 char	*ft_setenv(char *name, char *value, char **env)
 {
 	int		i;
-	int		j;
 	char	*sub;
 
 	i = 0;
 	while (env[i])
 	{
-		j = 0;
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		sub = ft_substr(env[i], 0, j);
+		sub = ft_get_var_name(env[i]);
 		if (ft_strcmp(sub, name) == 0)
 		{
 			free(sub);
@@ -81,19 +54,15 @@ char	*ft_setenv(char *name, char *value, char **env)
 	return (NULL);
 }
 
-/* Checks if the variable is already inside env, and it changes its value if so */
+/* Checks if a VAR is already inside ENV, and it changes its value if so */
 
 int	ft_change_env(char *var, t_data *data)
 {
 	int		i;
-	int		j;
 	char	*sub;
 
 	i = 0;
-	j = 0;
-	while (var[j] && var[j] != '=')
-		j++;
-	sub = ft_substr(var, 0, j);
+	sub = ft_get_var_name(var);
 	while (data->env[i])
 	{
 		if(ft_find_var(data->env[i], sub))
@@ -112,7 +81,7 @@ int	ft_change_env(char *var, t_data *data)
 	return (0);
 }
 
-/* Copies the original env to be able to manipulate it */
+/* Copies the original ENV to be able to manipulate it */
 
 char	**ft_cpyenv(char **env)
 {

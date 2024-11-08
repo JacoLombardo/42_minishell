@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:32 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/08 15:29:09 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:56:26 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@ void	ft_var_to_temp(char *var)
 	ft_putstr_fd(var, fd);
 	ft_putchar_fd('\n', fd);
 	close(fd);
+}
+
+int	ft_you_decide(char *input)
+{
+	if (ft_strrchr(input, '=') && ft_check_var_valid(input))
+	{
+		ft_var_to_temp(input);
+		return (1);
+		/* You close here the call */
+	}
+	else
+		return (0);
+	/* You handle it as any cmd, which will result in a "command not found" */
 }
 
 char	*ft_temp_to_env(char *var)
@@ -98,13 +111,25 @@ int ft_handle_export(char *arg, t_data *data)
 int	ft_export(t_full_cmd *cmd, t_data *data)
 {
 	int		i;
+	int status;
 
 	i = 1;
+	status = 0;
 	while (cmd->args[i])
 	{
-		if (ft_handle_export(cmd->args[i], data))
-			return (1);
+		if (ft_check_var_valid(cmd->args[i]))
+		{
+			status = 1;
+			write(2, "export: '", 9);
+			write(2, cmd->args[i], ft_strlen(cmd->args[i]));
+			write(2, "': not valid identifier\n", 24);
+		}
+		else
+		{
+			if (ft_handle_export(cmd->args[i], data))
+				return (1);
+		}
 		i++;
 	}
-	return (0);
+	return (status);
 }
