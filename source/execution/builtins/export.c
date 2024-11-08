@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:32 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/08 16:56:26 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/08 17:42:12 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	ft_export(t_full_cmd *cmd, t_data *data)
 			status = 1;
 			write(2, "export: '", 9);
 			write(2, cmd->args[i], ft_strlen(cmd->args[i]));
-			write(2, "': not valid identifier\n", 24);
+			write(2, "': not a valid identifier\n", 26);
 		}
 		else
 		{
