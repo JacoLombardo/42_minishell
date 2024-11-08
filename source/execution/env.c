@@ -6,42 +6,36 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/30 17:32:12 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/08 15:29:18 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-/* Copies the original env to be able to manipulate it */
+/* Checks if this specific env is the var looked for, and return its value if so */
 
-char	**ft_cpyenv(char **env)
+int	ft_find_var(char *env, char *name)
 {
-	char	**new_env;
-	int		i;
 	int		j;
+	char	*sub;
 
-	i = 0;
 	j = 0;
-	new_env = (char **)malloc((ft_tablen(env) + 2) * sizeof(char *));
-	if (!new_env)
-		return (NULL);
-	while (env[i])
+	while (env[j] && env[j] != '=')
+		j++;
+	sub = ft_substr(env, 0, j);
+	if (!ft_strcmp(sub, name))
 	{
-		new_env[i + j] = ft_strdup(env[i]);
-		if (!new_env)
-			return (NULL);
-		if (!ft_strncmp(env[i], "PWD", 3))
-		{
-			j++;
-			new_env[i + j] = ft_strjoin("OLD_", env[i]);
-		}
-		i++;
+		free(sub);
+		return (j + 1);
 	}
-	new_env[i + j] = NULL;
-	return (new_env);
+	else
+	{
+		free(sub);
+		return (0);
+	}
 }
 
-/* Finds a VAR in the env and returns its content */
+/* Finds a VAR in the env and returns its value */
 
 char	*ft_getenv(char *name, char **env)
 {
@@ -85,4 +79,64 @@ char	*ft_setenv(char *name, char *value, char **env)
 		i++;
 	}
 	return (NULL);
+}
+
+/* Checks if the variable is already inside env, and it changes its value if so */
+
+int	ft_change_env(char *var, t_data *data)
+{
+	int		i;
+	int		j;
+	char	*sub;
+
+	i = 0;
+	j = 0;
+	while (var[j] && var[j] != '=')
+		j++;
+	sub = ft_substr(var, 0, j);
+	while (data->env[i])
+	{
+		if(ft_find_var(data->env[i], sub))
+		{
+			free(sub);
+			if (ft_strrchr(var, '='))
+			{
+				free(data->env[i]);
+				data->env[i] = ft_strdup(var);
+			}
+			return (1);
+		}
+		i++;
+	}
+	free(sub);
+	return (0);
+}
+
+/* Copies the original env to be able to manipulate it */
+
+char	**ft_cpyenv(char **env)
+{
+	char	**new_env;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	new_env = (char **)malloc((ft_tablen(env) + 2) * sizeof(char *));
+	if (!new_env)
+		return (NULL);
+	while (env[i])
+	{
+		new_env[i + j] = ft_strdup(env[i]);
+		if (!new_env)
+			return (NULL);
+		if (!ft_strncmp(env[i], "PWD", 3))
+		{
+			j++;
+			new_env[i + j] = ft_strjoin("OLD_", env[i]);
+		}
+		i++;
+	}
+	new_env[i + j] = NULL;
+	return (new_env);
 }

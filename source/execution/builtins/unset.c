@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:30 by jalombar          #+#    #+#             */
-/*   Updated: 2024/10/31 16:49:33 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/08 15:27:19 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,33 @@ char	**ft_deallocenv(char **env, int size, char *name)
 	return (new_env);
 }
 
-int	ft_unset(t_full_cmd *cmd, t_data *data)
+int	ft_handle_unset(char *arg, t_data *data)
 {
 	int	len;
 
-	len = ft_tablen(data->env);
-	data->env = ft_deallocenv(data->env, len, cmd->args[1]);
-	if (!data->env)
-		return (1);
+	if (ft_getenv(arg, data->env))
+	{
+		len = ft_tablen(data->env);
+		data->env = ft_deallocenv(data->env, len, arg);
+		if (!data->env)
+			return (1);
+		else
+			return (0);
+	}
 	else
 		return (0);
+}
+
+int	ft_unset(t_full_cmd *cmd, t_data *data)
+{
+	int		i;
+
+	i = 1;
+	while (cmd->args[i])
+	{
+		if (ft_handle_unset(cmd->args[i], data))
+			return (1);
+		i++;
+	}
+	return (0);
 }
