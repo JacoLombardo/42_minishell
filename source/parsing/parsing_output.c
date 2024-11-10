@@ -12,9 +12,23 @@
 
 #include "../../includes/parsing.h"
 
+char	*trim_quote(char *str)
+{
+	char	*trimmed;
+
+	if (!str)
+		return (NULL);
+	if (what_quotes(str + 1))
+		trimmed = ft_substr(str, 1, ft_strlen(str) - 2);
+	else
+		trimmed = ft_strdup(str);
+	return (trimmed);
+}
+
 char	**args_to_array(t_arg *arg_list)
 {
 	char	**result;
+	char	*trimmed;
 	int		arg_count;
 	t_arg	*first;
 
@@ -30,7 +44,9 @@ char	**args_to_array(t_arg *arg_list)
 	while (first->next)
 	{
 		first = first->next;
-		result[arg_count] = ft_strdup(first->value);
+		trimmed = trim_quote(first->value);
+		result[arg_count] = ft_strdup(trimmed);
+		free(trimmed);
 		arg_count++;
 	}
 	result[arg_count] = NULL;

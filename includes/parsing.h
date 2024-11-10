@@ -44,8 +44,8 @@ t_token			*new_token(char *value, t_type type);
 void			append_token(t_token *token_list, char *value, t_type type);
 int				operator_token(t_token *token_list, char *line_pos);
 int				value_token(t_token *token_list, char *line_pos);
-
-void			print_ttoken(t_token *token);
+char			*trim_quote(char *str);
+//void			print_ttoken(t_token *token); this was for testing
 int				is_quote(char c);
 
 /* EXPANDING */

@@ -31,18 +31,18 @@ void	ft_heredoc(char *delimiter, t_data *data, int flag)
 {
 	int		fd;
 	char	*line;
+	char	*trimmed;
 
 	if (!data || !data->env)
 		return ;
 	fd = open("/tmp/heredoc_temp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd < 0)
 		ft_error("open", 1);
+	trimmed = trim_quote(delimiter);
 	while (1)
 	{
 		line = readline("heredoc> ");
-		/* todo: when delimiter is between quotes,
-			the quotes shouldnt be needed to end heredoc */
-		if (!line || !ft_strcmp(line, delimiter))
+		if (!line || !ft_strcmp(line, trimmed))
 		{
 			free(line);
 			break ;
@@ -50,6 +50,7 @@ void	ft_heredoc(char *delimiter, t_data *data, int flag)
 		ft_write_heredoc(fd, line, flag, data);
 		free(line);
 	}
+	free(trimmed);
 }
 
 void	ft_in_redirect(t_redir_type redirection, char *target, int *from_fd,
