@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/06 16:27:33 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:39:53 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ int		ft_pwd(t_full_cmd *cmd, t_data *data);
 int		ft_unset(t_full_cmd *cmd, t_data *data);
 
 /* env */
-char	**ft_cpyenv(char **env);
 char	*ft_getenv(char *name, char **env);
 char	*ft_setenv(char *name, char *value, char **env);
+int		ft_change_env(char *var, t_data *data);
+char	**ft_cpyenv(char **env);
 
 /* exec */
 char	*ft_get_path(char *cmd, char **env);
@@ -67,6 +68,10 @@ void	ft_sig_init(void);
 /* utils */
 void	ft_error(char *error, int status);
 int		ft_tablen(char **tab);
+
+/* var */
+int		ft_check_var_valid(char *var);
+char	*ft_get_var_name(char *var);
 int		ft_find_var(char *env, char *name);
 
 #endif
