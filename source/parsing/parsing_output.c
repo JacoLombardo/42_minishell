@@ -15,7 +15,6 @@
 char	**args_to_array(t_arg *arg_list)
 {
 	char	**result;
-	char	*trimmed;
 	int		arg_count;
 	t_arg	*first;
 
@@ -31,9 +30,7 @@ char	**args_to_array(t_arg *arg_list)
 	while (first->next)
 	{
 		first = first->next;
-		trimmed = super_trimmer(first->value);
-		result[arg_count] = ft_strdup(trimmed);
-		free(trimmed);
+		result[arg_count] = super_trimmer(first->value);
 		arg_count++;
 	}
 	result[arg_count] = NULL;
