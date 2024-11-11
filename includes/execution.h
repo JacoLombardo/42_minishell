@@ -20,6 +20,8 @@
 # include <readline/readline.h>
 # include <signal.h>
 
+t_data	ft_init(char **env);
+
 /* builtins */
 int		ft_cd(t_full_cmd *cmd, t_data *data);
 int		ft_echo(t_full_cmd *cmd, t_data *data);
