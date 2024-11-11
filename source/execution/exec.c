@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/06 16:27:08 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:45:37 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,21 @@ char	*ft_get_path(char *cmd, char **env)
 	return (cmd);
 }
 
-int	ft_external(t_full_cmd *cmd, t_data *data)
+int	ft_external(t_full_cmd *cmd, t_data *data, int status)
 {
 	char	*path;
 	pid_t	pid;
-	int		status;
 
 	path = ft_get_path(cmd->cmd, data->env);
 	pid = fork();
-	status = 0;
 	if (pid == -1)
 		exit(-1);
 	if (!pid)
 	{
 		if (cmd->redirections)
-			ft_redirect(cmd->redirections, cmd->targets);
+			status = ft_redirect(cmd->redirections, cmd->targets);
+		if (status == 1)
+			exit(status);
 		if (execve(path, cmd->args, data->env) == -1)
 			ft_error(cmd->cmd, 1);
 	}
@@ -76,7 +76,12 @@ int	ft_builtins(t_full_cmd *cmd, t_data *data, int status)
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	if (cmd->redirections)
-		ft_redirect(cmd->redirections, cmd->targets);
+		status = ft_redirect(cmd->redirections, cmd->targets);
+	if (status == 1)
+	{
+		ft_reset_redirect(saved_stdin, saved_stdout);
+		return (status);
+	}
 	if (!ft_strcmp(cmd->cmd, "echo"))
 		status = ft_echo(cmd, data);
 	else if (!ft_strcmp(cmd->cmd, "cd"))
@@ -92,7 +97,7 @@ int	ft_builtins(t_full_cmd *cmd, t_data *data, int status)
 	else if (!ft_strcmp(cmd->cmd, "exit"))
 		ft_exit(cmd, data);
 	if (cmd->redirections)
-		ft_reset_redirect(cmd->redirections, saved_stdin, saved_stdout);
+	 	ft_reset_redirect(saved_stdin, saved_stdout);
 	return (status);
 }
 
@@ -104,7 +109,7 @@ int	ft_exec(t_full_cmd *cmd, t_data *data)
 	if (cmd->built_in == TRUE)
 		status = ft_builtins(cmd, data, status);
 	else
-		status = ft_external(cmd, data);
+		status = ft_external(cmd, data, status);
 	return (status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/06 16:27:26 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:31:50 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ft_pipe(t_full_cmd **cmd, t_data *data, int count)
 			status = ft_fork(*cmd, data, pipex, 0);
 		i++;
 	}
-	return (WEXITSTATUS(status));
+	return (status);
 }
 
 int	ft_handle_pipe(t_full_cmd **cmd, t_data *data)
