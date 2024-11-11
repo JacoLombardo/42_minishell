@@ -46,28 +46,6 @@ t_type	get_type(char *str)
 	return (T_THING);
 }
 
-int	what_quotes(char const *string)
-{
-	int	i;
-	int	quote_type;
-
-	i = 0;
-	quote_type = 0;
-	while (string[i])
-	{
-		if (string[i] == '\"' && quote_type == 0)
-			quote_type = 1;
-		else if (string[i] == '\"' && quote_type == 1)
-			quote_type = 0;
-		else if (string[i] == '\'' && quote_type == 0)
-			quote_type = 2;
-		else if (string[i] == '\'' && quote_type == 2)
-			quote_type = 0;
-		i++;
-	}
-	return (quote_type);
-}
-
 t_token	*find_first(t_token *token_list)
 {
 	while (token_list->prev != NULL)
