@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/11 13:17:36 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:20:02 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # include <signal.h>
 
 t_data	ft_init(char **env);
+
+/* bin */
+char	*ft_get_path(char *cmd, char **env);
+int		ft_bin(t_full_cmd *cmd, t_data *data, int status);
 
 /* builtins */
 int		ft_cd(t_full_cmd *cmd, t_data *data);
@@ -37,9 +41,11 @@ char	*ft_setenv(char *name, char *value, char **env);
 int		ft_change_env(char *var, t_data *data);
 char	**ft_cpyenv(char **env);
 
+/* error */
+int		ft_file_error(char *path, int error);
+void	ft_error(char *error, int status);
+
 /* exec */
-char	*ft_get_path(char *cmd, char **env);
-int		ft_external(t_full_cmd *cmd, t_data *data, int status);
 int		ft_builtins(t_full_cmd *cmd, t_data *data, int status);
 int		ft_exec(t_full_cmd *cmd, t_data *data);
 int		ft_if_pipes(t_full_cmd *cmd, t_data *data);
@@ -59,18 +65,14 @@ int		ft_handle_pipe(t_full_cmd **cmd, t_data *data);
 
 /* redirections */
 void	ft_heredoc(char *delimiter, t_data *data, int flag);
-int	ft_redirect(t_redir_type *redirections, char **targets);
-//void	ft_redirect(t_redir_type *redirections, char **targets);
+int		ft_redirect(t_redir_type *redirections, char **targets);
 void	ft_reset_redirect(int saved_stdin, int saved_stdout);
-//void	ft_reset_redirect(t_redir_type *redirections, int saved_std_in,
-//			int saved_std_out);
 
 /* signals */
 void	ft_handle_sigint(int signal);
 void	ft_sig_init(void);
 
 /* utils */
-void	ft_error(char *error, int status);
 int		ft_tablen(char **tab);
 
 /* var */
