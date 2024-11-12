@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/08 17:46:45 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/11 11:12:18 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ int	ft_cd(t_full_cmd *cmd, t_data *data)
 	char	*path;
 
 	cwd = ft_getenv("PWD", data->env);
-	if (!ft_strcmp(cmd->args[1], "."))
-		return (0);
-	else if (ft_tablen(cmd->args) > 2)
+	if (ft_tablen(cmd->args) > 2)
 	{
 		write(2, "cd: too many arguments\n", 23);
 		return (1);
 	}
+	else if (!ft_strcmp(cmd->args[1], ".") || !ft_strcmp(cmd->args[1], cwd))
+		return (0);
 	path = ft_move(cwd, cmd->args[1]);
 	if (chdir(path))
 	{
@@ -87,7 +87,7 @@ int	ft_cd(t_full_cmd *cmd, t_data *data)
 	}
 	else
 	{
-		ft_setenv("OLD_PWD", cwd, data->env);
+		//ft_setenv("OLD_PWD", cwd, data->env);
 		ft_setenv("PWD", path, data->env);
 		free(path);
 		return (0);

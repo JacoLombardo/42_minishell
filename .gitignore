@@ -5,11 +5,14 @@ test.c
 *.a
 
 minishell
+/minishell_tester
 minishell_tester/*
 minishell_tester
+
+invalid_permission
 
 old_*
 *.swp
 *.txt
 
-/minishell_tester
+

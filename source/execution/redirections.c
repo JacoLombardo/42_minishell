@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:56:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/07 18:31:09 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:40:26 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	ft_out_redirect(t_redir_type redirection, char *target, int *from_fd,
 	}
 }
 
-void	ft_redirect(t_redir_type *redirections, char **targets)
+int	ft_redirect(t_redir_type *redirections, char **targets)
 {
 	int	i;
 	int	from_fd;
@@ -98,15 +98,52 @@ void	ft_redirect(t_redir_type *redirections, char **targets)
 			ft_in_redirect(redirections[i], targets[i], &from_fd, &to_fd);
 		else if (redirections[i] == R_OUT || redirections[i] == R_APPEND)
 			ft_out_redirect(redirections[i], targets[i], &from_fd, &to_fd);
-		if (to_fd == -1)
+		if (to_fd < 0)
+		{
+			perror(targets[i]);
+			return (1);
+		}
+		dup2(to_fd, from_fd);
+		close(to_fd);
+		i++;
+	}
+	return (0);
+}
+
+void	ft_redirect1(t_redir_type *redirections, char **targets)
+{
+	int	i;
+	int	from_fd;
+	int	to_fd;
+
+	i = 0;
+	from_fd = 0;
+	to_fd = -1;
+	while (targets[i])
+	{
+		if (redirections[i] == R_IN || redirections[i] == R_HEREDOC)
+			ft_in_redirect(redirections[i], targets[i], &from_fd, &to_fd);
+		else if (redirections[i] == R_OUT || redirections[i] == R_APPEND)
+			ft_out_redirect(redirections[i], targets[i], &from_fd, &to_fd);
+		if (to_fd < 0)
+		{
 			ft_error(targets[i], 1);
+		}
 		dup2(to_fd, from_fd);
 		close(to_fd);
 		i++;
 	}
 }
 
-void	ft_reset_redirect(t_redir_type *redirections, int saved_std_in,
+void	ft_reset_redirect(int saved_stdin, int saved_stdout)
+{
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
+}
+
+void	ft_reset_redirect1(t_redir_type *redirections, int saved_std_in,
 		int saved_std_out)
 {
 	int	i;
@@ -115,15 +152,11 @@ void	ft_reset_redirect(t_redir_type *redirections, int saved_std_in,
 	while (redirections[i])
 	{
 		if (redirections[i] == R_IN || redirections[i] == R_HEREDOC)
-		{
 			dup2(saved_std_in, STDIN_FILENO);
-			close(saved_std_in);
-		}
 		else if (redirections[i] == R_OUT || redirections[i] == R_APPEND)
-		{
 			dup2(saved_std_out, STDOUT_FILENO);
-			close(saved_std_out);
-		}
 		i++;
 	}
+	close(saved_std_in);
+	close(saved_std_out);
 }

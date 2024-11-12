@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/08 15:57:08 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/11 11:02:32 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,26 @@ int	ft_change_env(char *var, t_data *data)
 /* Copies the original ENV to be able to manipulate it */
 
 char	**ft_cpyenv(char **env)
+{
+	char	**new_env;
+	int		i;
+
+	i = 0;
+	new_env = (char **)malloc((ft_tablen(env) + 1) * sizeof(char *));
+	if (!new_env)
+		return (NULL);
+	while (env[i])
+	{
+		new_env[i] = ft_strdup(env[i]);
+		if (!new_env)
+			return (NULL);
+		i++;
+	}
+	new_env[i] = NULL;
+	return (new_env);
+}
+
+char	**ft_cpyenv2(char **env)
 {
 	char	**new_env;
 	int		i;
