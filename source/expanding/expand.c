@@ -40,6 +40,11 @@ static char	*expand_single_var(char *new_line, char *var_name, char *env[])
 	int		j;
 	char	*var_value;
 
+	if (!ft_strncmp(var_name, "=", 1))
+	{
+		new_line = append_char(new_line, '$');
+		return (new_line);
+	}
 	j = 0;
 	while (env[j])
 	{
@@ -87,6 +92,7 @@ char	*expand_vars(char *line, t_data *data)
 				new_line = expand_last_exit(new_line, data->last_exit);
 			else
 				new_line = expand_single_var(new_line, var_name, data->env);
+			free(var_name);
 		}
 		else
 		{

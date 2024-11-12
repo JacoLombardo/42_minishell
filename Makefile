@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC = cc
-FLAGS = -I -g -Wall -Werror -Wextra
+FLAGS = -I -g #-Wall -Werror -Wextra
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
 RL_FLAGS = -L/path/to/readline-8.2/.libs -lreadline
 SRCS = minishell.c $(EXEC) $(PARSING) $(TOKEN) $(EXPAND) testing/testing_funcs.c
@@ -38,6 +38,7 @@ PARSING = source/parsing/parse.c \
 			source/parsing/parsing_cleanup.c
 TOKEN = source/tokenizing/token_making.c \
 		source/tokenizing/token_utils.c \
+		source/tokenizing/token_quote_handling.c \
 		source/tokenizing/tokenize.c
 EXPAND = source/expanding/expand.c \
 		source/expanding/expanding_utils.c
