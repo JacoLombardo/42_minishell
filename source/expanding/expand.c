@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csilva-r <csilva-r@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:31:21 by csilva-r          #+#    #+#             */
-/*   Updated: 2024/10/24 17:31:26 by csilva-r         ###   ########.fr       */
+/*   Updated: 2024/11/12 11:58:50 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*expand_vars(char *line, t_data *data)
 				new_line = expand_last_exit(new_line, data->last_exit);
 			else
 				new_line = expand_single_var(new_line, var_name, data->env);
-			free(var_name);
+			//free(var_name);
 		}
 		else
 		{

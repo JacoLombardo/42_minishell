@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:39:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/06 15:55:55 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:09:48 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,15 @@ void	ft_free_cmd(t_full_cmd *cmd)
 
 void	ft_free_data_temps(t_data *data)
 {
+	char	*vars_temp;
+	char	*heredoc_temp;
+	
+	vars_temp = ft_charjoin("/tmp/vars_temp", data->shell_id + '0');
+	heredoc_temp = ft_charjoin("/tmp/heredoc_temp", data->shell_id + '0');
 	ft_free_tab(data->env);
 	rl_clear_history();
-	unlink("/tmp/heredoc_temp");
-	unlink("/tmp/vars_temp");
+	unlink(vars_temp);
+	unlink(heredoc_temp);
+	free(vars_temp);
+	free(heredoc_temp);
 }

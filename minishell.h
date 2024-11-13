@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/06 17:11:26 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:16:17 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <dirent.h>
+
+# include <sys/stat.h>
 
 # define FALSE 0
 # define TRUE 1

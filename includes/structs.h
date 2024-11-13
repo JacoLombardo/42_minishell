@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:47:39 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/07 18:29:17 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:35:34 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 /* DATA */
 typedef struct s_data
 {
+	int						shell_id;
 	char					**env;
 	HIST_ENTRY				**history;
 	int						last_exit;
@@ -79,6 +80,12 @@ typedef struct s_redirect
 }							t_redirect;
 
 /* EXECUTION */
+typedef struct s_dup2
+{
+	int						to_fd;
+	int						from_fd;
+}							t_dup2;
+
 typedef struct s_pipe
 {
 	int						*prev_fd;
