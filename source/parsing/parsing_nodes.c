@@ -12,7 +12,7 @@
 
 #include "../../includes/parsing.h"
 
-t_node	*make_simple_command(t_parser *parser)
+t_node	*make_simple_command(t_parser *parser, t_redirect *redir_list)
 {
 	t_simple_cmd	*simple;
 	t_node			*node;
@@ -24,15 +24,20 @@ t_node	*make_simple_command(t_parser *parser)
 	simple->arg = malloc(sizeof(t_arg));
 	simple->arg->next = NULL;
 	simple->arg->value = NULL;
-	while (accept(parser, T_THING))
+	while (accept(parser, T_THING) || accept(parser, T_APPEND) || accept(parser, T_HEREDOC) || accept(parser, T_IN) || accept(parser, T_OUT))
 	{
-		curr = simple->arg;
-		while (curr->next)
-			curr = curr->next;
-		new = malloc(sizeof(t_arg));
-		new->value = ft_strdup(parser->curr_token->value);
-		new->next = NULL;
-		curr->next = new;
+		if (peek(parser) >= T_APPEND)
+			append_redirect(parser, redir_list);
+		else
+		{
+			curr = simple->arg;
+			while (curr->next)
+				curr = curr->next;
+			new = malloc(sizeof(t_arg));
+			new->value = ft_strdup(parser->curr_token->value);
+			new->next = NULL;
+			curr->next = new;
+		}
 	}
 	node = create_node(SIMPLE_CMD);
 	node->simp_cmd = simple;
@@ -67,7 +72,7 @@ void	append_redirect(t_parser *parser, t_redirect *redir_list)
 		ft_heredoc(redir->target, parser->data, exp_heredoc);
 	}
 	find_last(redir_list)->next = redir;
-	advance(parser);
+	//advance(parser);
 }
 
 t_node	*make_full_command(t_parser *parser)
@@ -84,11 +89,14 @@ t_node	*make_full_command(t_parser *parser)
 	redir_list->target = NULL;
 	redir_list->next = NULL;
 	while (peek(parser) >= T_APPEND)
+	{
 		append_redirect(parser, redir_list);
+		advance(parser);
+	}
 	if (peek(parser) == T_THING)
-		node->pair->left = make_simple_command(parser);
-	while (peek(parser) >= T_APPEND)
-		append_redirect(parser, redir_list);
+		node->pair->left = make_simple_command(parser, redir_list);
+	//while (peek(parser) >= T_APPEND)
+	//	append_redirect(parser, redir_list);
 	node->pair->right = make_redirect(redir_list);
 	return (node);
 }
