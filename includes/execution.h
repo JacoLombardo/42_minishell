@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/12 15:20:02 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:04:30 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ int		ft_cd(t_full_cmd *cmd, t_data *data);
 int		ft_echo(t_full_cmd *cmd, t_data *data);
 int		ft_env(t_full_cmd *cmd, t_data *data);
 void	ft_exit(t_full_cmd *cmd, t_data *data);
+int     ft_handle_export(char *arg, t_data *data);
 int		ft_export(t_full_cmd *cmd, t_data *data);
 int		ft_pwd(t_full_cmd *cmd, t_data *data);
+int 	ft_handle_unset(char *arg, t_data *data);
 int		ft_unset(t_full_cmd *cmd, t_data *data);
 
 /* env */
@@ -71,6 +73,9 @@ void	ft_reset_redirect(int saved_stdin, int saved_stdout);
 /* signals */
 void	ft_handle_sigint(int signal);
 void	ft_sig_init(void);
+
+/* subshell */
+int    ft_subshell(t_full_cmd *cmd, t_data *data, int status);
 
 /* utils */
 int		ft_tablen(char **tab);

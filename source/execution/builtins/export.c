@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:32 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/08 17:42:12 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/13 09:25:57 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,18 @@ char	**ft_reallocenv(char **env, int size)
 	return (new_env);
 }
 
+void	ft_print_export(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->env[i])
+	{
+		printf("declare -x %s\n", data->env[i]);
+		i++;
+	}
+}
+
 int ft_handle_export(char *arg, t_data *data)
 {
 	int		len;
@@ -131,5 +143,7 @@ int	ft_export(t_full_cmd *cmd, t_data *data)
 		}
 		i++;
 	}
+	if (ft_tablen(cmd->args) == 1)
+		ft_print_export(data);
 	return (status);
 }

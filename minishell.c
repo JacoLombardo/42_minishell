@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/12 15:27:29 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:16:23 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,17 @@ t_data	ft_init(char **env)
 	t_data	data;
 
 	data.env = ft_cpyenv(env);
+	if (ft_getenv("SHELL_ID", data.env))
+	{
+		data.shell_id = ft_atoi(ft_getenv("SHELL_ID", data.env));
+		ft_handle_unset("SHELL_ID", &data);
+	}
+	else
+		data.shell_id = 0;
 	data.history = NULL;
 	data.last_exit = 0;
 	ft_sig_init();
+	printf("SHELL ID: %i\n", data.shell_id);
 	return (data);
 }
 
@@ -99,6 +107,9 @@ int	main(int argc, char **argv, char **env)
 			status = ft_readline(&data);
 	}
 	else
-		printf("Too many args\n");
+	{
+		ft_putstr_fd("Minishell: Too many arguments\n", 2);
+		return (1);
+	}
 	return (0);
 }
