@@ -6,26 +6,11 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/13 16:16:23 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:14:04 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_pwd_name(t_data *data)
-{
-	int		i;
-	int		len;
-	char	*cwd;
-
-	i = 0;
-	cwd = ft_getenv("PWD", data->env);
-	len = ft_strlen(cwd);
-	while (cwd[len - i] != '/')
-		i++;
-	cwd = ft_strdup(cwd + (len - i));
-	return (cwd);
-}
 
 char	*ft_create_prompt(t_data *data)
 {
@@ -60,7 +45,6 @@ t_data	ft_init(char **env)
 	data.history = NULL;
 	data.last_exit = 0;
 	ft_sig_init();
-	printf("SHELL ID: %i\n", data.shell_id);
 	return (data);
 }
 

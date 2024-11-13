@@ -6,44 +6,11 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:09:40 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/12 15:21:25 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:12:14 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
-
-int	test(char *filename)
-{
-	struct stat	statbuf;
-
-	stat(filename, &statbuf);
-	if (S_ISDIR(statbuf.st_mode))
-		printf("'%s' is a directory\n", filename);
-	else if (S_ISREG(statbuf.st_mode))
-	{
-		printf("'%s' is a regular file\n", filename);
-		if (statbuf.st_mode & S_IXUSR)
-			printf("File is executable by the user\n"); // return 0
-		else
-			printf("File is not executable by the user\n");
-		if (statbuf.st_mode & S_IXGRP)
-			printf("File is executable by the group\n");
-		else
-			printf("File is not executable by the group\n");
-		if (statbuf.st_mode & S_IXOTH)
-			printf("File is executable by others\n");
-		else
-			printf("File is not executable by others\n");
-		if (!(statbuf.st_mode & (S_IRUSR | S_IWUSR | S_IXUSR))
-			&& !(statbuf.st_mode & (S_IRGRP | S_IWGRP | S_IXGRP))
-			&& !(statbuf.st_mode & (S_IROTH | S_IWOTH | S_IXOTH)))
-
-			printf("File has no read, write, or execute permissions\n");
-	}
-	else
-		printf("'%s' is neither a regular file nor a directory\n", filename);
-	return (0);
-}
 
 char	*ft_get_path(char *cmd, char **env)
 {
@@ -104,7 +71,7 @@ int	ft_is_function(char *path)
 void	ft_bin_child(t_full_cmd *cmd, t_data *data, int status, char *path)
 {
 	if (cmd->redirections)
-		status = ft_redirect(cmd->redirections, cmd->targets);
+		status = ft_redirect(cmd->redirections, cmd->targets, data);
 	if (status == 1)
 		exit(status);
 	if (execve(path, cmd->args, data->env) == -1)

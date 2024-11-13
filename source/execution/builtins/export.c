@@ -6,27 +6,30 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:32 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/13 09:25:57 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:56:44 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/execution.h"
 
-void	ft_var_to_temp(char *var)
+void	ft_var_to_temp(char *var, t_data *data)
 {
 	int	fd;
+	char	*temp;
 
-	fd = open("/tmp/vars_temp", O_CREAT | O_WRONLY | O_APPEND, 0777);
+	temp = ft_charjoin("/tmp/vars_temp", data->shell_id + '0');
+	fd = open(temp, O_CREAT | O_WRONLY | O_APPEND, 0777);
+	free(temp);
 	ft_putstr_fd(var, fd);
 	ft_putchar_fd('\n', fd);
 	close(fd);
 }
 
-int	ft_you_decide(char *input)
+int	ft_you_decide(char *input, t_data *data)
 {
 	if (ft_strrchr(input, '=') && ft_check_var_valid(input))
 	{
-		ft_var_to_temp(input);
+		ft_var_to_temp(input, data);
 		return (1);
 		/* You close here the call */
 	}
@@ -35,14 +38,17 @@ int	ft_you_decide(char *input)
 	/* You handle it as any cmd, which will result in a "command not found" */
 }
 
-char	*ft_temp_to_env(char *var)
+char	*ft_temp_to_env(char *var, t_data *data)
 {
 	int		fd;
 	char	*line;
 	char	*content;
+	char	*temp;
 
 	content = NULL;
-	fd = open("/tmp/vars_temp", O_RDONLY, 0777);
+	temp = ft_charjoin("/tmp/vars_temp", data->shell_id + '0');
+	fd = open(temp, O_RDONLY, 0777);
+	free(temp);
 	if (fd < 0)
 		return (content);
 	while (1)
@@ -110,7 +116,7 @@ int ft_handle_export(char *arg, t_data *data)
 			data->env[len] = ft_strdup(arg);
 		else
 		{
-			var = ft_temp_to_env(arg);
+			var = ft_temp_to_env(arg, data);
 			if (var)
 				data->env[len] = var;
 			else
