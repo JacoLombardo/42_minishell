@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:09:40 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/13 17:12:14 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:23:05 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_is_function(char *path)
 	}
 	else
 	{
-		if (path[0] == '/')
+		if (path[0] == '/' || (path[0] == '.' && path[1] == '/'))
 			return (ft_file_error(path, 4));
 		else
 			return (ft_file_error(path, 1));

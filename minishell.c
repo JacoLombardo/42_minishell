@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/13 17:14:04 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:28:46 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,24 @@ t_data	ft_init(char **env)
 	return (data);
 }
 
+void	ft_handle_line(char *line, t_data *data)
+{
+	t_full_cmd	*cmd;
+
+	add_history(line);
+	data->history = history_list();
+	cmd = parse(line, data);
+	if (!cmd)
+		return ;
+	//print_jacopo(cmd, 0);
+	ft_if_pipes(cmd, data);
+	ft_free_cmd(cmd);
+}
+
 int	ft_readline(t_data *data)
 {
 	char		*line;
 	char		*prompt;
-	t_full_cmd	*cmd;
 
 	prompt = ft_create_prompt(data);
 	line = readline(prompt);
@@ -63,14 +76,7 @@ int	ft_readline(t_data *data)
 		return (1);
 	}
 	if (ft_strlen(line))
-	{
-		add_history(line);
-		data->history = history_list();
-		cmd = parse(line, data);
-		//print_jacopo(cmd, 0);
-		ft_if_pipes(cmd, data);
-		ft_free_cmd(cmd);
-	}
+		ft_handle_line(line, data);
 	else
 		free(line);
 	free(prompt);
