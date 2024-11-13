@@ -33,6 +33,8 @@ t_full_cmd	*parse(char *line, t_data *data)
 	t_token		*token_list;
 
 	expanded = expand_vars(line, data);
+	if (ft_strlen(expanded) == 0)
+		return (NULL);
 	token_list = tokenize(expanded);
 	free(line);
 	free(expanded);
