@@ -6,11 +6,36 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:43 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/12 17:15:50 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/13 09:09:01 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/execution.h"
+
+int ft_is_long(char *str, char *llong_max, char *llong_min)
+{
+	int negative;
+
+	negative = 0;
+	if (*str == '\0')
+		return (0);
+	if (*str == '-')
+		negative = 1;
+	if (*str == '-' || *str == '+')
+		str++;
+    if (negative)
+	{
+        if (ft_strlen(str) > 19) return 1;
+        if (ft_strlen(str) < 19) return 0;
+        return (ft_strcmp(str, llong_min + 1) > 0);
+    }
+	else
+	{
+        if (ft_strlen(str) > 19) return 1;
+        if (ft_strlen(str) < 19) return 0;
+        return (ft_strcmp(str, llong_max) > 0);
+    }
+}
 
 int	ft_is_numeric(char *arg)
 {
@@ -38,7 +63,15 @@ int	ft_handle_status(char **args)
 		return (2);
 	}
 	else if (ft_tablen(args) == 2)
-		return (ft_atoi(args[1]));
+	{
+		if (ft_is_long(args[1], "9223372036854775807", "-9223372036854775808"))
+		{
+			ft_putstr_fd("exit: numeric argument required\n", 2);
+			return (2);
+		}
+		else
+			return (ft_atoi(args[1]));
+	}
 	else if (ft_tablen(args) > 2)
 	{
 		ft_putstr_fd("exit: too many arguments\n", 2);
