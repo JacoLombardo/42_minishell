@@ -1,45 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_tab_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 11:20:50 by jalombar         ###   ########.fr       */
+/*   Created: 2024/11/14 13:42:03 by jalombar          #+#    #+#             */
+/*   Updated: 2024/11/14 13:45:19 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/execution.h"
+#include "libft.h"
 
-int	ft_tablen(char **tab)
+char	**ft_tab_sort(char **tab)
 {
-	int	len;
+	int		i;
+	int		j;
+	char	*temp;
 
-	len = 0;
-	while (tab[len])
-		len++;
-	return (len);
-}
-
-int	ft_filelen(char *path)
-{
-	int		fd;
-	int		len;
-	char	*line;
-
-	fd = open(path, O_RDONLY, 0777);
-	if (fd < 0)
-		return (-1);
-	len = 0;
-	while (1)
+	i = 0;
+	temp = NULL;
+	if (!tab)
+		return (NULL);
+	while (tab[i])
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		len++;
-		free(line);
+		j = 0;
+		while (tab[j])
+		{
+			if (ft_strcmp(tab[i], tab[j]) < 0)
+			{
+				temp = tab[i];
+				tab[i] = tab[j];
+				tab[j] = temp;
+			}
+			j++;
+		}
+		i++;
 	}
-	close(fd);
-	return (len);
+	return (tab);
 }

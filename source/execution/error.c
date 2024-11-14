@@ -6,11 +6,23 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:11:28 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/12 15:11:56 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:00:19 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
+
+int	ft_builtins_error(char *arg, char *error)
+{
+	if (!ft_strcmp(error, "export"))
+	{
+		ft_putstr_fd("export: '", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (1);
+	}
+	return (1);
+}
 
 int	ft_file_error(char *path, int error)
 {

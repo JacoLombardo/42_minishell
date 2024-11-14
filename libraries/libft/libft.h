@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:17:58 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/12 16:55:53 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:59:04 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char					*ft_strrchr(const char *s, int c);
 char					*ft_strtrim(char const *s1, char const *set);
 char					*ft_substr(char const *s, unsigned int start,
 							size_t len);
+char					**ft_tab_sort(char **tab);
 int						ft_tolower(int c);
 int						ft_toupper(int c);
 char					**ft_split(char const *s, char c);

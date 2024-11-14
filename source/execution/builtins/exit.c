@@ -6,15 +6,15 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:43 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/13 09:09:01 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 10:53:39 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/execution.h"
 
-int ft_is_long(char *str, char *llong_max, char *llong_min)
+int	ft_is_long(char *str, char *llong_max, char *llong_min)
 {
-	int negative;
+	int	negative;
 
 	negative = 0;
 	if (*str == '\0')
@@ -23,18 +23,22 @@ int ft_is_long(char *str, char *llong_max, char *llong_min)
 		negative = 1;
 	if (*str == '-' || *str == '+')
 		str++;
-    if (negative)
+	if (negative)
 	{
-        if (ft_strlen(str) > 19) return 1;
-        if (ft_strlen(str) < 19) return 0;
-        return (ft_strcmp(str, llong_min + 1) > 0);
-    }
+		if (ft_strlen(str) > 19)
+			return (1);
+		if (ft_strlen(str) < 19)
+			return (0);
+		return (ft_strcmp(str, llong_min + 1) > 0);
+	}
 	else
 	{
-        if (ft_strlen(str) > 19) return 1;
-        if (ft_strlen(str) < 19) return 0;
-        return (ft_strcmp(str, llong_max) > 0);
-    }
+		if (ft_strlen(str) > 19)
+			return (1);
+		if (ft_strlen(str) < 19)
+			return (0);
+		return (ft_strcmp(str, llong_max) > 0);
+	}
 }
 
 int	ft_is_numeric(char *arg)

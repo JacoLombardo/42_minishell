@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/12 11:53:53 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 10:54:00 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	ft_cd(t_full_cmd *cmd, t_data *data)
 	}
 	else
 	{
-		//ft_setenv("OLD_PWD", cwd, data->env);
 		ft_setenv("PWD", path, data->env);
 		free(path);
 		return (0);

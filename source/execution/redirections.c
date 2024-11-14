@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:56:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/13 16:56:23 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 10:52:49 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	ft_heredoc(char *delimiter, t_data *data, int flag)
 	free(trimmed);
 }
 
-void	ft_in_redirect(t_redir_type redirection, char *target, t_dup2 *fds, t_data *data)
+void	ft_in_redirect(t_redir_type redirection, char *target, t_dup2 *fds,
+		t_data *data)
 {
 	char	*temp;
 
@@ -91,8 +92,8 @@ void	ft_out_redirect(t_redir_type redirection, char *target, t_dup2 *fds)
 
 int	ft_redirect(t_redir_type *redirections, char **targets, t_data *data)
 {
-	int	i;
-	t_dup2 fds;
+	int		i;
+	t_dup2	fds;
 
 	i = 0;
 	fds.from_fd = 0;

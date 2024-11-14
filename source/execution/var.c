@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:39:03 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/08 16:39:15 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:25:55 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,24 @@
 
 int	ft_check_var_valid(char *var)
 {
-	int	status;
-	char *name;
+	int		status;
+	char	*name;
 
 	name = ft_get_var_name(var);
-	if ((name[0] < 65) || (90 < name[0] && name[0] < 95) || (name[0] == 96) || (name[0] > 122))
+	if ((name[0] < 65) || (90 < name[0] && name[0] < 95) || (name[0] == 96)
+		|| (name[0] > 122))
 		status = 1;
-	else if (ft_strrchr(name, '-') || ft_strrchr(name, ' ') || ft_strrchr(name, '$') || ft_strrchr(name, '.'))
+	else if (ft_strrchr(name, '-') || ft_strrchr(name, ' ') || ft_strrchr(name,
+			'$') || ft_strrchr(name, '.'))
 		status = 1;
-	else if (ft_strrchr(name, '(') || ft_strrchr(name, ')') || ft_strrchr(name, '[') || ft_strrchr(name, ']'))
+	else if (ft_strrchr(name, '(') || ft_strrchr(name, ')') || ft_strrchr(name,
+			'[') || ft_strrchr(name, ']'))
 		status = 1;
-	else if (ft_strrchr(name, '!') || ft_strrchr(name, '&') || ft_strrchr(name, '*') || ft_strrchr(name, '@'))
+	else if (ft_strrchr(name, '!') || ft_strrchr(name, '&') || ft_strrchr(name,
+			'*') || ft_strrchr(name, '@'))
 		status = 1;
-	else if (ft_strrchr(name, '?') || ft_strrchr(name, '+') || ft_strrchr(name, '%') || ft_strrchr(name, '^'))
+	else if (ft_strrchr(name, '?') || ft_strrchr(name, '+') || ft_strrchr(name,
+			'%') || ft_strrchr(name, '^'))
 		status = 1;
 	else if (ft_strrchr(name, '	'))
 		status = 1;
@@ -42,21 +47,44 @@ int	ft_check_var_valid(char *var)
 
 char	*ft_get_var_name(char *var)
 {
-	int	i;
-	char *sub;
+	int		i;
+	char	*sub;
 
 	i = 0;
 	while (var[i] && var[i] != '=')
 		i++;
 	sub = ft_substr(var, 0, i);
+	if (!sub)
+		return (NULL);
 	return (sub);
 }
 
-/* Checks if this specific ENV is the VAR looked for, and return its value if so */
+/* Extracts the VAR value */
+
+char	*ft_get_var_value(char *var)
+{
+	int		i;
+	char	*value;
+
+	i = 0;
+	while (var[i] && var[i] != '=')
+		i++;
+	value = ft_strdup(var + i + 1);
+	if (!value || !ft_strlen(value))
+	{
+		free(value);
+		return (NULL);
+	}
+	else
+		return (value);
+}
+
+/* Checks if this specific ENV is the VAR looked for,
+	and return its value if so */
 
 int	ft_find_var(char *env, char *name)
 {
-	int	len;
+	int		len;
 	char	*sub;
 
 	sub = ft_get_var_name(env);
