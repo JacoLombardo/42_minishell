@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 12:16:19 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:18:26 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,35 +29,6 @@ char	*ft_create_prompt(t_data *data)
 	free(cwd);
 	return (prompt);
 }
-
-/* char	**ft_cpyexports(char *path)
-{
-	int		i;
-	int		fd;
-	int		len;
-	char	*line;
-	char	**exports;
-
-	i = 0;
-	len = ft_filelen(path);
-	exports = (char **)malloc((len + 1 - 5) * sizeof(char *));
-	fd = open(path, O_RDONLY, 0777);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		if (!ft_is_makevars(line))
-		{
-			exports[i] = ft_strdup(line + 7);
-			i++;
-		}
-		free(line);
-	}
-	close(fd);
-	exports[i] = NULL;
-	return (exports);
-} */
 
 t_data	ft_init(char **env)
 {
@@ -104,11 +75,11 @@ int	ft_readline(t_data *data)
 		ft_free_data_temps(data);
 		return (1);
 	}
+	free(prompt);
 	if (ft_strlen(line))
 		ft_handle_line(line, data);
 	else
 		free(line);
-	free(prompt);
 	return (0);
 }
 

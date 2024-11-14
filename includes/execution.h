@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 13:57:34 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:17:56 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	ft_free_data_temps(t_data *data);
 void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag);
 int		ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex);
 int		ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag);
-int		ft_pipe(t_full_cmd **cmd, t_data *data, int count);
-int		ft_handle_pipe(t_full_cmd **cmd, t_data *data);
+int		ft_pipe(t_full_cmd *cmd, t_data *data, int count);
+int		ft_handle_pipe(t_full_cmd *cmd, t_data *data);
 
 /* redirections */
 void	ft_heredoc(char *delimiter, t_data *data, int flag);

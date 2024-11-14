@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 11:20:50 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:28:58 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_tablen(char **tab)
 	int	len;
 
 	len = 0;
+	if (!tab)
+		return (-1);
 	while (tab[len])
 		len++;
 	return (len);
@@ -28,6 +30,8 @@ int	ft_filelen(char *path)
 	int		len;
 	char	*line;
 
+	if (!path)
+		return (-1);
 	fd = open(path, O_RDONLY, 0777);
 	if (fd < 0)
 		return (-1);
