@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:56:25 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 16:13:15 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:18:32 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int	ft_redirect(t_redir_type *redirections, char **targets, t_data *data)
 			ft_out_redirect(redirections[i], targets[i], &fds);
 		if (fds.to_fd < 0)
 		{
-			close(fds.to_fd);
 			perror(targets[i]);
 			return (1);
 		}

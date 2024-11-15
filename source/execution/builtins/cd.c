@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 10:54:00 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:47:33 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ char	*ft_move(char *cwd, char *arg)
 	int		i;
 	char	*path;
 
-	i = 0;
+	if (arg[0] == '~')
+		i = 2;
+	else
+		i = 0;
 	path = ft_strdup(cwd);
 	while (i < (int)ft_strlen(arg))
 	{
@@ -65,25 +68,37 @@ char	*ft_move(char *cwd, char *arg)
 	return (path);
 }
 
+int	ft_special_args(t_full_cmd *cmd, t_data *data)
+{
+	if (!cmd->args[1])
+	{
+		ft_setenv("PWD", ft_getenv("HOME", data->env), data->env);
+		return (0);
+	}
+	else if (!ft_strcmp(cmd->args[1], ".") || !ft_strcmp(cmd->args[1], ft_getenv("PWD", data->env)))
+		return (0);
+	else
+		return (1);
+}
+
 int	ft_cd(t_full_cmd *cmd, t_data *data)
 {
 	char	*cwd;
 	char	*path;
 
-	cwd = ft_getenv("PWD", data->env);
 	if (ft_tablen(cmd->args) > 2)
-	{
-		write(2, "cd: too many arguments\n", 23);
-		return (1);
-	}
-	else if (!ft_strcmp(cmd->args[1], ".") || !ft_strcmp(cmd->args[1], cwd))
+		return (ft_builtins_error("cd", NULL));
+	if (!ft_special_args(cmd, data))
 		return (0);
+	if (cmd->args[1][0] == '~')
+		cwd = ft_getenv("HOME", data->env);
+	else
+		cwd = ft_getenv("PWD", data->env);
 	path = ft_move(cwd, cmd->args[1]);
 	if (chdir(path))
 	{
-		perror(path);
 		free(path);
-		return (1);
+		return (ft_builtins_error("cd", cmd->args[1]));
 	}
 	else
 	{

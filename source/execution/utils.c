@@ -6,11 +6,27 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 14:28:58 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:51:56 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
+
+void	ft_put_error(char *s1, char *s2, char *s3, int quotes)
+{
+	ft_putstr_fd(s1, 2);
+	ft_putstr_fd(": ", 2);
+	if (s2)
+	{
+		if (quotes)
+			ft_putstr_fd("'", 2);
+		ft_putstr_fd(s2, 2);
+		if (quotes)
+			ft_putstr_fd("'", 2);
+		ft_putstr_fd(": ", 2);
+	}
+	ft_putstr_fd(s3, 2);
+}
 
 int	ft_tablen(char **tab)
 {

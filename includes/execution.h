@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 16:17:56 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:52:10 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	ft_sig_init(void);
 int		ft_subshell(t_full_cmd *cmd, t_data *data, int status);
 
 /* utils */
+void	ft_put_error(char *s1, char *s2, char *s3, int quotes);
 int		ft_tablen(char **tab);
 int		ft_filelen(char *path);
 

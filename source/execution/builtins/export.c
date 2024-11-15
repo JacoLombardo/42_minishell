@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:32 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 14:24:36 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/15 09:43:38 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int	ft_export(t_full_cmd *cmd, t_data *data)
 	while (cmd->args[i])
 	{
 		if (ft_check_var_valid(cmd->args[i]))
-			status = ft_builtins_error(cmd->args[i], "export");
+			status = ft_builtins_error("export", cmd->args[i]);
 		else
 		{
 			if (ft_handle_export(cmd->args[i], data))

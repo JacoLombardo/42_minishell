@@ -6,11 +6,29 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:28:13 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/07 10:01:34 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:05:10 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/execution.h"
+
+int	ft_check_n_flags(char *arg)
+{
+	int	i;
+
+	i = 2;
+	if (!ft_strncmp(arg, "-n", 2))
+	{
+		while (arg[i])
+		{
+			if (arg[i] != 'n')
+				return (0);
+			i++;
+		}
+		return (1);
+	}
+	return (0);
+}
 
 int	ft_echo(t_full_cmd *cmd, t_data *data)
 {
@@ -19,13 +37,12 @@ int	ft_echo(t_full_cmd *cmd, t_data *data)
 
 	(void)data;
 	n_flag = 0;
-	if (cmd->args[1] && !ft_strcmp(cmd->args[1], "-n"))
+	i = 1;
+	while (cmd->args[i] && ft_check_n_flags(cmd->args[i]))
 	{
 		n_flag = 1;
-		i = 2;
+		i++;
 	}
-	else
-		i = 1;
 	while (cmd->args[i])
 	{
 		printf("%s", cmd->args[i]);

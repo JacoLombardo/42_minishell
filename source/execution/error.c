@@ -6,21 +6,22 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:11:28 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 14:00:19 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:51:20 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-int	ft_builtins_error(char *arg, char *error)
+int	ft_builtins_error(char *builtin, char *arg)
 {
-	if (!ft_strcmp(error, "export"))
-	{
-		ft_putstr_fd("export: '", 2);
-		ft_putstr_fd(arg, 2);
-		ft_putstr_fd("': not a valid identifier\n", 2);
-		return (1);
-	}
+	if (!ft_strcmp(builtin, "export"))
+		ft_put_error(builtin, arg, "not a valid identifier\n", 1);
+	else if (!ft_strcmp(builtin, "cd") && !arg)
+		ft_put_error(builtin, arg, "too many arguments\n", 0);
+	else if (!ft_strcmp(builtin, "cd") && arg)
+		ft_put_error(builtin, arg, "No such file or directory\n", 0);
+	else if (!ft_strcmp(builtin, "env"))
+		ft_put_error(builtin, arg, "No such file or directory\n", 1); //127
 	return (1);
 }
 
