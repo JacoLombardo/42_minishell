@@ -6,11 +6,62 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:09:40 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/15 11:23:45 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:13:05 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
+
+int	ft_test(char *filename)
+{	
+	struct stat statbuf;
+
+    // Get the file status using stat
+    if (stat(filename, &statbuf) == -1) {
+        perror("stat failed");
+        return EXIT_FAILURE;
+    }
+
+    // Check if it's a directory
+    if (S_ISDIR(statbuf.st_mode)) {
+        printf("'%s' is a directory\n", filename);
+    }
+    // Check if it's a regular file and executable
+    else if (S_ISREG(statbuf.st_mode)) {
+        printf("'%s' is a regular file\n", filename);
+
+        // Check for executable permissions (user, group, others)
+        if (statbuf.st_mode & S_IXUSR) {
+            printf("File is executable by the user\n");
+        } else {
+            printf("File is not executable by the user\n");
+        }
+
+        if (statbuf.st_mode & S_IXGRP) {
+            printf("File is executable by the group\n");
+        } else {
+            printf("File is not executable by the group\n");
+        }
+
+        if (statbuf.st_mode & S_IXOTH) {
+            printf("File is executable by others\n");
+        } else {
+            printf("File is not executable by others\n");
+        }
+
+        // Check if the file has no permissions
+        if (!(statbuf.st_mode & (S_IRUSR | S_IWUSR | S_IXUSR)) &&
+            !(statbuf.st_mode & (S_IRGRP | S_IWGRP | S_IXGRP)) &&
+            !(statbuf.st_mode & (S_IROTH | S_IWOTH | S_IXOTH))) {
+            printf("File has no read, write, or execute permissions\n");
+        }
+    }
+    else {
+        printf("'%s' is neither a regular file nor a directory\n", filename);
+    }
+
+    return EXIT_SUCCESS;
+}
 
 char	*ft_get_path(char *cmd, char **env)
 {
@@ -37,7 +88,7 @@ char	*ft_get_path(char *cmd, char **env)
 		i++;
 	}
 	ft_free_both_tab(allpath, s_cmd);
-	return (cmd);
+	return (NULL);
 }
 
 int	ft_is_function(char *path)
@@ -55,10 +106,10 @@ int	ft_is_function(char *path)
 	}
 	else if (S_ISREG(statbuf.st_mode))
 	{
-		if (statbuf.st_mode & S_IXUSR)
-			return (0);
-		else
+		if (!ft_strncmp(path, "./", 2))
 			return (ft_file_error(path, 3));
+		else
+			return (ft_file_error(path, 1));
 	}
 	else
 	{
@@ -88,15 +139,10 @@ int	ft_bin(t_full_cmd *cmd, t_data *data, int status)
 {
 	char	*path;
 	pid_t	pid;
-	int		error;
 
 	path = ft_get_path(cmd->cmd, data->env);
-	error = ft_is_function(path);
-	if (error)
-	{
-		free(path);
-		return (error);
-	}
+	if (!path)
+		return (ft_is_function(cmd->cmd));
 	pid = fork();
 	if (pid == -1)
 		exit(-1);
