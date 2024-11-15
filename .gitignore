@@ -2,7 +2,7 @@
 
 *.o
 *.a
-
+test.c
 minishell
 /minishell_tester
 minishell_tester/*
