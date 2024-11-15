@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:09:40 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/13 17:23:05 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:23:45 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	ft_is_function(char *path)
 {
 	struct stat	statbuf;
 
+	ft_memset(&statbuf, 0, sizeof(statbuf));
 	stat(path, &statbuf);
 	if (S_ISDIR(statbuf.st_mode))
 	{
@@ -73,7 +74,12 @@ void	ft_bin_child(t_full_cmd *cmd, t_data *data, int status, char *path)
 	if (cmd->redirections)
 		status = ft_redirect(cmd->redirections, cmd->targets, data);
 	if (status == 1)
+	{
+		free(path);
+		ft_free_cmd(cmd);
+		ft_free_tab(data->env);
 		exit(status);
+	}
 	if (execve(path, cmd->args, data->env) == -1)
 		ft_error(cmd->cmd, 1);
 }
@@ -87,7 +93,10 @@ int	ft_bin(t_full_cmd *cmd, t_data *data, int status)
 	path = ft_get_path(cmd->cmd, data->env);
 	error = ft_is_function(path);
 	if (error)
+	{
+		free(path);
 		return (error);
+	}
 	pid = fork();
 	if (pid == -1)
 		exit(-1);
@@ -95,8 +104,8 @@ int	ft_bin(t_full_cmd *cmd, t_data *data, int status)
 		ft_bin_child(cmd, data, status, path);
 	else
 	{
-		waitpid(pid, &status, 0);
 		free(path);
+		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 	}

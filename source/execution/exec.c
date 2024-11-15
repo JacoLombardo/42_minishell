@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/13 16:40:31 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:16:13 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	ft_exec(t_full_cmd *cmd, t_data *data)
 	int	status;
 
 	status = 0;
-	if (!ft_strcmp(cmd->cmd, "minishell") || !ft_strcmp(cmd->cmd, "./minishell"))
+	if (!ft_strcmp(cmd->cmd, "minishell") || !ft_strcmp(cmd->cmd,
+			"./minishell"))
 		status = ft_subshell(cmd, data, status);
 	else if (cmd->built_in == TRUE)
 		status = ft_builtins(cmd, data, status);
@@ -73,7 +74,7 @@ int	ft_if_pipes(t_full_cmd *cmd, t_data *data)
 	if (!cmd->operator)
 		status = ft_exec(cmd, data);
 	else
-		status = ft_handle_pipe(&cmd, data);
+		status = ft_handle_pipe(cmd, data);
 	data->last_exit = status;
 	return (status);
 }

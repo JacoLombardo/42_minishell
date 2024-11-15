@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_tab_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 17:30:41 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/15 10:26:57 by jalombar         ###   ########.fr       */
+/*   Created: 2024/11/14 13:42:03 by jalombar          #+#    #+#             */
+/*   Updated: 2024/11/14 13:45:19 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/execution.h"
+#include "libft.h"
 
-int	ft_env(t_full_cmd *cmd, t_data *data)
+char	**ft_tab_sort(char **tab)
 {
 	int		i;
-	char	*value;
+	int		j;
+	char	*temp;
 
 	i = 0;
-	if (ft_tablen(cmd->args) > 1)
-		return (ft_builtins_error("env", cmd->args[1]));
-	while (data->env[i])
+	temp = NULL;
+	if (!tab)
+		return (NULL);
+	while (tab[i])
 	{
-		value = ft_get_var_value(data->env[i]);
-		if (value)
+		j = 0;
+		while (tab[j])
 		{
-			printf("%s\n", data->env[i]);
-			free(value);
+			if (ft_strcmp(tab[i], tab[j]) < 0)
+			{
+				temp = tab[i];
+				tab[i] = tab[j];
+				tab[j] = temp;
+			}
+			j++;
 		}
 		i++;
 	}
-	return (0);
+	return (tab);
 }

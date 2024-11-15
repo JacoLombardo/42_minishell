@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/13 17:28:46 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:18:26 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	ft_handle_line(char *line, t_data *data)
 
 int	ft_readline(t_data *data)
 {
-	char		*line;
-	char		*prompt;
+	char	*line;
+	char	*prompt;
 
 	prompt = ft_create_prompt(data);
 	line = readline(prompt);
@@ -75,11 +75,11 @@ int	ft_readline(t_data *data)
 		ft_free_data_temps(data);
 		return (1);
 	}
+	free(prompt);
 	if (ft_strlen(line))
 		ft_handle_line(line, data);
 	else
 		free(line);
-	free(prompt);
 	return (0);
 }
 

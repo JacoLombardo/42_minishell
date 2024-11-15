@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/11 11:02:32 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:14:36 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 char	*ft_getenv(char *name, char **env)
 {
-	int		i;
-	int		var;
+	int	i;
+	int	var;
 
 	i = 0;
 	while (env[i])
@@ -65,7 +65,7 @@ int	ft_change_env(char *var, t_data *data)
 	sub = ft_get_var_name(var);
 	while (data->env[i])
 	{
-		if(ft_find_var(data->env[i], sub))
+		if (ft_find_var(data->env[i], sub))
 		{
 			free(sub);
 			if (ft_strrchr(var, '='))

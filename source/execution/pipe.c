@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/11 13:31:50 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:17:53 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 	if (!pipex.pid)
 		ft_child(cmd, data, pipex, flag);
 	else
+	{
 		status = ft_parent(cmd, data, pipex);
+	}
 	return (status);
 }
 
-int	ft_pipe(t_full_cmd **cmd, t_data *data, int count)
+int	ft_pipe(t_full_cmd *cmd, t_data *data, int count)
 {
 	int		i;
 	t_pipe	pipex;
@@ -79,34 +81,29 @@ int	ft_pipe(t_full_cmd **cmd, t_data *data, int count)
 		{
 			if (pipe(pipex.pipe_fd) == -1)
 				ft_error("pipe", EXIT_FAILURE);
-			status = ft_fork(*cmd, data, pipex, 1);
-			*cmd = (*cmd)->next;
+			status = ft_fork(cmd, data, pipex, 1);
+			cmd = cmd->next;
 		}
 		else
-			status = ft_fork(*cmd, data, pipex, 0);
+			status = ft_fork(cmd, data, pipex, 0);
 		i++;
 	}
 	return (status);
 }
 
-int	ft_handle_pipe(t_full_cmd **cmd, t_data *data)
+int	ft_handle_pipe(t_full_cmd *cmd, t_data *data)
 {
 	int			cmd_count;
 	int			status;
 	t_full_cmd	*temp;
 
 	cmd_count = 1;
-	temp = *cmd;
-	if (temp->operator && !ft_strcmp(temp->operator, "|"))
+	temp = cmd;
+	while (temp->operator)
 	{
-		while (temp->operator && !ft_strcmp(temp->operator, "|"))
-		{
-			temp = temp->next;
-			cmd_count++;
-		}
-		status = ft_pipe(cmd, data, cmd_count);
+		temp = temp->next;
+		cmd_count++;
 	}
-	else
-		status = ft_exec(*cmd, data);
+	status = ft_pipe(cmd, data, cmd_count);
 	return (status);
 }

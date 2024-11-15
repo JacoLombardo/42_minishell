@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:32 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/13 16:56:44 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/15 09:43:38 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_var_to_temp(char *var, t_data *data)
 {
-	int	fd;
+	int		fd;
 	char	*temp;
 
 	temp = ft_charjoin("/tmp/vars_temp", data->shell_id + '0');
@@ -88,19 +88,56 @@ char	**ft_reallocenv(char **env, int size)
 	return (new_env);
 }
 
-void	ft_print_export(t_data *data)
+char	*ft_create_export(char *var)
 {
-	int	i;
+	char	*temp;
+	char	*name;
+	char	*value;
 
-	i = 0;
-	while (data->env[i])
-	{
-		printf("declare -x %s\n", data->env[i]);
-		i++;
-	}
+	name = ft_get_var_name(var);
+	if (!name)
+		return (NULL);
+	value = ft_get_var_value(var);
+	if (!value)
+		return (NULL);
+	free(var);
+	temp = ft_strjoinjoin(name, "=", "\"");
+	if (!temp)
+		return (NULL);
+	if (value)
+		var = ft_strjoinjoin(temp, value, "\"");
+	else
+		var = ft_charjoin(temp, '"');
+	if (!var)
+		return (NULL);
+	free(temp);
+	free(name);
+	free(value);
+	return (var);
 }
 
-int ft_handle_export(char *arg, t_data *data)
+int	ft_print_export(char **env)
+{
+	int		i;
+	char	**exports;
+
+	i = 0;
+	exports = ft_tab_sort(ft_cpyenv(env));
+	if (!exports)
+		return (1);
+	while (exports[i])
+	{
+		exports[i] = ft_create_export(exports[i]);
+		if (!exports[i])
+			return (1);
+		printf("declare -x %s\n", exports[i]);
+		i++;
+	}
+	ft_free_tab(exports);
+	return (0);
+}
+
+int	ft_handle_export(char *arg, t_data *data)
 {
 	int		len;
 	char	*var;
@@ -128,20 +165,15 @@ int ft_handle_export(char *arg, t_data *data)
 
 int	ft_export(t_full_cmd *cmd, t_data *data)
 {
-	int		i;
-	int status;
+	int	i;
+	int	status;
 
 	i = 1;
 	status = 0;
 	while (cmd->args[i])
 	{
 		if (ft_check_var_valid(cmd->args[i]))
-		{
-			status = 1;
-			write(2, "export: '", 9);
-			write(2, cmd->args[i], ft_strlen(cmd->args[i]));
-			write(2, "': not a valid identifier\n", 26);
-		}
+			status = ft_builtins_error("export", cmd->args[i]);
 		else
 		{
 			if (ft_handle_export(cmd->args[i], data))
@@ -150,6 +182,9 @@ int	ft_export(t_full_cmd *cmd, t_data *data)
 		i++;
 	}
 	if (ft_tablen(cmd->args) == 1)
-		ft_print_export(data);
+	{
+		if (ft_print_export(data->env))
+			return (1);
+	}
 	return (status);
 }
