@@ -48,6 +48,8 @@ int		is_builtin(char *cmd)
 {
 	int	len;
 
+	if (!cmd)
+		return (FALSE);
 	len = ft_strlen(cmd);
 	if (!ft_strncmp(cmd, "echo", len) || !ft_strncmp(cmd, "pwd", len))
 		return (TRUE);
