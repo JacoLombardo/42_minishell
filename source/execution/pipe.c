@@ -6,27 +6,44 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 16:17:53 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/17 15:46:27 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
+int	ft_close_fds(t_pipe pipex)
+{
+	if (*pipex.prev_fd != -1)
+		close(*pipex.prev_fd);
+	close(pipex.pipe_fd[0]);
+	close(pipex.pipe_fd[1]);
+	return (1);
+}
+
+void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 {
 	int	status;
 
 	if (*pipex.prev_fd != -1)
 	{
-		dup2(*pipex.prev_fd, STDIN_FILENO);
+		if (dup2(*pipex.prev_fd, STDIN_FILENO) == -1)
+		{
+			perror("dup2 failed for input");
+			exit(ft_close_fds(pipex));
+		}
 		close(*pipex.prev_fd);
 	}
-	if (flag)
+	if (cmd->next)
 	{
-		dup2(pipex.pipe_fd[1], STDOUT_FILENO);
-		close(pipex.pipe_fd[1]);
+		if (dup2(pipex.pipe_fd[1], STDOUT_FILENO) == -1)
+		{
+			perror("dup2 failed for output");
+			exit(ft_close_fds(pipex));
+		}
 	}
 	close(pipex.pipe_fd[0]);
+	close(pipex.pipe_fd[1]);
 	status = ft_exec(cmd, data);
 	exit(status);
 }
@@ -40,7 +57,13 @@ int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 	close(pipex.pipe_fd[1]);
 	if (*pipex.prev_fd != -1)
 		close(*pipex.prev_fd);
-	*pipex.prev_fd = pipex.pipe_fd[0];
+	if (cmd->next)
+		*pipex.prev_fd = pipex.pipe_fd[0];
+	else
+	{
+		close(pipex.pipe_fd[0]);
+		*pipex.prev_fd = -1;
+	}
 	waitpid(pipex.pid, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
@@ -48,62 +71,49 @@ int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 		return (1);
 }
 
-int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
+int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 {
 	int	status;
 
 	status = 0;
 	pipex.pid = fork();
 	if (pipex.pid == -1)
-		ft_error("fork", EXIT_FAILURE);
-	if (!pipex.pid)
-		ft_child(cmd, data, pipex, flag);
-	else
 	{
-		status = ft_parent(cmd, data, pipex);
+		perror("fork");
+		return (ft_close_fds(pipex));
 	}
+	if (!pipex.pid)
+		ft_child(cmd, data, pipex);
+	else
+		status = ft_parent(cmd, data, pipex);
 	return (status);
 }
 
-int	ft_pipe(t_full_cmd *cmd, t_data *data, int count)
+int	ft_pipe(t_full_cmd *cmd, t_data *data)
 {
-	int		i;
+	int status;
 	t_pipe	pipex;
-	int		status;
 	int		prev_fd;
 
 	prev_fd = -1;
 	pipex.prev_fd = &prev_fd;
-	i = 0;
-	while (i < count)
+	while (cmd)
 	{
-		if (i < count - 1)
+		if (pipe(pipex.pipe_fd) == -1)
 		{
-			if (pipe(pipex.pipe_fd) == -1)
-				ft_error("pipe", EXIT_FAILURE);
-			status = ft_fork(cmd, data, pipex, 1);
-			cmd = cmd->next;
+			perror("pipe");
+			return (ft_close_fds(pipex));
 		}
-		else
-			status = ft_fork(cmd, data, pipex, 0);
-		i++;
+		status = ft_fork(cmd, data, pipex);
+		if (status)
+		{
+			ft_close_fds(pipex);
+			return (status);
+		}
+		cmd = cmd->next;
 	}
-	return (status);
-}
-
-int	ft_handle_pipe(t_full_cmd *cmd, t_data *data)
-{
-	int			cmd_count;
-	int			status;
-	t_full_cmd	*temp;
-
-	cmd_count = 1;
-	temp = cmd;
-	while (temp->operator)
-	{
-		temp = temp->next;
-		cmd_count++;
-	}
-	status = ft_pipe(cmd, data, cmd_count);
-	return (status);
+	// while (waitpid(-1, NULL, 0) > 0) { }
+	// if (*pipex.prev_fd != -1)
+	// 	close(*pipex.prev_fd);
+	return (0);
 }

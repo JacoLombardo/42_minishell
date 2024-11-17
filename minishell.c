@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/15 15:32:46 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/17 15:28:50 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,15 @@ char	*ft_create_prompt(t_data *data)
 
 t_data	ft_init(char **env)
 {
+	int	fd;
 	t_data	data;
 
+	fd = 3;
+	while (fd < 124)
+	{
+		close(fd);
+		fd++;
+	}
 	data.env = ft_cpyenv(env);
 	if (ft_getenv("SHELL_ID", data.env))
 	{
