@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:09:40 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 11:32:15 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:18:37 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,10 @@ void	ft_bin_child(t_full_cmd *cmd, t_data *data, int status, char *path)
 	if (status == 1)
 	{
 		free(path);
-		ft_free_reachable(cmd, data);
-		exit(status);
+		exit(ft_clean_house(cmd, data, status, 0));
 	}
 	if (execve(path, cmd->args, data->env) == -1)
-		ft_error(cmd->cmd, 1);
+		ft_error(cmd->cmd, ft_clean_house(cmd, data, 1, 0));
 }
 
 int	ft_bin(t_full_cmd *cmd, t_data *data, int status)
@@ -100,7 +99,6 @@ int	ft_bin(t_full_cmd *cmd, t_data *data, int status)
 	{
 		free(path);
 		waitpid(pid, &status, 0);
-		//cleanup_jacopo(cmd); // test
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 	}

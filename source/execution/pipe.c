@@ -6,18 +6,27 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 17:44:41 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:19:27 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
+t_full_cmd	*ft_select_cmd(t_full_cmd *cmd, int index)
+{
+	while (cmd)
+	{
+		if (cmd->index == index)
+			break ;
+		cmd = cmd->next;
+	}
+	return (cmd);
+}
+
 void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 {
 	int			status;
-	t_full_cmd	*to_exec;
 
-	to_exec = cmd;
 	if (*pipex.prev_fd != -1)
 	{
 		if (dup2(*pipex.prev_fd, STDIN_FILENO) == -1)
@@ -31,14 +40,8 @@ void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 	}
 	close(pipex.pipe_fd[0]);
 	close(pipex.pipe_fd[1]);
-	while (to_exec)
-	{
-		if (to_exec->index == pipex.index)
-			break ;
-		to_exec = to_exec->next;
-	}
-	status = ft_exec(to_exec, data);
-	exit(ft_clean_house(cmd, data, status));
+	status = ft_exec(ft_select_cmd(cmd, pipex.index), data);
+	exit(ft_clean_house(cmd, data, status, 0));
 }
 
 int	ft_parent(t_pipe pipex)

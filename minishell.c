@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 17:35:48 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:54:29 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ void	ft_handle_line(char *line, t_data *data)
 	// print_jacopo(cmd, 0);
 	cmd = ft_index(cmd);
 	ft_if_pipes(cmd, data);
-	// ft_free_cmd(cmd);
-	cleanup_jacopo(cmd);
+	ft_cleanup_list(cmd);
 }
 
 int	ft_readline(t_data *data)
