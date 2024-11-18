@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 11:31:40 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 11:41:56 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 	exit(status);
 }
 
-int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
+int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 {
 	int	status;
 
