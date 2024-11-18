@@ -68,7 +68,8 @@ int	value_token(t_token *token_list, char *line_pos)
 			&& !what_quotes(line_pos + len + 1)) && line_pos[len])
 		len++;
 	value = ft_substr(line_pos, start, len);
-	append_token(token_list, value, T_THING);
+	if (ft_strlen(value) > 0)
+		append_token(token_list, value, T_THING);
 	free(value);
 	return (len);
 }
