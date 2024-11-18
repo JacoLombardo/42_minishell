@@ -66,7 +66,8 @@ void	ft_handle_line(char *line, t_data *data)
 		return ;
 	// print_jacopo(cmd, 0);
 	ft_if_pipes(cmd, data);
-	ft_free_cmd(cmd);
+	//ft_free_cmd(cmd);
+	cleanup_jacopo(cmd);
 }
 
 int	ft_readline(t_data *data)

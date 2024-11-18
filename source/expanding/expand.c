@@ -92,7 +92,7 @@ char	*expand_vars(char *line, t_data *data)
 				new_line = expand_last_exit(new_line, data->last_exit);
 			else
 				new_line = expand_single_var(new_line, var_name, data->env);
-			//free(var_name);
+			free(var_name);
 		}
 		else
 		{
