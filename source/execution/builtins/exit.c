@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:43 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/15 10:54:40 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:23:53 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ void	ft_exit(t_full_cmd *cmd, t_data *data)
 	status = ft_handle_status(cmd->args);
 	//ft_free_cmd(cmd);
 	cleanup_jacopo(cmd);
-	ft_free_data_temps(data);
+	ft_free_data_temps(data, 0);
 	exit(status);
 }

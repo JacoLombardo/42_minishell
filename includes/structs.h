@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:47:39 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 12:16:00 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:28:38 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,13 @@ typedef struct s_pipe
 	int						*prev_fd;
 	pid_t					pid;
 	int						pipe_fd[2];
+	int						index;
+	int						len;
 }							t_pipe;
 
 typedef struct s_full_cmd
 {
+	int						index;
 	int						built_in;
 	char					*cmd;
 	char					**args;

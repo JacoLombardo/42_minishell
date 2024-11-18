@@ -6,11 +6,18 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:39:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 11:31:48 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:43:10 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
+
+int	ft_clean_house(t_full_cmd *cmd, t_data *data, int status)
+{
+	cleanup_jacopo(cmd);
+	ft_free_data_temps(data, 1);
+	return (status);
+}
 
 int	ft_free_reachable(t_full_cmd *cmd, t_data *data)
 {
@@ -65,7 +72,7 @@ void	ft_free_cmd(t_full_cmd *cmd)
 	}
 }
 
-void	ft_free_data_temps(t_data *data)
+void	ft_free_data_temps(t_data *data, int child)
 {
 	char	*vars_temp;
 	char	*heredoc_temp;
@@ -74,8 +81,11 @@ void	ft_free_data_temps(t_data *data)
 	heredoc_temp = ft_charjoin("/tmp/heredoc_temp", data->shell_id + '0');
 	ft_free_tab(data->env);
 	rl_clear_history();
-	unlink(vars_temp);
-	unlink(heredoc_temp);
+	if (!child)
+	{
+		unlink(vars_temp);
+		unlink(heredoc_temp);
+	}
 	free(vars_temp);
 	free(heredoc_temp);
 }

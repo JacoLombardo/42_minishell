@@ -6,11 +6,26 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/16 15:25:59 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:25:22 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
+
+int	ft_listlen(t_full_cmd *cmd)
+{
+	int	len;
+
+	len = 0;
+	if (!cmd)
+		return (-1);
+	while (cmd)
+	{
+		len++;
+		cmd = cmd->next;
+	}
+	return (len);
+}
 
 int	ft_tablen(char **tab)
 {
