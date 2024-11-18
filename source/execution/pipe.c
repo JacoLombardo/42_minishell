@@ -34,7 +34,7 @@ void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 	exit(status);
 }
 
-int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex)
+int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 {
 	int	status;
 

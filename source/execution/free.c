@@ -52,14 +52,14 @@ void	ft_free_cmd(t_full_cmd *cmd)
 			temp = cmd->next;
 		else
 			temp = NULL;
-		free(cmd->cmd);
+		//free(cmd->cmd);
 		ft_free_tab(cmd->args);
 		if (cmd->redirections)
 			free(cmd->redirections);
 		ft_free_tab(cmd->targets);
 		if (cmd->operator)
 			free(cmd->operator);
-		free(cmd);
+		//free(cmd);
 		cmd = temp;
 	}
 }
