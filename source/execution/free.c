@@ -14,7 +14,8 @@
 
 int	ft_free_reachable(t_full_cmd *cmd, t_data *data)
 {
-	ft_free_cmd(cmd);
+	//ft_free_cmd(cmd);
+	cleanup_jacopo(cmd);
 	ft_free_tab(data->env);
 	return (1);
 }
