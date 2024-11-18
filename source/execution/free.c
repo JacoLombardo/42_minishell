@@ -6,11 +6,18 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:39:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/15 09:21:19 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 11:31:48 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
+
+int	ft_free_reachable(t_full_cmd *cmd, t_data *data)
+{
+	ft_free_cmd(cmd);
+	ft_free_tab(data->env);
+	return (1);
+}
 
 void	ft_free_both_tab(char **tab1, char **tab2)
 {

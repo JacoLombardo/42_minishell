@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:11:28 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/16 15:26:06 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 11:29:48 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,19 @@ int	ft_builtins_error(char *builtin, char *arg)
 		ft_put_error(builtin, arg, "No such file or directory\n", 1);
 		return (127);
 	}
+	return (1);
+}
+
+int	ft_pipe_error(t_full_cmd *cmd, t_data *data, t_pipe pipex, char *error)
+{
+	if (error && !ft_strncmp(error, "dup2", 4))
+		ft_free_reachable(cmd, data);
+	if (error)
+		perror(error);
+	if (*pipex.prev_fd != -1)
+		close(*pipex.prev_fd);
+	close(pipex.pipe_fd[0]);
+	close(pipex.pipe_fd[1]);
 	return (1);
 }
 

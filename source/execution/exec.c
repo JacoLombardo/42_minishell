@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/17 15:47:46 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 10:21:04 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,20 @@ int	ft_builtins(t_full_cmd *cmd, t_data *data, int status)
 	int	saved_stdin;
 	int	saved_stdout;
 
-	saved_stdin = dup(STDIN_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
+	saved_stdin = 0;
+	saved_stdout = 0;
 	if (cmd->redirections)
+	{
+		if (ft_strcmp(cmd->cmd, "exit"))
+		{
+			saved_stdin = dup(STDIN_FILENO);
+			saved_stdout = dup(STDOUT_FILENO);
+		}
 		status = ft_redirect(cmd->redirections, cmd->targets, data);
-	if (status == 1)
+	}
+	if (status)
 	{
 		ft_reset_redirect(saved_stdin, saved_stdout);
-		// close(saved_stdin);
-		// close(saved_stdout);
 		return (status);
 	}
 	status = ft_select_builtin(cmd, data, status);
