@@ -61,7 +61,7 @@ void	ft_free_data_temps(t_data *data);
 
 /* pipe */
 void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag);
-int		ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex);
+int		ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag);
 int		ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag);
 int		ft_pipe(t_full_cmd *cmd, t_data *data, int count);
 int		ft_handle_pipe(t_full_cmd *cmd, t_data *data);

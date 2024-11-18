@@ -31,7 +31,7 @@ void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 	exit(status);
 }
 
-int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex)
+int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 {
 	int	status;
 
@@ -41,7 +41,8 @@ int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 	if (*pipex.prev_fd != -1)
 		close(*pipex.prev_fd);
 	*pipex.prev_fd = pipex.pipe_fd[0];
-	waitpid(pipex.pid, &status, 0);
+	if (!flag)
+		waitpid(pipex.pid, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else
@@ -60,7 +61,7 @@ int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 		ft_child(cmd, data, pipex, flag);
 	else
 	{
-		status = ft_parent(cmd, data, pipex);
+		status = ft_parent(cmd, data, pipex, flag);
 	}
 	return (status);
 }
