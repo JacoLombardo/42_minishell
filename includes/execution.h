@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/15 10:52:10 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 11:31:58 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ int		ft_change_env(char *var, t_data *data);
 char	**ft_cpyenv(char **env);
 
 /* error */
+void	ft_put_error(char *s1, char *s2, char *s3, int quotes);
 int		ft_builtins_error(char *cmd, char *error);
+int		ft_pipe_error(t_full_cmd *cmd, t_data *data, t_pipe pipex, char *error);
 int		ft_file_error(char *path, int error);
 void	ft_error(char *error, int status);
 
@@ -54,17 +56,17 @@ int		ft_exec(t_full_cmd *cmd, t_data *data);
 int		ft_if_pipes(t_full_cmd *cmd, t_data *data);
 
 /* free */
+int		ft_free_reachable(t_full_cmd *cmd, t_data *data);
 void	ft_free_both_tab(char **tab1, char **tab2);
 void	ft_free_tab(char **tab);
 void	ft_free_cmd(t_full_cmd *cmd);
 void	ft_free_data_temps(t_data *data);
 
 /* pipe */
-void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag);
-int		ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag);
-int		ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag);
-int		ft_pipe(t_full_cmd *cmd, t_data *data, int count);
-int		ft_handle_pipe(t_full_cmd *cmd, t_data *data);
+void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex);
+int		ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex);
+int		ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex);
+int		ft_pipe(t_full_cmd *cmd, t_data *data);
 
 /* redirections */
 void	ft_heredoc(char *delimiter, t_data *data, int flag);
@@ -79,7 +81,6 @@ void	ft_sig_init(void);
 int		ft_subshell(t_full_cmd *cmd, t_data *data, int status);
 
 /* utils */
-void	ft_put_error(char *s1, char *s2, char *s3, int quotes);
 int		ft_tablen(char **tab);
 int		ft_filelen(char *path);
 

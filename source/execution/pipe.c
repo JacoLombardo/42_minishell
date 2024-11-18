@@ -6,28 +6,31 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 16:17:53 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 11:31:40 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
+void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 {
 	int	status;
 
 	if (*pipex.prev_fd != -1)
 	{
-		dup2(*pipex.prev_fd, STDIN_FILENO);
+		if (dup2(*pipex.prev_fd, STDIN_FILENO) == -1)
+			exit(ft_pipe_error(cmd, data, pipex, "dup2 failed for input"));
 		close(*pipex.prev_fd);
 	}
-	if (flag)
+	if (cmd->next)
 	{
-		dup2(pipex.pipe_fd[1], STDOUT_FILENO);
-		close(pipex.pipe_fd[1]);
+		if (dup2(pipex.pipe_fd[1], STDOUT_FILENO) == -1)
+			exit(ft_pipe_error(cmd, data, pipex, "dup2 failed for output"));
 	}
 	close(pipex.pipe_fd[0]);
+	close(pipex.pipe_fd[1]);
 	status = ft_exec(cmd, data);
+	ft_free_reachable(cmd, data);
 	exit(status);
 }
 
@@ -37,11 +40,18 @@ int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 
 	(void)cmd;
 	(void)data;
+	status = 0;
 	close(pipex.pipe_fd[1]);
 	if (*pipex.prev_fd != -1)
 		close(*pipex.prev_fd);
-	*pipex.prev_fd = pipex.pipe_fd[0];
-	if (!flag)
+	if (cmd->next)
+		*pipex.prev_fd = pipex.pipe_fd[0];
+	else
+	{
+		close(pipex.pipe_fd[0]);
+		*pipex.prev_fd = -1;
+	}
+	if (!cmd->next)
 		waitpid(pipex.pid, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
@@ -49,62 +59,35 @@ int	ft_parent(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
 		return (1);
 }
 
-int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex, int flag)
+int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 {
 	int	status;
 
 	status = 0;
 	pipex.pid = fork();
 	if (pipex.pid == -1)
-		ft_error("fork", EXIT_FAILURE);
+		return (ft_pipe_error(cmd, data, pipex, "fork"));
 	if (!pipex.pid)
-		ft_child(cmd, data, pipex, flag);
+		ft_child(cmd, data, pipex);
 	else
-	{
-		status = ft_parent(cmd, data, pipex, flag);
-	}
+		status = ft_parent(cmd, data, pipex);
 	return (status);
 }
 
-int	ft_pipe(t_full_cmd *cmd, t_data *data, int count)
+int	ft_pipe(t_full_cmd *cmd, t_data *data)
 {
-	int		i;
 	t_pipe	pipex;
-	int		status;
 	int		prev_fd;
 
 	prev_fd = -1;
 	pipex.prev_fd = &prev_fd;
-	i = 0;
-	while (i < count)
+	while (cmd)
 	{
-		if (i < count - 1)
-		{
-			if (pipe(pipex.pipe_fd) == -1)
-				ft_error("pipe", EXIT_FAILURE);
-			status = ft_fork(cmd, data, pipex, 1);
-			cmd = cmd->next;
-		}
-		else
-			status = ft_fork(cmd, data, pipex, 0);
-		i++;
+		if (pipe(pipex.pipe_fd) == -1)
+			return (ft_pipe_error(cmd, data, pipex, "pipe"));
+		if (ft_fork(cmd, data, pipex))
+			return (ft_pipe_error(cmd, data, pipex, NULL));
+		cmd = cmd->next;
 	}
-	return (status);
-}
-
-int	ft_handle_pipe(t_full_cmd *cmd, t_data *data)
-{
-	int			cmd_count;
-	int			status;
-	t_full_cmd	*temp;
-
-	cmd_count = 1;
-	temp = cmd;
-	while (temp->operator)
-	{
-		temp = temp->next;
-		cmd_count++;
-	}
-	status = ft_pipe(cmd, data, cmd_count);
-	return (status);
+	return (0);
 }

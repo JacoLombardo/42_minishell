@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 16:16:13 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 10:21:04 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,18 @@ int	ft_builtins(t_full_cmd *cmd, t_data *data, int status)
 	int	saved_stdin;
 	int	saved_stdout;
 
-	saved_stdin = dup(STDIN_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
+	saved_stdin = 0;
+	saved_stdout = 0;
 	if (cmd->redirections)
+	{
+		if (ft_strcmp(cmd->cmd, "exit"))
+		{
+			saved_stdin = dup(STDIN_FILENO);
+			saved_stdout = dup(STDOUT_FILENO);
+		}
 		status = ft_redirect(cmd->redirections, cmd->targets, data);
-	if (status == 1)
+	}
+	if (status)
 	{
 		ft_reset_redirect(saved_stdin, saved_stdout);
 		return (status);
@@ -74,7 +81,7 @@ int	ft_if_pipes(t_full_cmd *cmd, t_data *data)
 	if (!cmd->operator)
 		status = ft_exec(cmd, data);
 	else
-		status = ft_handle_pipe(cmd, data);
+		status = ft_pipe(cmd, data);
 	data->last_exit = status;
 	return (status);
 }

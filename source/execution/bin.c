@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:09:40 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/15 11:23:45 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 11:32:15 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_get_path(char *cmd, char **env)
 		i++;
 	}
 	ft_free_both_tab(allpath, s_cmd);
-	return (cmd);
+	return (NULL);
 }
 
 int	ft_is_function(char *path)
@@ -55,10 +55,10 @@ int	ft_is_function(char *path)
 	}
 	else if (S_ISREG(statbuf.st_mode))
 	{
-		if (statbuf.st_mode & S_IXUSR)
-			return (0);
-		else
+		if (!ft_strncmp(path, "./", 2))
 			return (ft_file_error(path, 3));
+		else
+			return (ft_file_error(path, 1));
 	}
 	else
 	{
@@ -76,8 +76,7 @@ void	ft_bin_child(t_full_cmd *cmd, t_data *data, int status, char *path)
 	if (status == 1)
 	{
 		free(path);
-		ft_free_cmd(cmd);
-		ft_free_tab(data->env);
+		ft_free_reachable(cmd, data);
 		exit(status);
 	}
 	if (execve(path, cmd->args, data->env) == -1)
@@ -88,15 +87,10 @@ int	ft_bin(t_full_cmd *cmd, t_data *data, int status)
 {
 	char	*path;
 	pid_t	pid;
-	int		error;
 
 	path = ft_get_path(cmd->cmd, data->env);
-	error = ft_is_function(path);
-	if (error)
-	{
-		free(path);
-		return (error);
-	}
+	if (!path)
+		return (ft_is_function(cmd->cmd));
 	pid = fork();
 	if (pid == -1)
 		exit(-1);
