@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 17:44:23 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:12:07 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,10 @@ int		ft_exec(t_full_cmd *cmd, t_data *data);
 int		ft_if_pipes(t_full_cmd *cmd, t_data *data);
 
 /* free */
-int		ft_clean_house(t_full_cmd *cmd, t_data *data, int status);
-int		ft_free_reachable(t_full_cmd *cmd, t_data *data);
+int		ft_clean_house(t_full_cmd *cmd, t_data *data, int status, int child);
 void	ft_free_both_tab(char **tab1, char **tab2);
 void	ft_free_tab(char **tab);
-void	ft_free_cmd(t_full_cmd *cmd);
+void	ft_cleanup_list(t_full_cmd *cmd);
 void	ft_free_data_temps(t_data *data, int child);
 
 /* pipe */

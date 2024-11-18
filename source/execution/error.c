@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:11:28 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 11:29:48 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:17:54 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_builtins_error(char *builtin, char *arg)
 int	ft_pipe_error(t_full_cmd *cmd, t_data *data, t_pipe pipex, char *error)
 {
 	if (error && !ft_strncmp(error, "dup2", 4))
-		ft_free_reachable(cmd, data);
+		ft_clean_house(cmd, data, 1, 0);
 	if (error)
 		perror(error);
 	if (*pipex.prev_fd != -1)
