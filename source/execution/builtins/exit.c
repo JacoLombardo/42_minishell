@@ -90,7 +90,8 @@ void	ft_exit(t_full_cmd *cmd, t_data *data)
 	int	status;
 
 	status = ft_handle_status(cmd->args);
-	ft_free_cmd(cmd);
+	//ft_free_cmd(cmd);
+	cleanup_jacopo(cmd);
 	ft_free_data_temps(data);
 	exit(status);
 }
