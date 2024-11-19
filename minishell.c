@@ -55,6 +55,7 @@ t_data	ft_init(char **env)
 	return (data);
 }
 
+/* adds indexes // replace with putting indexes in when jacopizing */
 t_full_cmd	*ft_index(t_full_cmd *cmd)
 {
 	int			i;
@@ -81,7 +82,7 @@ void	ft_handle_line(char *line, t_data *data)
 	if (!cmd)
 		return ;
 	// print_jacopo(cmd, 0);
-	cmd = ft_index(cmd);
+	// cmd = ft_index(cmd);
 	ft_if_pipes(cmd, data);
 	// ft_free_cmd(cmd);
 	cleanup_jacopo(cmd);

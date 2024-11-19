@@ -69,6 +69,7 @@ t_full_cmd	*jacopize(t_node *pipeline)
 {
 	t_full_cmd	*jacopo;
 	t_node		*full_cmd;
+	static int	index;
 
 	if (!pipeline)
 		return (NULL);
@@ -76,6 +77,7 @@ t_full_cmd	*jacopize(t_node *pipeline)
 	if (!jacopo)
 		return (NULL);
 	full_cmd = pipeline->pair->left;
+	jacopo->index = index;
 	jacopo->cmd = NULL;
 	jacopo->args = NULL;
 	if (full_cmd->pair->left)
@@ -89,10 +91,12 @@ t_full_cmd	*jacopize(t_node *pipeline)
 	jacopo->operator = NULL;
 	jacopo->built_in = is_builtin(jacopo->cmd);
 	redir_to_arrays(jacopo, full_cmd->pair->right->redirect);
+	index++;
 	jacopo->next = jacopize(pipeline->pair->right);
 	if (jacopo->next)
 		jacopo->operator = ft_strdup("|");
 	else
 		jacopo->operator = NULL;
+	index = 0;
 	return (jacopo);
 }
