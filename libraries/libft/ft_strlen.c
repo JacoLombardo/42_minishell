@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:06:54 by jalombar          #+#    #+#             */
-/*   Updated: 2024/05/07 14:50:03 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:08:29 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i])
-	{
 		i++;
-	}
 	return (i);
 }
