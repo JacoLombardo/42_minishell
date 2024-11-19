@@ -74,6 +74,24 @@ void	append_redirect(t_parser *parser, t_redirect *redir_list)
 	find_last(redir_list)->next = redir;
 }
 
+static int	is_assignment(char* input)
+{
+	int i;
+
+	i = 0;
+	if (!ft_strrchr(input, '='))
+		return (FALSE);
+	while (input[i])
+	{
+		if (input[i] == '=')
+			break ;
+		if (!is_bash_valid(input[i]))
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
 t_node	*make_full_command(t_parser *parser)
 {
 	t_node		*node;
@@ -92,8 +110,19 @@ t_node	*make_full_command(t_parser *parser)
 		append_redirect(parser, redir_list);
 		advance(parser);
 	}
-	if (peek(parser) == T_THING)
-		node->pair->left = make_simple_command(parser, redir_list);
+	while (peek(parser) == T_THING)
+	{
+		if (is_assignment(parser->curr_token->value))
+		{
+			ft_var_to_temp(parser->curr_token->value, parser->data);
+			advance(parser);
+		}
+		else
+		{
+			node->pair->left = make_simple_command(parser, redir_list);
+			break ;
+		}
+	}
 	node->pair->right = make_redirect(redir_list);
 	return (node);
 }

@@ -36,6 +36,7 @@ int		ft_export(t_full_cmd *cmd, t_data *data);
 int		ft_pwd(t_full_cmd *cmd, t_data *data);
 int		ft_handle_unset(char *arg, t_data *data);
 int		ft_unset(t_full_cmd *cmd, t_data *data);
+void	ft_var_to_temp(char *var, t_data *data);
 
 /* env */
 char	*ft_getenv(char *name, char **env);
