@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:32 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/19 13:55:00 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:15:22 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,38 @@ char	**ft_reallocenv(char **env, int size)
 	return (new_env);
 }
 
+char	*test2(char *var)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*temp;
+	char	*export;
+
+	i = 0;
+	j = 0;
+	len = ft_strlen(ft_get_var_name(var)) + ft_strlen(ft_get_var_value2(var))
+		+ 3;
+	export = (char *)malloc((len + 1) * sizeof(char));
+	if (!export)
+		return (NULL);
+	temp = ft_get_var_name(var);
+	while (temp[j])
+		export[i++] = temp[j++];
+	export[i++] = '=';
+	export[i++] = '"';
+	j = 0;
+	temp = ft_get_var_value2(var);
+	if (temp)
+	{
+		while (temp[j])
+			export[i++] = temp[j++];
+	}
+	export[i++] = '"';
+	export[i] = '\0';
+	return (export);
+}
+
 char	*ft_create_export(char *var)
 {
 	char	*temp;
@@ -97,9 +129,10 @@ char	*ft_create_export(char *var)
 	name = ft_get_var_name(var);
 	if (!name)
 		return (NULL);
+	printf("name: %s\n", name);
 	value = ft_get_var_value(var);
 	if (!value)
-		return (NULL);
+		temp = ft_strjoinjoin(name, "=", "\"");
 	free(var);
 	temp = ft_strjoinjoin(name, "=", "\"");
 	if (!temp)
@@ -144,6 +177,7 @@ int	ft_handle_export(char *arg, t_data *data)
 
 	if (!ft_change_env(arg, data))
 	{
+		printf("here\n");
 		len = ft_tablen(data->env);
 		var = NULL;
 		data->env = ft_reallocenv(data->env, len);
@@ -153,11 +187,14 @@ int	ft_handle_export(char *arg, t_data *data)
 			data->env[len] = ft_strdup(arg);
 		else
 		{
-			var = ft_temp_to_env(arg, data);
+			printf("here1\n");
+			data->env[len] = ft_strdup(arg);
+			/* var = ft_temp_to_env(arg, data);
 			if (var)
 				data->env[len] = var;
 			else
-				data->env[len] = ft_strjoin(arg, "=");
+				data->env[len] = ft_strdup(arg); */
+				//data->env[len] = ft_strjoin(arg, "=");
 		}
 	}
 	return (0);

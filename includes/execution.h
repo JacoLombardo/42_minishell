@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/19 14:20:05 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:49:41 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,8 @@ int		ft_check_var_valid(char *var);
 char	*ft_get_var_name(char *var);
 char	*ft_get_var_value(char *var);
 int		ft_find_var(char *env, char *name);
+
+char	*ft_get_var_value2(char *var);
+char	*test(char *var);
 
 #endif

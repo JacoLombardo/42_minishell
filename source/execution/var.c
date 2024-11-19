@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:39:03 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 14:25:55 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:44:16 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,12 @@ char	*ft_get_var_value(char *var)
 	i = 0;
 	while (var[i] && var[i] != '=')
 		i++;
-	value = ft_strdup(var + i + 1);
+	if (var[i] == '=' && var[i + 1] == '\0')
+		value = ft_strdup("=");
+	else if (var[i] == '=')
+		value = ft_strdup(var + i + 1);
+	else
+		return (NULL);
 	if (!value || !ft_strlen(value))
 	{
 		free(value);
@@ -77,6 +82,24 @@ char	*ft_get_var_value(char *var)
 	}
 	else
 		return (value);
+}
+
+char	*ft_get_var_value2(char *var)
+{
+	int		i;
+
+	i = 0;
+	while (var[i] && var[i] != '=')
+		i++;
+	if (var[i] == '=' && var[i + 1] == '\0')
+		return (NULL);
+	else if (var[i] == '=')
+	{
+		printf("VAR VALUE: %s\n", (var + i + 1));
+		return (var + i + 1);
+	}
+	else
+		return (NULL);
 }
 
 /* Checks if this specific ENV is the VAR looked for,
