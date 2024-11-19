@@ -95,10 +95,7 @@ char	*expand_vars(char *line, t_data *data)
 			free(var_name);
 		}
 		else
-		{
-			new_line = append_char(new_line, line[i]);
-			i++;
-		}
+			new_line = append_char(new_line, line[i++]); //check this
 	}
 	new_line = append_char(new_line, '\0');
 	return (new_line);

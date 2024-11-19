@@ -33,8 +33,6 @@ int				accept(t_parser *parser, t_type type);
 int				expect(t_parser *parser, t_type type);
 t_type			peek(t_parser *parser);
 
-char			**args_to_array(t_arg *arg_list);
-void			redir_to_arrays(t_full_cmd *jacopo, t_redirect *redir_list);
 t_full_cmd		*jacopize(t_node *full_cmd);
 int				is_builtin(char *cmd);
 

@@ -12,7 +12,7 @@
 
 #include "../../includes/parsing.h"
 
-int		is_bash_valid(char c)
+int	is_bash_valid(char c)
 {
 	if (ft_isalnum(c) || c == '_')
 		return (TRUE);
@@ -41,7 +41,7 @@ char	*append_char(char *new_line, char c)
 	return (new_line);
 }
 
-/* version of strstr to look for var_name in env (looks only at the beginning) */
+/* version of strstr to look for var_name in env */
 char	*ft_better_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
@@ -57,4 +57,3 @@ char	*ft_better_strnstr(const char *big, const char *little, size_t len)
 		return ((char *)(big));
 	return (NULL);
 }
-

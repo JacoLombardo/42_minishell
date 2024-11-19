@@ -12,7 +12,7 @@
 
 #include "../../includes/parsing.h"
 
-char	**args_to_array(t_arg *arg_list)
+static char	**args_to_array(t_arg *arg_list)
 {
 	char	**result;
 	int		arg_count;
@@ -37,7 +37,7 @@ char	**args_to_array(t_arg *arg_list)
 	return (result);
 }
 
-void	redir_to_arrays(t_full_cmd *jacopo, t_redirect *redir_list)
+static void	redir_to_arrays(t_full_cmd *jacopo, t_redirect *redir_list)
 {
 	t_redirect	*first;
 	int			count;
@@ -58,11 +58,28 @@ void	redir_to_arrays(t_full_cmd *jacopo, t_redirect *redir_list)
 		{
 			first = first->next;
 			jacopo->redirections[count] = first->type;
-			jacopo->targets[count] = super_trimmer(first->target); //
+			jacopo->targets[count] = super_trimmer(first->target);
 			count++;
 		}
 		jacopo->targets[count] = NULL;
 	}
+}
+
+static void	fill_full_cmd(t_full_cmd *jacopo, t_node *full_cmd)
+{
+	jacopo->cmd = NULL;
+	jacopo->args = NULL;
+	jacopo->redirections = NULL;
+	jacopo->targets = NULL;
+	jacopo->operator = NULL;
+	if (full_cmd->pair->left)
+	{
+		jacopo->cmd = ft_strdup(full_cmd->pair->left->simp_cmd->command);
+		jacopo->args = args_to_array(full_cmd->pair->left->simp_cmd->arg);
+		jacopo->args[0] = ft_strdup(jacopo->cmd);
+	}
+	jacopo->built_in = is_builtin(jacopo->cmd);
+	redir_to_arrays(jacopo, full_cmd->pair->right->redirect);
 }
 
 t_full_cmd	*jacopize(t_node *pipeline)
@@ -78,19 +95,7 @@ t_full_cmd	*jacopize(t_node *pipeline)
 		return (NULL);
 	full_cmd = pipeline->pair->left;
 	jacopo->index = index;
-	jacopo->cmd = NULL;
-	jacopo->args = NULL;
-	if (full_cmd->pair->left)
-	{
-		jacopo->cmd = ft_strdup(full_cmd->pair->left->simp_cmd->command);
-		jacopo->args = args_to_array(full_cmd->pair->left->simp_cmd->arg);
-		jacopo->args[0] = ft_strdup(jacopo->cmd);
-	}
-	jacopo->redirections = NULL;
-	jacopo->targets = NULL;
-	jacopo->operator = NULL;
-	jacopo->built_in = is_builtin(jacopo->cmd);
-	redir_to_arrays(jacopo, full_cmd->pair->right->redirect);
+	fill_full_cmd(jacopo, full_cmd);
 	index++;
 	jacopo->next = jacopize(pipeline->pair->right);
 	if (jacopo->next)

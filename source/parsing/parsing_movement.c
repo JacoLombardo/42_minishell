@@ -32,9 +32,9 @@ int	expect(t_parser *parser, t_type type)
 	if (accept(parser, type))
 		return (TRUE);
 	parser->err_num = 1;
-	// todo: write cleanup function
 	return (FALSE);
 }
+/* todo: cleanup after failing here? */
 
 t_type	peek(t_parser *parser)
 {

@@ -44,7 +44,7 @@ t_redir_type	get_redirect_type(t_type token_type)
 		return (R_ERR);
 }
 
-int		is_builtin(char *cmd)
+int	is_builtin(char *cmd)
 {
 	int	len;
 

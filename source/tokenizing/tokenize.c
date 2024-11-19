@@ -27,8 +27,8 @@ t_token	*tokenize(char *line)
 
 	if (what_quotes(line) != 0)
 	{
-		printf("invalid quote situation\n");
-		return (NULL);
+		perror("Unexpected EOF\n");
+		// give new prompt?
 	}
 	token_list = malloc(sizeof(t_token));
 	token_list->next = NULL;
