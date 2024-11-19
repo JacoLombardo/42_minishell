@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/15 10:47:33 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:19:25 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	*ft_move(char *cwd, char *arg)
 	else
 		i = 0;
 	path = ft_strdup(cwd);
+	if (!path)
+		return (NULL);
 	while (i < (int)ft_strlen(arg))
 	{
 		if (!ft_strcmp(arg + i, ".."))
@@ -70,26 +72,38 @@ char	*ft_move(char *cwd, char *arg)
 
 int	ft_special_args(t_full_cmd *cmd, t_data *data)
 {
+	char	*cwd;
+
+	cwd = ft_getenv("PWD", data->env);
 	if (!cmd->args[1])
 	{
-		ft_setenv("PWD", ft_getenv("HOME", data->env), data->env);
+		ft_set_pwd(ft_getenv("HOME", data->env), data, 0);
 		return (0);
 	}
-	else if (!ft_strcmp(cmd->args[1], ".") || !ft_strcmp(cmd->args[1], ft_getenv("PWD", data->env)))
+	else if (ft_tablen(cmd->args) > 2)
+		return (ft_builtins_error("cd", NULL, 0));
+	else if (ft_strlen(cmd->args[1]) > 1 && cmd->args[1][0] == '-')
+		return (ft_builtins_error("cd", cmd->args[1], 2));
+	else if (!ft_strcmp(cmd->args[1], ".") || !ft_strcmp(cmd->args[1], cwd))
 		return (0);
+	else if (!ft_strcmp(cmd->args[1], "-"))
+	{
+		ft_set_pwd(NULL, data, 1);
+		return (0);
+	}
 	else
-		return (1);
+		return (-1);
 }
 
 int	ft_cd(t_full_cmd *cmd, t_data *data)
 {
+	int		status;
 	char	*cwd;
 	char	*path;
 
-	if (ft_tablen(cmd->args) > 2)
-		return (ft_builtins_error("cd", NULL));
-	if (!ft_special_args(cmd, data))
-		return (0);
+	status = ft_special_args(cmd, data);
+	if (status >= 0)
+		return (status);
 	if (cmd->args[1][0] == '~')
 		cwd = ft_getenv("HOME", data->env);
 	else
@@ -98,11 +112,11 @@ int	ft_cd(t_full_cmd *cmd, t_data *data)
 	if (chdir(path))
 	{
 		free(path);
-		return (ft_builtins_error("cd", cmd->args[1]));
+		return (ft_builtins_error("cd", cmd->args[1], 1));
 	}
 	else
 	{
-		ft_setenv("PWD", path, data->env);
+		ft_set_pwd(path, data, 0);
 		free(path);
 		return (0);
 	}

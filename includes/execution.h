@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 18:12:07 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:20:05 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,18 @@ char	*ft_getenv(char *name, char **env);
 char	*ft_setenv(char *name, char *value, char **env);
 int		ft_change_env(char *var, t_data *data);
 char	**ft_cpyenv(char **env);
+int		ft_set_pwd(char *pwd, t_data *data, int swap);
 
 /* error */
 void	ft_put_error(char *s1, char *s2, char *s3, int quotes);
-int		ft_builtins_error(char *cmd, char *error);
+int		ft_builtins_error(char *cmd, char *arg, int type);
 int		ft_pipe_error(t_full_cmd *cmd, t_data *data, t_pipe pipex, char *error);
 int		ft_file_error(char *path, int error);
 void	ft_error(char *error, int status);
 
 /* exec */
 int		ft_builtins(t_full_cmd *cmd, t_data *data, int status);
+int		ft_exec_redir(t_full_cmd *cmd, t_data *data, int status);
 int		ft_exec(t_full_cmd *cmd, t_data *data);
 int		ft_if_pipes(t_full_cmd *cmd, t_data *data);
 

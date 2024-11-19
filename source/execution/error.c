@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:11:28 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 18:17:54 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:54:22 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,19 @@ void	ft_put_error(char *s1, char *s2, char *s3, int quotes)
 	ft_putstr_fd(s3, 2);
 }
 
-int	ft_builtins_error(char *builtin, char *arg)
+int	ft_builtins_error(char *builtin, char *arg, int type)
 {
 	if (!ft_strcmp(builtin, "export"))
 		ft_put_error(builtin, arg, "not a valid identifier\n", 1);
 	else if (!ft_strcmp(builtin, "cd") && !arg)
 		ft_put_error(builtin, arg, "too many arguments\n", 0);
 	else if (!ft_strcmp(builtin, "cd") && arg)
-		ft_put_error(builtin, arg, "No such file or directory\n", 0);
+	{
+		if (type == 1)
+			ft_put_error(builtin, arg, "No such file or directory\n", 0);
+		else if (type == 2)
+			ft_put_error(builtin, arg, "invalid option\n", 0);
+	}
 	else if (!ft_strcmp(builtin, "env"))
 	{
 		ft_put_error(builtin, arg, "No such file or directory\n", 1);

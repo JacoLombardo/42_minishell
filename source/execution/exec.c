@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 10:21:04 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:46:56 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,18 @@ int	ft_builtins(t_full_cmd *cmd, t_data *data, int status)
 	return (status);
 }
 
+int	ft_exec_redir(t_full_cmd *cmd, t_data *data, int status)
+{
+	int	saved_stdin;
+	int	saved_stdout;
+
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	status = ft_redirect(cmd->redirections, cmd->targets, data);
+	ft_reset_redirect(saved_stdin, saved_stdout);
+	return (status);
+}
+
 int	ft_exec(t_full_cmd *cmd, t_data *data)
 {
 	int	status;
@@ -68,6 +80,8 @@ int	ft_exec(t_full_cmd *cmd, t_data *data)
 		status = ft_subshell(cmd, data, status);
 	else if (cmd->built_in == TRUE)
 		status = ft_builtins(cmd, data, status);
+	else if (!cmd->cmd)
+		status = ft_exec_redir(cmd, data, status);
 	else
 		status = ft_bin(cmd, data, status);
 	return (status);
@@ -78,10 +92,10 @@ int	ft_if_pipes(t_full_cmd *cmd, t_data *data)
 	int	status;
 
 	status = 0;
-	if (!cmd->operator)
-		status = ft_exec(cmd, data);
-	else
+	if (cmd->next)
 		status = ft_pipe(cmd, data);
+	else
+		status = ft_exec(cmd, data);
 	data->last_exit = status;
 	return (status);
 }
