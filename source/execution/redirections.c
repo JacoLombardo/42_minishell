@@ -123,4 +123,3 @@ void	ft_reset_redirect(int saved_stdin, int saved_stdout)
 	close(saved_stdin);
 	close(saved_stdout);
 }
-
