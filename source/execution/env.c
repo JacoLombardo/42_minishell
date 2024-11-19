@@ -13,7 +13,6 @@
 #include "../../includes/execution.h"
 
 /* Finds a VAR in ENV and returns its value */
-
 char	*ft_getenv(char *name, char **env)
 {
 	int	i;
@@ -31,7 +30,6 @@ char	*ft_getenv(char *name, char **env)
 }
 
 /* Adds a new VAR to ENV */
-
 char	*ft_setenv(char *name, char *value, char **env)
 {
 	int		i;
@@ -55,7 +53,6 @@ char	*ft_setenv(char *name, char *value, char **env)
 }
 
 /* Checks if a VAR is already inside ENV, and it changes its value if so */
-
 int	ft_change_env(char *var, t_data *data)
 {
 	int		i;

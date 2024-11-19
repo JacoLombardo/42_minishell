@@ -72,7 +72,6 @@ void	append_redirect(t_parser *parser, t_redirect *redir_list)
 		ft_heredoc(redir->target, parser->data, exp_heredoc);
 	}
 	find_last(redir_list)->next = redir;
-	//advance(parser);
 }
 
 t_node	*make_full_command(t_parser *parser)
@@ -95,8 +94,6 @@ t_node	*make_full_command(t_parser *parser)
 	}
 	if (peek(parser) == T_THING)
 		node->pair->left = make_simple_command(parser, redir_list);
-	//while (peek(parser) >= T_APPEND)
-	//	append_redirect(parser, redir_list);
 	node->pair->right = make_redirect(redir_list);
 	return (node);
 }

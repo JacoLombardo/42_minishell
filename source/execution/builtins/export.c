@@ -65,7 +65,6 @@ char	*ft_temp_to_env(char *var, t_data *data)
 }
 
 /* Increses the memory allocation of env by one */
-
 char	**ft_reallocenv(char **env, int size)
 {
 	char	**new_env;

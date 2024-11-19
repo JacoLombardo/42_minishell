@@ -21,7 +21,6 @@ int	ft_clean_house(t_full_cmd *cmd, t_data *data, int status)
 
 int	ft_free_reachable(t_full_cmd *cmd, t_data *data)
 {
-	//ft_free_cmd(cmd);
 	cleanup_jacopo(cmd);
 	ft_free_tab(data->env);
 	return (1);
@@ -60,14 +59,12 @@ void	ft_free_cmd(t_full_cmd *cmd)
 			temp = cmd->next;
 		else
 			temp = NULL;
-		//free(cmd->cmd);
 		ft_free_tab(cmd->args);
 		if (cmd->redirections)
 			free(cmd->redirections);
 		ft_free_tab(cmd->targets);
 		if (cmd->operator)
 			free(cmd->operator);
-		//free(cmd);
 		cmd = temp;
 	}
 }

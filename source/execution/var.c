@@ -13,7 +13,6 @@
 #include "../../includes/execution.h"
 
 /* Checks if the VAR name is valid */
-
 int	ft_check_var_valid(char *var)
 {
 	int		status;
@@ -44,7 +43,6 @@ int	ft_check_var_valid(char *var)
 }
 
 /* Extracts the VAR name */
-
 char	*ft_get_var_name(char *var)
 {
 	int		i;
@@ -60,7 +58,6 @@ char	*ft_get_var_name(char *var)
 }
 
 /* Extracts the VAR value */
-
 char	*ft_get_var_value(char *var)
 {
 	int		i;
@@ -81,7 +78,6 @@ char	*ft_get_var_value(char *var)
 
 /* Checks if this specific ENV is the VAR looked for,
 	and return its value if so */
-
 int	ft_find_var(char *env, char *name)
 {
 	int		len;
