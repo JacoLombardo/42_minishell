@@ -55,23 +55,6 @@ t_data	ft_init(char **env)
 	return (data);
 }
 
-/* adds indexes // replace with putting indexes in when jacopizing */
-t_full_cmd	*ft_index(t_full_cmd *cmd)
-{
-	int			i;
-	t_full_cmd	*new;
-
-	i = 0;
-	new = cmd;
-	while (cmd)
-	{
-		cmd->index = i;
-		cmd = cmd->next;
-		i++;
-	}
-	return (new);
-}
-
 void	ft_handle_line(char *line, t_data *data)
 {
 	t_full_cmd	*cmd;
