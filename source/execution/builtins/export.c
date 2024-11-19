@@ -25,19 +25,6 @@ void	ft_var_to_temp(char *var, t_data *data)
 	close(fd);
 }
 
-int	ft_you_decide(char *input, t_data *data)
-{
-	if (ft_strrchr(input, '=') && ft_check_var_valid(input))
-	{
-		ft_var_to_temp(input, data);
-		return (1);
-		/* You close here the call */
-	}
-	else
-		return (0);
-	/* You handle it as any cmd, which will result in a "command not found" */
-}
-
 char	*ft_temp_to_env(char *var, t_data *data)
 {
 	int		fd;
