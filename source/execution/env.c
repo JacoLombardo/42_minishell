@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 12:14:36 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:19:35 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*ft_getenv(char *name, char **env)
 	}
 	return (NULL);
 }
+
 
 /* Adds a new VAR to ENV */
 char	*ft_setenv(char *name, char *value, char **env)
@@ -100,29 +101,28 @@ char	**ft_cpyenv(char **env)
 	return (new_env);
 }
 
-char	**ft_cpyenv2(char **env)
+int	ft_set_pwd(char *pwd, t_data *data, int swap)
 {
-	char	**new_env;
-	int		i;
-	int		j;
+	char	*temp;
 
-	i = 0;
-	j = 0;
-	new_env = (char **)malloc((ft_tablen(env) + 2) * sizeof(char *));
-	if (!new_env)
-		return (NULL);
-	while (env[i])
+	temp = NULL;
+	if (swap)
 	{
-		new_env[i + j] = ft_strdup(env[i]);
-		if (!new_env)
-			return (NULL);
-		if (!ft_strncmp(env[i], "PWD", 3))
-		{
-			j++;
-			new_env[i + j] = ft_strjoin("OLD_", env[i]);
-		}
-		i++;
+		temp = ft_strdup(ft_getenv("OLDPWD", data->env));
+		if (!temp)
+			return (1);
+		if (!ft_setenv("OLDPWD", ft_getenv("PWD", data->env), data->env))
+			return (1);
+		if (!ft_setenv("PWD", temp, data->env))
+			return (1);
+		free(temp);
 	}
-	new_env[i + j] = NULL;
-	return (new_env);
+	else
+	{
+		if (!ft_setenv("OLDPWD", ft_getenv("PWD", data->env), data->env))
+			return (1);
+		if (!ft_setenv("PWD", pwd, data->env))
+			return (1);
+	}
+	return (0);
 }
