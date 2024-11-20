@@ -44,7 +44,8 @@ TOKEN = source/tokenizing/token_making.c \
 		source/tokenizing/token_quote_handling.c \
 		source/tokenizing/tokenize.c
 EXPAND = source/expanding/expand.c \
-		source/expanding/expanding_utils.c
+		source/expanding/expanding_utils.c \
+		source/expanding/expanding_shell_vars.c
 HEADER = minishell.h
 NAME = minishell
 LIBFT_PATH = libraries/libft

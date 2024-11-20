@@ -36,13 +36,13 @@ int		ft_export(t_full_cmd *cmd, t_data *data);
 int		ft_pwd(t_full_cmd *cmd, t_data *data);
 int		ft_handle_unset(char *arg, t_data *data);
 int		ft_unset(t_full_cmd *cmd, t_data *data);
-void	ft_var_to_temp(char *var, t_data *data);
 
 /* env */
 char	*ft_getenv(char *name, char **env);
 char	*ft_setenv(char *name, char *value, char **env);
 int		ft_change_env(char *var, t_data *data);
 char	**ft_cpyenv(char **env);
+char	**ft_reallocenv(char **env, int size);
 
 /* error */
 void	ft_put_error(char *s1, char *s2, char *s3, int quotes);

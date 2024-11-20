@@ -57,6 +57,10 @@ char			*append_value(char *new_line, char *var_value, char *var_name);
 char			*append_char(char *new_line, char c);
 char			*ft_better_strnstr(const char *big, const char *little,
 					size_t len);
+/* SHELL VARIABLES */
+void			ft_var_to_temp(char *var, t_data *data);
+char			*ft_temp_to_env(char *var, t_data *data);
+char			**copy_and_enhance_env(t_data *data);
 
 /* UTILS */
 t_type			get_type(char *str);
