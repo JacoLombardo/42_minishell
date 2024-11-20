@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/19 14:19:25 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:37:35 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*ft_back(char *temp, int *index)
 	while (temp[len - i - 1] != '/')
 		i++;
 	path = ft_strndup(temp, (len - 1 - i));
+	if (!path)
+		return (ft_malloc_error1(temp, NULL, 0));
 	free(temp);
 	if (index)
 		*index += 3;
@@ -39,7 +41,14 @@ char	*ft_forward(char *temp, char *arg, int *i)
 	while (arg[*i + len] && arg[*i + len] != '/')
 		len++;
 	temp2 = ft_strndup(arg + *i, len);
+	if (!temp2)
+		return (ft_malloc_error1(temp, NULL, 0));
 	path = ft_strjoinjoin(temp, "/", temp2);
+	if (!path)
+	{
+		free(temp2);
+		return (ft_malloc_error1(temp, NULL, 0));
+	}
 	free(temp);
 	free(temp2);
 	*i += len + 1;
@@ -57,7 +66,7 @@ char	*ft_move(char *cwd, char *arg)
 		i = 0;
 	path = ft_strdup(cwd);
 	if (!path)
-		return (NULL);
+		return (ft_malloc_error1(NULL, NULL, 0));
 	while (i < (int)ft_strlen(arg))
 	{
 		if (!ft_strcmp(arg + i, ".."))
@@ -66,6 +75,8 @@ char	*ft_move(char *cwd, char *arg)
 			path = ft_back(path, &i);
 		else
 			path = ft_forward(path, arg, &i);
+		if (!path)
+			return (NULL);
 	}
 	return (path);
 }
@@ -109,6 +120,8 @@ int	ft_cd(t_full_cmd *cmd, t_data *data)
 	else
 		cwd = ft_getenv("PWD", data->env);
 	path = ft_move(cwd, cmd->args[1]);
+	if (!path)
+		return (1);
 	if (chdir(path))
 	{
 		free(path);

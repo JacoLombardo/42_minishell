@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 15:48:08 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 12:22:34 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:44:21 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_subshell_child(t_full_cmd *cmd, t_data *data)
 	char	*var;
 
 	var = ft_charjoin("SHELL_ID=", (data->shell_id + 1) + '0');
+	if (!var)
+		ft_error("malloc", 1);
 	ft_handle_export(var, data);
 	free(var);
 	if (execve(cmd->cmd, cmd->args, data->env) == -1)

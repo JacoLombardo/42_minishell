@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:30 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/08 15:27:19 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:37:47 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ char	**ft_deallocenv(char **env, int size, char *name)
 	j = 0;
 	new_env = (char **)malloc((size - 1 + 1) * sizeof(char *));
 	if (!new_env)
-		return (NULL);
+		return (ft_malloc_error2(NULL, NULL, 0));
 	while (env[i])
 	{
 		if (!ft_find_var(env[i], name))
 		{
 			new_env[j] = ft_strdup(env[i]);
 			if (!new_env[j])
-				return (NULL);
+				return (ft_malloc_error2(NULL, new_env, j));
 			j++;
 		}
 		i++;
