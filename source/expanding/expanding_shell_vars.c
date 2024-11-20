@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expanding_shell_vars.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: csilva-r <csilva-r@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/20 18:11:04 by csilva-r          #+#    #+#             */
+/*   Updated: 2024/11/20 18:11:07 by csilva-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/parsing.h"
 
 static char	*ft_get_temp_var_filename(t_data *data)
 {
-	return ft_charjoin("/tmp/vars_temp", data->shell_id + '0');
+	return (ft_charjoin("/tmp/vars_temp", data->shell_id + '0'));
 }
 
 static char	**append_to_env(char **new_env, char *line)
@@ -39,6 +51,7 @@ char	**copy_and_enhance_env(t_data *data)
 	}
 	return (new_env);
 }
+
 void	ft_var_to_temp(char *var, t_data *data)
 {
 	int		fd;

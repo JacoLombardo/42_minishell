@@ -78,7 +78,7 @@ char	*expand_vars(char *line, t_data *data)
 	int		i;
 	char	*var_name;
 	char	*new_line;
-	char	**temp_env; //
+	char	**temp_env;
 
 	temp_env = copy_and_enhance_env(data);
 	i = 0;
