@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/19 15:49:41 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:37:04 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int		ft_pipe_error(t_full_cmd *cmd, t_data *data, t_pipe pipex, char *error);
 int		ft_file_error(char *path, int error);
 void	ft_error(char *error, int status);
 
+/* error2 */
+int		ft_malloc_error(char *s1, char **tab, int index);
+char	*ft_malloc_error1(char *s1, char **tab, int index);
+char 	**ft_malloc_error2(char *s1, char **tab, int index);
+
 /* exec */
 int		ft_builtins(t_full_cmd *cmd, t_data *data, int status);
 int		ft_exec_redir(t_full_cmd *cmd, t_data *data, int status);
@@ -90,11 +95,9 @@ int		ft_filelen(char *path);
 
 /* var */
 int		ft_check_var_valid(char *var);
-char	*ft_get_var_name(char *var);
+char	*ft_dup_var_name(char *var);
+char	*ft_dup_var_value(char *var);
 char	*ft_get_var_value(char *var);
 int		ft_find_var(char *env, char *name);
-
-char	*ft_get_var_value2(char *var);
-char	*test(char *var);
 
 #endif

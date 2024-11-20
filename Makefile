@@ -25,6 +25,7 @@ EXEC = source/execution/builtins/cd.c \
 		source/execution/bin.c \
 		source/execution/env.c \
 		source/execution/error.c \
+		source/execution/error2.c \
 		source/execution/exec.c \
 		source/execution/free.c \
 		source/execution/pipe.c \

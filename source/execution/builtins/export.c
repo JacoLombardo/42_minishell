@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:32 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/19 16:15:22 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:38:26 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ char	**ft_reallocenv(char **env, int size)
 	i = 0;
 	new_env = (char **)malloc((size + 1 + 1) * sizeof(char *));
 	if (!new_env)
-		return (NULL);
+		return (ft_malloc_error2(NULL, NULL, 0));
 	while (env[i])
 	{
 		new_env[i] = ft_strdup(env[i]);
 		if (!new_env)
-			return (NULL);
+			return (ft_malloc_error2(NULL, new_env, i));
 		i++;
 	}
 	new_env[i] = NULL;
@@ -35,85 +35,58 @@ char	**ft_reallocenv(char **env, int size)
 	return (new_env);
 }
 
-char	*test2(char *var)
+char	*ft_add_quotes(char *var, char	*name, char *value)
 {
-	int		i;
-	int		j;
-	int		len;
-	char	*temp;
 	char	*export;
+	char	*with_quotes;
 
-	i = 0;
-	j = 0;
-	len = ft_strlen(ft_get_var_name(var)) + ft_strlen(ft_get_var_value2(var))
-		+ 3;
-	export = (char *)malloc((len + 1) * sizeof(char));
-	if (!export)
-		return (NULL);
-	temp = ft_get_var_name(var);
-	while (temp[j])
-		export[i++] = temp[j++];
-	export[i++] = '=';
-	export[i++] = '"';
-	j = 0;
-	temp = ft_get_var_value2(var);
-	if (temp)
+	with_quotes = NULL;
+	if (value && ft_strchr(var, '='))
 	{
-		while (temp[j])
-			export[i++] = temp[j++];
+		with_quotes = ft_strjoinjoin("=\"", value, "\"");
+		if (!with_quotes)
+			return (ft_malloc_error1(name, NULL, 0));
 	}
-	export[i++] = '"';
-	export[i] = '\0';
-	return (export);
-}
-
-char	*ft_create_export(char *var)
-{
-	char	*temp;
-	char	*name;
-	char	*value;
-
-	name = ft_get_var_name(var);
-	if (!name)
-		return (NULL);
-	printf("name: %s\n", name);
-	value = ft_get_var_value(var);
-	if (!value)
-		temp = ft_strjoinjoin(name, "=", "\"");
-	free(var);
-	temp = ft_strjoinjoin(name, "=", "\"");
-	if (!temp)
-		return (NULL);
-	if (value)
-		var = ft_strjoinjoin(temp, value, "\"");
+	else if (!value && ft_strchr(var, '='))
+	{
+		with_quotes = ft_strjoin("=\"", "\"");
+		if (!with_quotes)
+			return (ft_malloc_error1(name, NULL, 0));
+	}
 	else
-		var = ft_charjoin(temp, '"');
-	if (!var)
-		return (NULL);
-	free(temp);
+		return (name);
+	export = ft_strjoin(name, with_quotes);
 	free(name);
-	free(value);
-	return (var);
+	if (!export)
+		return (ft_malloc_error1(with_quotes, NULL, 0));
+	free(with_quotes);
+	return (export);
 }
 
 int	ft_print_export(char **env)
 {
 	int		i;
 	char	**exports;
+	char *with_quotes;
 
 	i = 0;
 	exports = ft_tab_sort(ft_cpyenv(env));
 	if (!exports)
-		return (1);
+		return (ft_malloc_error(NULL, NULL, 0));
 	while (exports[i])
 	{
-		exports[i] = ft_create_export(exports[i]);
-		if (!exports[i])
+		with_quotes = ft_add_quotes(exports[i], ft_dup_var_name(exports[i]), ft_get_var_value(exports[i]));
+		if (!with_quotes)
+		{
+			free(exports);
 			return (1);
-		printf("declare -x %s\n", exports[i]);
+		}
+		printf("declare -x %s\n", with_quotes);
+		free(with_quotes);
+		free(exports[i]);
 		i++;
 	}
-	ft_free_tab(exports);
+	free(exports);
 	return (0);
 }
 
@@ -124,7 +97,6 @@ int	ft_handle_export(char *arg, t_data *data)
 
 	if (!ft_change_env(arg, data))
 	{
-		printf("here\n");
 		len = ft_tablen(data->env);
 		var = NULL;
 		data->env = ft_reallocenv(data->env, len);
@@ -134,14 +106,11 @@ int	ft_handle_export(char *arg, t_data *data)
 			data->env[len] = ft_strdup(arg);
 		else
 		{
-			printf("here1\n");
-			data->env[len] = ft_strdup(arg);
-			/* var = ft_temp_to_env(arg, data);
+			var = ft_temp_to_env(arg, data);
 			if (var)
 				data->env[len] = var;
 			else
-				data->env[len] = ft_strdup(arg); */
-				//data->env[len] = ft_strjoin(arg, "=");
+				data->env[len] = ft_strdup(arg);
 		}
 	}
 	return (0);
