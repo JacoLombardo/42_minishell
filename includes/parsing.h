@@ -37,7 +37,7 @@ t_full_cmd		*jacopize(t_node *full_cmd);
 int				is_builtin(char *cmd);
 
 /* TOKENIZING */
-t_token			*tokenize(char *line);
+t_token			*tokenize(char *line, t_data *data);
 t_token			*new_token(char *value, t_type type);
 void			append_token(t_token *token_list, char *value, t_type type);
 int				operator_token(t_token *token_list, char *line_pos);

@@ -35,9 +35,11 @@ t_full_cmd	*parse(char *line, t_data *data)
 	expanded = expand_vars(line, data);
 	if (ft_strlen(expanded) == 0)
 		return (NULL);
-	token_list = tokenize(expanded);
+	token_list = tokenize(expanded, data);
 	free(line);
 	free(expanded);
+	if (!token_list)
+		return (NULL);
 	parser = parser_init(token_list, data);
 	top_node = make_pipeline(parser);
 	jacopo = jacopize(top_node);

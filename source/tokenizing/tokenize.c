@@ -19,7 +19,7 @@ int	is_operator_char(char c)
 	return (FALSE);
 }
 
-t_token	*tokenize(char *line)
+t_token	*tokenize(char *line, t_data *data)
 {
 	t_token	*token_list;
 	t_token	*dummy_first;
@@ -27,8 +27,9 @@ t_token	*tokenize(char *line)
 
 	if (what_quotes(line) != 0)
 	{
-		perror("Unexpected EOF\n");
-		// give new prompt?
+		ft_putstr_fd("Syntax error\n", 2);
+		data->last_exit = 2;
+		return (NULL);
 	}
 	token_list = malloc(sizeof(t_token));
 	token_list->next = NULL;
