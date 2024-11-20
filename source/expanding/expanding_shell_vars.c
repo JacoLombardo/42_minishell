@@ -12,7 +12,7 @@ static char	**append_to_env(char **new_env, char *line)
 
 	len = ft_tablen(new_env);
 	newer_env = ft_reallocenv(new_env, len);
-	newer_env[len] = line;
+	newer_env[len] = ft_substr(line, 0, ft_strlen(line) - 1);
 	return (newer_env);
 }
 
