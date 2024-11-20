@@ -36,6 +36,8 @@ t_type			peek(t_parser *parser);
 t_full_cmd		*jacopize(t_node *full_cmd);
 int				is_builtin(char *cmd);
 
+void			*set_syntax_error(t_data *data);
+
 /* TOKENIZING */
 t_token			*tokenize(char *line, t_data *data);
 t_token			*new_token(char *value, t_type type);

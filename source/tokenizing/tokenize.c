@@ -26,11 +26,7 @@ t_token	*tokenize(char *line, t_data *data)
 	int		i;
 
 	if (what_quotes(line) != 0)
-	{
-		ft_putstr_fd("Syntax error\n", 2);
-		data->last_exit = 2;
-		return (NULL);
-	}
+		return (set_syntax_error(data));
 	token_list = malloc(sizeof(t_token));
 	token_list->next = NULL;
 	token_list->prev = NULL;

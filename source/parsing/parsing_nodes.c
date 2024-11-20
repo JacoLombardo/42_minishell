@@ -63,7 +63,11 @@ void	append_redirect(t_parser *parser, t_redirect *redir_list)
 	redir = malloc(sizeof(t_redirect));
 	redir->type = get_redirect_type(parser->curr_token->type);
 	redir->next = NULL;
-	expect(parser, T_THING);
+	if (!expect(parser, T_THING))
+	{
+		redir->target = NULL;
+		return ;
+	}
 	redir->target = ft_strdup(parser->curr_token->value);
 	if (redir->type == R_HEREDOC)
 	{
