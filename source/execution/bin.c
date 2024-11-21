@@ -100,7 +100,6 @@ int	ft_bin(t_full_cmd *cmd, t_data *data, int status)
 	{
 		free(path);
 		waitpid(pid, &status, 0);
-		//cleanup_jacopo(cmd); // test
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 	}
