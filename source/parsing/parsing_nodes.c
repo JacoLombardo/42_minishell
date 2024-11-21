@@ -25,16 +25,16 @@ t_node	*make_simple_command(t_parser *parser, t_redirect *redir_list)
 	while (accept(parser, T_THING) || accept_redirect(parser))
 	{
 		if (peek(parser) >= T_APPEND)
-			append_redirect(parser, redir_list);
-		else
 		{
-			curr = simple->arg;
-			while (curr->next)
-				curr = curr->next;
-			new = ft_calloc(1, sizeof(t_arg));
-			new->value = ft_strdup(parser->curr_token->value);
-			curr->next = new;
+			append_redirect(parser, redir_list);
+			continue ;
 		}
+		curr = simple->arg;
+		while (curr->next)
+			curr = curr->next;
+		new = ft_calloc(1, sizeof(t_arg));
+		new->value = ft_strdup(parser->curr_token->value);
+		curr->next = new;
 	}
 	node = create_node(SIMPLE_CMD);
 	node->simp_cmd = simple;
