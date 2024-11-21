@@ -30,11 +30,13 @@ t_redirect		*find_last(t_redirect *redir);
 t_node			*create_node(t_node_type type);
 void			advance(t_parser *parser);
 int				accept(t_parser *parser, t_type type);
+int				accept_redirect(t_parser *parser);
 int				expect(t_parser *parser, t_type type);
 t_type			peek(t_parser *parser);
 
 t_full_cmd		*jacopize(t_node *full_cmd);
 int				is_builtin(char *cmd);
+int				is_assignment(char* input);
 
 void			*set_syntax_error(t_data *data);
 

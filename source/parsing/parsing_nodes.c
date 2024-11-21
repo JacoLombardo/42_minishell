@@ -24,7 +24,7 @@ t_node	*make_simple_command(t_parser *parser, t_redirect *redir_list)
 	simple->arg = malloc(sizeof(t_arg));
 	simple->arg->next = NULL;
 	simple->arg->value = NULL;
-	while (accept(parser, T_THING) || accept(parser, T_APPEND) || accept(parser, T_HEREDOC) || accept(parser, T_IN) || accept(parser, T_OUT))
+	while (accept(parser, T_THING) || accept_redirect(parser))
 	{
 		if (peek(parser) >= T_APPEND)
 			append_redirect(parser, redir_list);
@@ -76,24 +76,6 @@ void	append_redirect(t_parser *parser, t_redirect *redir_list)
 		ft_heredoc(redir->target, parser->data, exp_heredoc);
 	}
 	find_last(redir_list)->next = redir;
-}
-
-static int	is_assignment(char* input)
-{
-	int i;
-
-	i = 0;
-	if (!ft_strrchr(input, '='))
-		return (FALSE);
-	while (input[i])
-	{
-		if (input[i] == '=')
-			break ;
-		if (!is_bash_valid(input[i]))
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
 }
 
 t_node	*make_full_command(t_parser *parser)

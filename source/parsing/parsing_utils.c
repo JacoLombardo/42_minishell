@@ -61,3 +61,21 @@ int	is_builtin(char *cmd)
 		return (TRUE);
 	return (FALSE);
 }
+
+int	is_assignment(char* input)
+{
+	int i;
+
+	i = 0;
+	if (!ft_strrchr(input, '='))
+		return (FALSE);
+	while (input[i])
+	{
+		if (input[i] == '=')
+			break ;
+		if (!is_bash_valid(input[i]))
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
