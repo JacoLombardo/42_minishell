@@ -62,9 +62,9 @@ int	is_builtin(char *cmd)
 	return (FALSE);
 }
 
-int	is_assignment(char* input)
+int	is_assignment(char *input)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!ft_strrchr(input, '='))
