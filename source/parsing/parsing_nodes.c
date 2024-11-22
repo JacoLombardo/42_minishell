@@ -63,6 +63,7 @@ void	append_redirect(t_parser *parser, t_redirect *redir_list)
 	if (!expect(parser, T_THING))
 	{
 		redir->target = NULL;
+		free(redir);
 		return ;
 	}
 	redir->target = ft_strdup(parser->curr_token->value);
