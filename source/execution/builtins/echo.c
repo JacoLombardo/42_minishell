@@ -32,7 +32,7 @@ int	ft_check_n_flags(char *arg)
 
 int	ft_echo(t_full_cmd *cmd, t_data *data)
 {
-	int		i;
+	int	i;
 	int	n_flag;
 
 	(void)data;

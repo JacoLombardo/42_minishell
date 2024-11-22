@@ -29,6 +29,7 @@ EXEC = source/execution/builtins/cd.c \
 		source/execution/free.c \
 		source/execution/pipe.c \
 		source/execution/redirections.c \
+		source/execution/heredoc.c \
 		source/execution/signals.c \
 		source/execution/subshell.c \
 		source/execution/utils.c \

@@ -36,7 +36,7 @@ t_type			peek(t_parser *parser);
 
 t_full_cmd		*jacopize(t_node *full_cmd);
 int				is_builtin(char *cmd);
-int				is_assignment(char* input);
+int				is_assignment(char *input);
 
 void			*set_syntax_error(t_data *data);
 
