@@ -31,6 +31,20 @@ void	*set_syntax_error(t_data *data)
 	return (NULL);
 }
 
+static int	is_empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] > ' ')
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
 t_full_cmd	*parse(char *line, t_data *data)
 {
 	t_parser	*parser;
@@ -40,7 +54,7 @@ t_full_cmd	*parse(char *line, t_data *data)
 	t_token		*token_list;
 
 	expanded = expand_vars(line, data);
-	if (ft_strlen(expanded) == 0)
+	if (ft_strlen(expanded) == 0 || is_empty_line(expanded))
 		return (NULL);
 	token_list = tokenize(expanded, data);
 	free(line);

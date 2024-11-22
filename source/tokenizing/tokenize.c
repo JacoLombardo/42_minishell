@@ -27,9 +27,7 @@ t_token	*tokenize(char *line, t_data *data)
 
 	if (what_quotes(line) != 0)
 		return (set_syntax_error(data));
-	token_list = malloc(sizeof(t_token));
-	token_list->next = NULL;
-	token_list->prev = NULL;
+	token_list = ft_calloc(1, sizeof(t_token));
 	i = 0;
 	while (*line)
 	{
