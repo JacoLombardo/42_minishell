@@ -77,7 +77,7 @@ int	ft_special_args(t_full_cmd *cmd, t_data *data)
 	}
 	else if (!ft_strcmp(cmd->args[1], "."))
 		return (0);
-	else if  (!ft_strcmp(cmd->args[1], ft_getenv("PWD", data->env)))
+	else if (!ft_strcmp(cmd->args[1], ft_getenv("PWD", data->env)))
 		return (0);
 	else
 		return (1);
