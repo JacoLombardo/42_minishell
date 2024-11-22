@@ -27,7 +27,6 @@ int	accept(t_parser *parser, t_type type)
 	return (FALSE);
 }
 
-// while (accept(parser, T_THING) || accept_redirect())
 int	accept_redirect(t_parser *parser)
 {
 	if (accept(parser, T_APPEND))
@@ -48,7 +47,6 @@ int	expect(t_parser *parser, t_type type)
 	parser->err_num = 1;
 	return (FALSE);
 }
-/* todo: cleanup after failing here? */
 
 t_type	peek(t_parser *parser)
 {

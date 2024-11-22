@@ -87,8 +87,7 @@ char	*expand_vars(char *line, t_data *data)
 	{
 		if (line[i] == '$' && what_quotes(line + i + 1) != 2)
 		{
-			i++;
-			var_name = get_var_name(i, line);
+			var_name = get_var_name(++i, line);
 			i += (ft_strlen(var_name) - 1);
 			if (!ft_strncmp(var_name, "?", 1))
 				new_line = expand_last_exit(new_line, data->last_exit);
@@ -99,7 +98,6 @@ char	*expand_vars(char *line, t_data *data)
 		else
 			new_line = append_char(new_line, line[i++]);
 	}
-	new_line = append_char(new_line, '\0');
 	ft_free_tab(temp_env);
-	return (new_line);
+	return (append_char(new_line, '\0'));
 }
