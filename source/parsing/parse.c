@@ -45,6 +45,13 @@ static int	is_empty_line(char *line)
 	return (TRUE);
 }
 
+static void	free_tokens_parser_nodes(t_token *toks, t_parser *prsr, t_node *top)
+{
+	free_token_list(find_first(toks));
+	cleanup_nodes(top);
+	free(prsr);
+}
+
 t_full_cmd	*parse(char *line, t_data *data)
 {
 	t_parser	*parser;
@@ -65,13 +72,10 @@ t_full_cmd	*parse(char *line, t_data *data)
 	top_node = make_pipeline(parser);
 	if (parser->err_num)
 	{
-		cleanup_nodes(top_node);
-		free(parser);
+		free_tokens_parser_nodes(token_list, parser, top_node);
 		return (set_syntax_error(data));
 	}
 	jacopo = jacopize(top_node);
-	free_token_list(find_first(token_list));
-	cleanup_nodes(top_node);
-	free(parser);
+	free_tokens_parser_nodes(token_list, parser, top_node);
 	return (jacopo);
 }
