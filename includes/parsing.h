@@ -27,6 +27,7 @@ t_redir_type	get_redirect_type(t_type token_type);
 t_node			*make_simple_command(t_parser *parser, t_redirect *redir_list);
 
 t_redirect		*find_last(t_redirect *redir);
+t_arg			*find_last_arg(t_arg *arg);
 t_node			*create_node(t_node_type type);
 void			advance(t_parser *parser);
 int				accept(t_parser *parser, t_type type);

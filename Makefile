@@ -39,7 +39,8 @@ PARSING = source/parsing/parse.c \
 			source/parsing/parsing_utils.c \
 			source/parsing/parsing_movement.c \
 			source/parsing/parsing_output.c \
-			source/parsing/parsing_cleanup.c
+			source/parsing/parsing_cleanup.c \
+			source/parsing/parsing_boolean_checks.c
 TOKEN = source/tokenizing/token_making.c \
 		source/tokenizing/token_utils.c \
 		source/tokenizing/token_quote_handling.c \

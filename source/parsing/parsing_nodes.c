@@ -29,9 +29,7 @@ t_node	*make_simple_command(t_parser *parser, t_redirect *redir_list)
 			append_redirect(parser, redir_list);
 			continue ;
 		}
-		curr = simple->arg;
-		while (curr->next)
-			curr = curr->next;
+		curr = find_last_arg(simple->arg);
 		new = ft_calloc(1, sizeof(t_arg));
 		new->value = ft_strdup(parser->curr_token->value);
 		curr->next = new;

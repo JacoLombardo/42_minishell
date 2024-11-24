@@ -12,13 +12,6 @@
 
 #include "../../includes/parsing.h"
 
-int	is_bash_valid(char c)
-{
-	if (ft_isalnum(c) || c == '_')
-		return (TRUE);
-	return (FALSE);
-}
-
 char	*append_value(char *new_line, char *var_value, char *var_name)
 {
 	char	*temp;

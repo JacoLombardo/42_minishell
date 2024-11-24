@@ -12,13 +12,6 @@
 
 #include "../../includes/parsing.h"
 
-int	is_operator_char(char c)
-{
-	if (c == '|' || c == '>' || c == '<' || c == '&')
-		return (TRUE);
-	return (FALSE);
-}
-
 t_token	*tokenize(char *line, t_data *data)
 {
 	t_token	*token_list;
