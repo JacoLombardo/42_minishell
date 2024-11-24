@@ -38,7 +38,6 @@ void	ft_free_tab(char **tab)
 		i++;
 	}
 	free(tab);
-	tab = NULL;
 }
 
 void	ft_cleanup_list(t_full_cmd *cmd)

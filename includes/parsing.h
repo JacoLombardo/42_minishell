@@ -76,6 +76,5 @@ int				is_operator_char(char c);
 
 /* CLEANUP */
 void			cleanup_nodes(t_node *top_node);
-void			cleanup_jacopo(t_full_cmd *jacopo);
 
 #endif

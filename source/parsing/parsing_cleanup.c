@@ -53,33 +53,7 @@ void	cleanup_nodes(t_node *top_node)
 	free(top_node);
 }
 
-void	cleanup_string_array(char **array)
-{
-	int	i;
+/* deprecated> now free_tab*/
 
-	if (!array)
-		return ;
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
+/* deprecated> now cleanup_list */
 
-void	cleanup_jacopo(t_full_cmd *jacopo)
-{
-	if (!jacopo)
-		return ;
-	if (jacopo->cmd)
-		free(jacopo->cmd);
-	cleanup_string_array(jacopo->args);
-	if (jacopo->redirections)
-		free(jacopo->redirections);
-	cleanup_string_array(jacopo->targets);
-	if (jacopo->operator)
-		free(jacopo->operator);
-	cleanup_jacopo(jacopo->next);
-	free(jacopo);
-}
