@@ -35,10 +35,9 @@ int				accept_redirect(t_parser *parser);
 int				expect(t_parser *parser, t_type type);
 t_type			peek(t_parser *parser);
 
-t_full_cmd		*jacopize(t_node *full_cmd);
+t_full_cmd		*nodes_to_fullcmd(t_node *full_cmd);
 int				is_builtin(char *cmd);
 int				is_assignment(char *input);
-
 void			*set_syntax_error(t_data *data);
 
 /* TOKENIZING */
@@ -52,7 +51,6 @@ int				value_token(t_token *token_list, char *line_pos);
 int				what_quotes(char const *string);
 char			*trim_quote(char *str);
 char			*super_trimmer(char *line);
-//void			print_ttoken(t_token *token); this was for testing
 int				is_quote(char c);
 
 /* EXPANDING */
