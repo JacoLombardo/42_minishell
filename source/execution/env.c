@@ -29,7 +29,6 @@ char	*ft_getenv(char *name, char **env)
 	return (NULL);
 }
 
-
 /* Adds a new VAR to ENV */
 char	*ft_setenv(char *name, char *value, char **env)
 {
@@ -80,7 +79,6 @@ int	ft_change_env(char *var, t_data *data)
 }
 
 /* Copies the original ENV to be able to manipulate it */
-
 char	**ft_cpyenv(char **env)
 {
 	char	**new_env;
@@ -126,33 +124,4 @@ char	**ft_cpyenv_with_oldpwd(char **env)
 	}
 	new_env[i + j] = NULL;
 	return (new_env);
-}
-
-int	ft_set_pwd(char *pwd, t_data *data, int swap)
-{
-	char	*temp;
-
-	temp = NULL;
-	if (swap)
-	{
-		if (!ft_getenv("OLDPWD", data->env))
-			return (1);
-		temp = ft_strdup(ft_getenv("OLDPWD", data->env));
-		if (!ft_setenv("OLDPWD", ft_getenv("PWD", data->env), data->env))
-			return (1);
-		if (!ft_setenv("PWD", temp, data->env))
-			return (1);
-		free(temp);
-	}
-	else
-	{
-		if (ft_getenv("OLDPWD", data->env))
-		{
-			if (!ft_setenv("OLDPWD", ft_getenv("PWD", data->env), data->env))
-				return (1);
-		}
-		if (!ft_setenv("PWD", pwd, data->env))
-			return (1);
-	}
-	return (0);
 }

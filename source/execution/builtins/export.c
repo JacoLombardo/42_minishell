@@ -66,27 +66,27 @@ char	*ft_add_quotes(char *var, char	*name, char *value)
 int	ft_print_export(char **env)
 {
 	int		i;
-	char	**exports;
-	char *with_quotes;
+	char	**exps;
+	char	*with_quotes;
 
 	i = 0;
-	exports = ft_tab_sort(ft_cpyenv(env));
-	if (!exports)
+	exps = ft_tab_sort(ft_cpyenv(env));
+	if (!exps)
 		return (ft_malloc_error(NULL, NULL, 0));
-	while (exports[i])
+	while (exps[i])
 	{
-		with_quotes = ft_add_quotes(exports[i], ft_dup_var_name(exports[i]), ft_get_var_value(exports[i]));
+		with_quotes = ft_add_quotes(exps[i], ft_dup_var_name(exps[i]), ft_get_var_value(exps[i]));
 		if (!with_quotes)
 		{
-			free(exports);
+			free(exps);
 			return (1);
 		}
 		printf("declare -x %s\n", with_quotes);
 		free(with_quotes);
-		free(exports[i]);
+		free(exps[i]);
 		i++;
 	}
-	free(exports);
+	free(exps);
 	return (0);
 }
 
@@ -126,7 +126,7 @@ int	ft_export(t_full_cmd *cmd, t_data *data)
 	while (cmd->args[i])
 	{
 		if (ft_check_var_valid(cmd->args[i]))
-			status = ft_builtins_error("export", cmd->args[i],0);
+			status = ft_builtins_error("export", cmd->args[i], 0);
 		else
 		{
 			if (ft_handle_export(cmd->args[i], data))

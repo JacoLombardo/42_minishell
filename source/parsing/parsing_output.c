@@ -82,7 +82,7 @@ static void	fill_full_cmd(t_full_cmd *jacopo, t_node *full_cmd)
 	redir_to_arrays(jacopo, full_cmd->pair->right->redirect);
 }
 
-t_full_cmd	*jacopize(t_node *pipeline)
+t_full_cmd	*nodes_to_fullcmd(t_node *pipeline)
 {
 	t_full_cmd	*jacopo;
 	t_node		*full_cmd;
@@ -97,7 +97,7 @@ t_full_cmd	*jacopize(t_node *pipeline)
 	jacopo->index = index;
 	fill_full_cmd(jacopo, full_cmd);
 	index++;
-	jacopo->next = jacopize(pipeline->pair->right);
+	jacopo->next = nodes_to_fullcmd(pipeline->pair->right);
 	if (jacopo->next)
 		jacopo->operator = ft_strdup("|");
 	else

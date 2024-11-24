@@ -56,7 +56,7 @@ t_full_cmd	*parse(char *line, t_data *data)
 {
 	t_parser	*parser;
 	t_node		*top_node;
-	t_full_cmd	*jacopo;
+	t_full_cmd	*output;
 	char		*expanded;
 	t_token		*token_list;
 
@@ -75,7 +75,7 @@ t_full_cmd	*parse(char *line, t_data *data)
 		free_tokens_parser_nodes(token_list, parser, top_node);
 		return (set_syntax_error(data));
 	}
-	jacopo = jacopize(top_node);
+	output = nodes_to_fullcmd(top_node);
 	free_tokens_parser_nodes(token_list, parser, top_node);
-	return (jacopo);
+	return (output);
 }

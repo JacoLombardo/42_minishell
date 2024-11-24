@@ -55,7 +55,7 @@ void	ft_error(char *error, int status);
 /* error2 */
 int		ft_malloc_error(char *s1, char **tab, int index);
 char	*ft_malloc_error1(char *s1, char **tab, int index);
-char 	**ft_malloc_error2(char *s1, char **tab, int index);
+char	**ft_malloc_error2(char *s1, char **tab, int index);
 
 /* exec */
 int		ft_builtins(t_full_cmd *cmd, t_data *data, int status);

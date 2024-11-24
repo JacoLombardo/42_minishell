@@ -64,7 +64,7 @@ void	ft_handle_line(char *line, t_data *data)
 	cmd = parse(line, data);
 	if (!cmd || !cmd->cmd)
 	{
-		cleanup_jacopo(cmd);
+		ft_cleanup_list(cmd);
 		return ;
 	}
 	ft_if_pipes(cmd, data);
