@@ -15,31 +15,19 @@
 /* Checks if the VAR name is valid */
 int	ft_check_var_valid(char *var)
 {
-	int		status;
-	char	*name;
+	int	i;
 
-	name = ft_dup_var_name(var);
-	if ((name[0] < 65) || (90 < name[0] && name[0] < 95) || (name[0] == 96)
-		|| (name[0] > 122))
-		status = 1;
-	else if (ft_strrchr(name, '-') || ft_strrchr(name, ' ') || ft_strrchr(name,
-			'$') || ft_strrchr(name, '.'))
-		status = 1;
-	else if (ft_strrchr(name, '(') || ft_strrchr(name, ')') || ft_strrchr(name,
-			'[') || ft_strrchr(name, ']'))
-		status = 1;
-	else if (ft_strrchr(name, '!') || ft_strrchr(name, '&') || ft_strrchr(name,
-			'*') || ft_strrchr(name, '@'))
-		status = 1;
-	else if (ft_strrchr(name, '?') || ft_strrchr(name, '+') || ft_strrchr(name,
-			'%') || ft_strrchr(name, '^'))
-		status = 1;
-	else if (ft_strrchr(name, '	'))
-		status = 1;
-	else
-		status = 0;
-	free(name);
-	return (status);
+	i = 0;
+	if (!(ft_isalpha(var[i]) || var[i] == '_'))
+		return (1);
+	i++;
+	while (var[i] && var[i] != '=')
+	{
+		if (!is_bash_valid(var[i]))
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 /* Clones the VAR name */
