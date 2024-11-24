@@ -12,7 +12,7 @@
 
 #include "../../includes/execution.h"
 
-int ft_malloc_error(char *s1, char **tab, int index)
+int	ft_malloc_error(char *s1, char **tab, int index)
 {
 	ft_put_error("xmalloc", NULL, "cannot allocate memory\n", 0);
 	if (s1)
@@ -21,7 +21,7 @@ int ft_malloc_error(char *s1, char **tab, int index)
 	{
 		while (index-- >= 0)
 			free(tab[index]);
-        free(tab);
+		free(tab);
 	}
 	return (1);
 }
@@ -35,12 +35,12 @@ char	*ft_malloc_error1(char *s1, char **tab, int index)
 	{
 		while (index-- >= 0)
 			free(tab[index]);
-        free(tab);
+		free(tab);
 	}
 	return (NULL);
 }
 
-char **ft_malloc_error2(char *s1, char **tab, int index)
+char	**ft_malloc_error2(char *s1, char **tab, int index)
 {
 	ft_put_error("xmalloc", NULL, "cannot allocate memory\n", 0);
 	if (s1)
@@ -49,9 +49,7 @@ char **ft_malloc_error2(char *s1, char **tab, int index)
 	{
 		while (index-- >= 0)
 			free(tab[index]);
-        free(tab);
+		free(tab);
 	}
 	return (NULL);
 }
-
-

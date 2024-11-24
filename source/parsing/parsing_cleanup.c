@@ -52,8 +52,3 @@ void	cleanup_nodes(t_node *top_node)
 		cleanup_redirs(top_node->redirect);
 	free(top_node);
 }
-
-/* deprecated> now free_tab*/
-
-/* deprecated> now cleanup_list */
-
