@@ -32,8 +32,8 @@ typedef enum e_type
 	T_PIPE,
 	T_OR,
 	T_AND,
-	T_APPEND,  // >>
-	T_HEREDOC, // <<
+	T_APPEND,
+	T_HEREDOC,
 	T_OUT,
 	T_IN,
 }	t_type;

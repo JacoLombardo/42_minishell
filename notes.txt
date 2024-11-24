@@ -1,5 +1,9 @@
 valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
 
+// when a variable exists both in env and in temps, bash checks temps first. ours for now checks env first
+
+
+
 
 // echo with no args segfaults -- still happens 4nov
 // unset 

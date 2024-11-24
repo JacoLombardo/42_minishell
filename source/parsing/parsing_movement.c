@@ -27,12 +27,24 @@ int	accept(t_parser *parser, t_type type)
 	return (FALSE);
 }
 
+int	accept_redirect(t_parser *parser)
+{
+	if (accept(parser, T_APPEND))
+		return (TRUE);
+	else if (accept(parser, T_HEREDOC))
+		return (TRUE);
+	else if (accept(parser, T_IN))
+		return (TRUE);
+	else if (accept(parser, T_OUT))
+		return (TRUE);
+	return (FALSE);
+}
+
 int	expect(t_parser *parser, t_type type)
 {
 	if (accept(parser, type))
 		return (TRUE);
 	parser->err_num = 1;
-	// todo: write cleanup function
 	return (FALSE);
 }
 

@@ -73,10 +73,7 @@ void	cleanup_jacopo(t_full_cmd *jacopo)
 	if (!jacopo)
 		return ;
 	if (jacopo->cmd)
-	{
-		printf("cleaning up for cmd %s\n", jacopo->cmd);
 		free(jacopo->cmd);
-	}
 	cleanup_string_array(jacopo->args);
 	if (jacopo->redirections)
 		free(jacopo->redirections);

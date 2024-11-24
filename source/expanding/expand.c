@@ -78,28 +78,26 @@ char	*expand_vars(char *line, t_data *data)
 	int		i;
 	char	*var_name;
 	char	*new_line;
+	char	**temp_env;
 
+	temp_env = copy_and_enhance_env(data);
 	i = 0;
 	new_line = ft_strdup("");
 	while (line[i])
 	{
 		if (line[i] == '$' && what_quotes(line + i + 1) != 2)
 		{
-			i++;
-			var_name = get_var_name(i, line);
+			var_name = get_var_name(++i, line);
 			i += (ft_strlen(var_name) - 1);
 			if (!ft_strncmp(var_name, "?", 1))
 				new_line = expand_last_exit(new_line, data->last_exit);
 			else
-				new_line = expand_single_var(new_line, var_name, data->env);
+				new_line = expand_single_var(new_line, var_name, temp_env);
 			free(var_name);
 		}
 		else
-		{
-			new_line = append_char(new_line, line[i]);
-			i++;
-		}
+			new_line = append_char(new_line, line[i++]);
 	}
-	new_line = append_char(new_line, '\0');
-	return (new_line);
+	ft_free_tab(temp_env);
+	return (append_char(new_line, '\0'));
 }

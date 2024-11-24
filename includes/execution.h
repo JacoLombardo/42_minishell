@@ -42,6 +42,7 @@ char	*ft_getenv(char *name, char **env);
 char	*ft_setenv(char *name, char *value, char **env);
 int		ft_change_env(char *var, t_data *data);
 char	**ft_cpyenv(char **env);
+char	**ft_reallocenv(char **env, int size);
 
 /* error */
 void	ft_put_error(char *s1, char *s2, char *s3, int quotes);
