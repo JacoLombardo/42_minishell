@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/14 12:14:36 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:40:00 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*ft_getenv(char *name, char **env)
 	return (NULL);
 }
 
+
 /* Adds a new VAR to ENV */
 char	*ft_setenv(char *name, char *value, char **env)
 {
@@ -38,8 +39,8 @@ char	*ft_setenv(char *name, char *value, char **env)
 	i = 0;
 	while (env[i])
 	{
-		sub = ft_get_var_name(env[i]);
-		if (ft_strcmp(sub, name) == 0)
+		sub = ft_dup_var_name(env[i]);
+		if (!ft_strcmp(sub, name))
 		{
 			free(sub);
 			free(env[i]);
@@ -59,7 +60,7 @@ int	ft_change_env(char *var, t_data *data)
 	char	*sub;
 
 	i = 0;
-	sub = ft_get_var_name(var);
+	sub = ft_dup_var_name(var);
 	while (data->env[i])
 	{
 		if (ft_find_var(data->env[i], sub))
@@ -88,19 +89,19 @@ char	**ft_cpyenv(char **env)
 	i = 0;
 	new_env = (char **)malloc((ft_tablen(env) + 1) * sizeof(char *));
 	if (!new_env)
-		return (NULL);
+		return (ft_malloc_error2(NULL, NULL, 0));
 	while (env[i])
 	{
 		new_env[i] = ft_strdup(env[i]);
 		if (!new_env)
-			return (NULL);
+			return (ft_malloc_error2(NULL, new_env, i));
 		i++;
 	}
 	new_env[i] = NULL;
 	return (new_env);
 }
 
-char	**ft_cpyenv2(char **env)
+char	**ft_cpyenv_with_oldpwd(char **env)
 {
 	char	**new_env;
 	int		i;
@@ -110,19 +111,48 @@ char	**ft_cpyenv2(char **env)
 	j = 0;
 	new_env = (char **)malloc((ft_tablen(env) + 2) * sizeof(char *));
 	if (!new_env)
-		return (NULL);
+		return (ft_malloc_error2(NULL, NULL, 0));
 	while (env[i])
 	{
 		new_env[i + j] = ft_strdup(env[i]);
 		if (!new_env)
-			return (NULL);
+			return (ft_malloc_error2(NULL, new_env, i + j));
 		if (!ft_strncmp(env[i], "PWD", 3))
 		{
 			j++;
-			new_env[i + j] = ft_strjoin("OLD_", env[i]);
+			new_env[i + j] = ft_strjoin("OLD", env[i]);
 		}
 		i++;
 	}
 	new_env[i + j] = NULL;
 	return (new_env);
+}
+
+int	ft_set_pwd(char *pwd, t_data *data, int swap)
+{
+	char	*temp;
+
+	temp = NULL;
+	if (swap)
+	{
+		if (!ft_getenv("OLDPWD", data->env))
+			return (1);
+		temp = ft_strdup(ft_getenv("OLDPWD", data->env));
+		if (!ft_setenv("OLDPWD", ft_getenv("PWD", data->env), data->env))
+			return (1);
+		if (!ft_setenv("PWD", temp, data->env))
+			return (1);
+		free(temp);
+	}
+	else
+	{
+		if (ft_getenv("OLDPWD", data->env))
+		{
+			if (!ft_setenv("OLDPWD", ft_getenv("PWD", data->env), data->env))
+				return (1);
+		}
+		if (!ft_setenv("PWD", pwd, data->env))
+			return (1);
+	}
+	return (0);
 }

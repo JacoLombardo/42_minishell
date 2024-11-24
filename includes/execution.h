@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 17:44:23 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:37:04 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,31 @@ char	*ft_setenv(char *name, char *value, char **env);
 int		ft_change_env(char *var, t_data *data);
 char	**ft_cpyenv(char **env);
 char	**ft_reallocenv(char **env, int size);
+int		ft_set_pwd(char *pwd, t_data *data, int swap);
 
 /* error */
 void	ft_put_error(char *s1, char *s2, char *s3, int quotes);
-int		ft_builtins_error(char *cmd, char *error);
+int		ft_builtins_error(char *cmd, char *arg, int type);
 int		ft_pipe_error(t_full_cmd *cmd, t_data *data, t_pipe pipex, char *error);
 int		ft_file_error(char *path, int error);
 void	ft_error(char *error, int status);
 
+/* error2 */
+int		ft_malloc_error(char *s1, char **tab, int index);
+char	*ft_malloc_error1(char *s1, char **tab, int index);
+char 	**ft_malloc_error2(char *s1, char **tab, int index);
+
 /* exec */
 int		ft_builtins(t_full_cmd *cmd, t_data *data, int status);
+int		ft_exec_redir(t_full_cmd *cmd, t_data *data, int status);
 int		ft_exec(t_full_cmd *cmd, t_data *data);
 int		ft_if_pipes(t_full_cmd *cmd, t_data *data);
 
 /* free */
-int		ft_clean_house(t_full_cmd *cmd, t_data *data, int status);
-int		ft_free_reachable(t_full_cmd *cmd, t_data *data);
+int		ft_clean_house(t_full_cmd *cmd, t_data *data, int status, int child);
 void	ft_free_both_tab(char **tab1, char **tab2);
 void	ft_free_tab(char **tab);
-void	ft_free_cmd(t_full_cmd *cmd);
+void	ft_cleanup_list(t_full_cmd *cmd);
 void	ft_free_data_temps(t_data *data, int child);
 
 /* pipe */
@@ -89,7 +95,8 @@ int		ft_filelen(char *path);
 
 /* var */
 int		ft_check_var_valid(char *var);
-char	*ft_get_var_name(char *var);
+char	*ft_dup_var_name(char *var);
+char	*ft_dup_var_value(char *var);
 char	*ft_get_var_value(char *var);
 int		ft_find_var(char *env, char *name);
 

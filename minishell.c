@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 17:35:48 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:14:24 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_handle_line(char *line, t_data *data)
 		return ;
 	}
 	ft_if_pipes(cmd, data);
-	cleanup_jacopo(cmd);
+	ft_cleanup_list(cmd);
 }
 
 int	ft_readline(t_data *data)

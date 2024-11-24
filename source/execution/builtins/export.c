@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:32 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/15 09:43:38 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:38:26 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ char	**ft_reallocenv(char **env, int size)
 	i = 0;
 	new_env = (char **)malloc((size + 1 + 1) * sizeof(char *));
 	if (!new_env)
-		return (NULL);
+		return (ft_malloc_error2(NULL, NULL, 0));
 	while (env[i])
 	{
 		new_env[i] = ft_strdup(env[i]);
 		if (!new_env)
-			return (NULL);
+			return (ft_malloc_error2(NULL, new_env, i));
 		i++;
 	}
 	new_env[i] = NULL;
@@ -35,52 +35,58 @@ char	**ft_reallocenv(char **env, int size)
 	return (new_env);
 }
 
-char	*ft_create_export(char *var)
+char	*ft_add_quotes(char *var, char	*name, char *value)
 {
-	char	*temp;
-	char	*name;
-	char	*value;
+	char	*export;
+	char	*with_quotes;
 
-	name = ft_get_var_name(var);
-	if (!name)
-		return (NULL);
-	value = ft_get_var_value(var);
-	if (!value)
-		return (NULL);
-	free(var);
-	temp = ft_strjoinjoin(name, "=", "\"");
-	if (!temp)
-		return (NULL);
-	if (value)
-		var = ft_strjoinjoin(temp, value, "\"");
+	with_quotes = NULL;
+	if (value && ft_strchr(var, '='))
+	{
+		with_quotes = ft_strjoinjoin("=\"", value, "\"");
+		if (!with_quotes)
+			return (ft_malloc_error1(name, NULL, 0));
+	}
+	else if (!value && ft_strchr(var, '='))
+	{
+		with_quotes = ft_strjoin("=\"", "\"");
+		if (!with_quotes)
+			return (ft_malloc_error1(name, NULL, 0));
+	}
 	else
-		var = ft_charjoin(temp, '"');
-	if (!var)
-		return (NULL);
-	free(temp);
+		return (name);
+	export = ft_strjoin(name, with_quotes);
 	free(name);
-	free(value);
-	return (var);
+	if (!export)
+		return (ft_malloc_error1(with_quotes, NULL, 0));
+	free(with_quotes);
+	return (export);
 }
 
 int	ft_print_export(char **env)
 {
 	int		i;
 	char	**exports;
+	char *with_quotes;
 
 	i = 0;
 	exports = ft_tab_sort(ft_cpyenv(env));
 	if (!exports)
-		return (1);
+		return (ft_malloc_error(NULL, NULL, 0));
 	while (exports[i])
 	{
-		exports[i] = ft_create_export(exports[i]);
-		if (!exports[i])
+		with_quotes = ft_add_quotes(exports[i], ft_dup_var_name(exports[i]), ft_get_var_value(exports[i]));
+		if (!with_quotes)
+		{
+			free(exports);
 			return (1);
-		printf("declare -x %s\n", exports[i]);
+		}
+		printf("declare -x %s\n", with_quotes);
+		free(with_quotes);
+		free(exports[i]);
 		i++;
 	}
-	ft_free_tab(exports);
+	free(exports);
 	return (0);
 }
 
@@ -104,7 +110,7 @@ int	ft_handle_export(char *arg, t_data *data)
 			if (var)
 				data->env[len] = var;
 			else
-				data->env[len] = ft_strjoin(arg, "=");
+				data->env[len] = ft_strdup(arg);
 		}
 	}
 	return (0);
@@ -120,7 +126,7 @@ int	ft_export(t_full_cmd *cmd, t_data *data)
 	while (cmd->args[i])
 	{
 		if (ft_check_var_valid(cmd->args[i]))
-			status = ft_builtins_error("export", cmd->args[i]);
+			status = ft_builtins_error("export", cmd->args[i],0);
 		else
 		{
 			if (ft_handle_export(cmd->args[i], data))

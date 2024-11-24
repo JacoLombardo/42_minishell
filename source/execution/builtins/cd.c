@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/15 10:47:33 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:37:35 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*ft_back(char *temp, int *index)
 	while (temp[len - i - 1] != '/')
 		i++;
 	path = ft_strndup(temp, (len - 1 - i));
+	if (!path)
+		return (ft_malloc_error1(temp, NULL, 0));
 	free(temp);
 	if (index)
 		*index += 3;
@@ -39,7 +41,14 @@ char	*ft_forward(char *temp, char *arg, int *i)
 	while (arg[*i + len] && arg[*i + len] != '/')
 		len++;
 	temp2 = ft_strndup(arg + *i, len);
+	if (!temp2)
+		return (ft_malloc_error1(temp, NULL, 0));
 	path = ft_strjoinjoin(temp, "/", temp2);
+	if (!path)
+	{
+		free(temp2);
+		return (ft_malloc_error1(temp, NULL, 0));
+	}
 	free(temp);
 	free(temp2);
 	*i += len + 1;
@@ -56,6 +65,8 @@ char	*ft_move(char *cwd, char *arg)
 	else
 		i = 0;
 	path = ft_strdup(cwd);
+	if (!path)
+		return (ft_malloc_error1(NULL, NULL, 0));
 	while (i < (int)ft_strlen(arg))
 	{
 		if (!ft_strcmp(arg + i, ".."))
@@ -64,47 +75,61 @@ char	*ft_move(char *cwd, char *arg)
 			path = ft_back(path, &i);
 		else
 			path = ft_forward(path, arg, &i);
+		if (!path)
+			return (NULL);
 	}
 	return (path);
 }
 
 int	ft_special_args(t_full_cmd *cmd, t_data *data)
 {
+	char	*cwd;
+
+	cwd = ft_getenv("PWD", data->env);
 	if (!cmd->args[1])
 	{
-		ft_setenv("PWD", ft_getenv("HOME", data->env), data->env);
+		ft_set_pwd(ft_getenv("HOME", data->env), data, 0);
 		return (0);
 	}
-	else if (!ft_strcmp(cmd->args[1], "."))
+	else if (ft_tablen(cmd->args) > 2)
+		return (ft_builtins_error("cd", NULL, 0));
+	else if (ft_strlen(cmd->args[1]) > 1 && cmd->args[1][0] == '-')
+		return (ft_builtins_error("cd", cmd->args[1], 2));
+	else if (!ft_strcmp(cmd->args[1], ".") || !ft_strcmp(cmd->args[1], cwd))
 		return (0);
-	else if (!ft_strcmp(cmd->args[1], ft_getenv("PWD", data->env)))
+	else if (!ft_strcmp(cmd->args[1], "-"))
+	{
+		ft_set_pwd(NULL, data, 1);
 		return (0);
+	}
 	else
-		return (1);
+		return (-1);
 }
 
 int	ft_cd(t_full_cmd *cmd, t_data *data)
 {
+	int		status;
 	char	*cwd;
 	char	*path;
 
-	if (ft_tablen(cmd->args) > 2)
-		return (ft_builtins_error("cd", NULL));
-	if (!ft_special_args(cmd, data))
-		return (0);
+	status = ft_special_args(cmd, data);
+	if (status >= 0)
+		return (status);
 	if (cmd->args[1][0] == '~')
 		cwd = ft_getenv("HOME", data->env);
 	else
 		cwd = ft_getenv("PWD", data->env);
 	path = ft_move(cwd, cmd->args[1]);
+	if (!path)
+		return (1);
 	if (chdir(path))
 	{
 		free(path);
-		return (ft_builtins_error("cd", cmd->args[1]));
+		return (ft_builtins_error("cd", cmd->args[1], 1));
 	}
 	else
 	{
-		ft_setenv("PWD", path, data->env);
+		ft_set_pwd(path, data, 0);
 		free(path);
 		return (0);
 	}
