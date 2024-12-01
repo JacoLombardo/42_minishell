@@ -27,7 +27,7 @@ int	ft_select_builtin(t_full_cmd *cmd, t_data *data, int status)
 	else if (!ft_strcmp(cmd->cmd, "env"))
 		status = ft_env(cmd, data);
 	else if (!ft_strcmp(cmd->cmd, "exit"))
-		ft_exit(cmd, data);
+		status = ft_exit(cmd, data);
 	return (status);
 }
 
