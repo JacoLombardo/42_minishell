@@ -68,6 +68,7 @@ int	ft_print_export(char **env)
 	int		i;
 	char	**exps;
 	char	*with_quotes;
+	char	*var_name;
 
 	i = 0;
 	exps = ft_tab_sort(ft_cpyenv(env));
@@ -75,7 +76,8 @@ int	ft_print_export(char **env)
 		return (ft_malloc_error(NULL, NULL, 0));
 	while (exps[i])
 	{
-		with_quotes = ft_add_quotes(exps[i], ft_dup_var_name(exps[i]), ft_get_var_value(exps[i]));
+		var_name = ft_dup_var_name(exps[i]);
+		with_quotes = ft_add_quotes(exps[i], var_name, ft_get_var_value(exps[i]));
 		if (!with_quotes)
 		{
 			free(exps);
