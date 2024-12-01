@@ -90,5 +90,7 @@ void	ft_exit(t_full_cmd *cmd, t_data *data)
 	int	status;
 
 	status = ft_handle_status(cmd->args);
+	if (status == 1)
+		return ;
 	exit(ft_clean_house(cmd, data, status, 1));
 }
