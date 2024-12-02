@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/02 09:56:01 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/02 18:37:46 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 		ft_child(cmd, data, pipex);
 	else
 		status = ft_parent(pipex);
-	printf("cmd: %s, status: %i\n", cmd->cmd, status);
 	return (status);
 }
 
@@ -87,11 +86,13 @@ int	ft_pipe(t_full_cmd *cmd, t_data *data)
 {
 	int		i;
 	int		len;
+	int 	status;
 	t_pipe	pipex;
 	int		prev_fd;
 
 	i = 0;
 	len = ft_listlen(cmd);
+	status = 0;
 	prev_fd = -1;
 	pipex.prev_fd = &prev_fd;
 	pipex.len = len;
@@ -100,9 +101,10 @@ int	ft_pipe(t_full_cmd *cmd, t_data *data)
 		if (pipe(pipex.pipe_fd) == -1)
 			return (ft_pipe_error(cmd, data, pipex, "pipe"));
 		pipex.index = i;
-		if (ft_fork(cmd, data, pipex))
+		status = ft_fork(cmd, data, pipex);
+		if (status == -1)
 			return (ft_pipe_error(cmd, data, pipex, NULL));
 		i++;
 	}
-	return (0);
+	return (status);
 }
