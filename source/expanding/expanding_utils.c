@@ -12,13 +12,6 @@
 
 #include "../../includes/parsing.h"
 
-int		is_bash_valid(char c)
-{
-	if (ft_isalnum(c) || c == '_')
-		return (TRUE);
-	return (FALSE);
-}
-
 char	*append_value(char *new_line, char *var_value, char *var_name)
 {
 	char	*temp;
@@ -27,8 +20,6 @@ char	*append_value(char *new_line, char *var_value, char *var_name)
 	free(new_line);
 	new_line = ft_strjoin(temp, var_value + ft_strlen(var_name));
 	free(temp);
-	//free(var_name);
-	//free(var_value);
 	return (new_line);
 }
 
@@ -43,7 +34,7 @@ char	*append_char(char *new_line, char c)
 	return (new_line);
 }
 
-/* Like strnstr but only looks at the beginning of big string */
+/* version of strstr to look for var_name in env */
 char	*ft_better_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
@@ -59,4 +50,3 @@ char	*ft_better_strnstr(const char *big, const char *little, size_t len)
 		return ((char *)(big));
 	return (NULL);
 }
-

@@ -12,60 +12,7 @@
 
 #include "../../../includes/execution.h"
 
-void	ft_var_to_temp(char *var, t_data *data)
-{
-	int		fd;
-	char	*temp;
-
-	temp = ft_charjoin("/tmp/vars_temp", data->shell_id + '0');
-	fd = open(temp, O_CREAT | O_WRONLY | O_APPEND, 0777);
-	free(temp);
-	ft_putstr_fd(var, fd);
-	ft_putchar_fd('\n', fd);
-	close(fd);
-}
-
-int	ft_you_decide(char *input, t_data *data)
-{
-	if (ft_strrchr(input, '=') && ft_check_var_valid(input))
-	{
-		ft_var_to_temp(input, data);
-		return (1);
-		/* You close here the call */
-	}
-	else
-		return (0);
-	/* You handle it as any cmd, which will result in a "command not found" */
-}
-
-char	*ft_temp_to_env(char *var, t_data *data)
-{
-	int		fd;
-	char	*line;
-	char	*content;
-	char	*temp;
-
-	content = NULL;
-	temp = ft_charjoin("/tmp/vars_temp", data->shell_id + '0');
-	fd = open(temp, O_RDONLY, 0777);
-	free(temp);
-	if (fd < 0)
-		return (content);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		if (ft_find_var(line, var))
-			content = ft_strndup(line, (ft_strlen(line) - 1));
-		free(line);
-	}
-	close(fd);
-	return (content);
-}
-
 /* Increses the memory allocation of env by one */
-
 char	**ft_reallocenv(char **env, int size)
 {
 	char	**new_env;
@@ -119,27 +66,29 @@ char	*ft_add_quotes(char *var, char	*name, char *value)
 int	ft_print_export(char **env)
 {
 	int		i;
-	char	**exports;
-	char *with_quotes;
+	char	**exps;
+	char	*with_quotes;
+	char	*name;
 
 	i = 0;
-	exports = ft_tab_sort(ft_cpyenv(env));
-	if (!exports)
+	exps = ft_tab_sort(ft_cpyenv(env));
+	if (!exps)
 		return (ft_malloc_error(NULL, NULL, 0));
-	while (exports[i])
+	while (exps[i])
 	{
-		with_quotes = ft_add_quotes(exports[i], ft_dup_var_name(exports[i]), ft_get_var_value(exports[i]));
+		name = ft_dup_var_name(exps[i]);
+		with_quotes = ft_add_quotes(exps[i], name, ft_get_var_value(exps[i]));
 		if (!with_quotes)
 		{
-			free(exports);
+			free(exps);
 			return (1);
 		}
 		printf("declare -x %s\n", with_quotes);
 		free(with_quotes);
-		free(exports[i]);
+		free(exps[i]);
 		i++;
 	}
-	free(exports);
+	free(exps);
 	return (0);
 }
 

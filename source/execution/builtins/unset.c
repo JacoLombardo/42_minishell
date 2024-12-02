@@ -13,7 +13,6 @@
 #include "../../../includes/execution.h"
 
 /* Reduces the memory allocation of env and remove a specific VAR */
-
 char	**ft_deallocenv(char **env, int size, char *name)
 {
 	char	**new_env;

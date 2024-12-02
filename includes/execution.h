@@ -30,7 +30,7 @@ int		ft_bin(t_full_cmd *cmd, t_data *data, int status);
 int		ft_cd(t_full_cmd *cmd, t_data *data);
 int		ft_echo(t_full_cmd *cmd, t_data *data);
 int		ft_env(t_full_cmd *cmd, t_data *data);
-void	ft_exit(t_full_cmd *cmd, t_data *data);
+int		ft_exit(t_full_cmd *cmd, t_data *data);
 int		ft_handle_export(char *arg, t_data *data);
 int		ft_export(t_full_cmd *cmd, t_data *data);
 int		ft_pwd(t_full_cmd *cmd, t_data *data);
@@ -42,6 +42,7 @@ char	*ft_getenv(char *name, char **env);
 char	*ft_setenv(char *name, char *value, char **env);
 int		ft_change_env(char *var, t_data *data);
 char	**ft_cpyenv(char **env);
+char	**ft_reallocenv(char **env, int size);
 int		ft_set_pwd(char *pwd, t_data *data, int swap);
 
 /* error */

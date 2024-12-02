@@ -12,27 +12,15 @@
 
 #include "../../includes/parsing.h"
 
-int	is_operator_char(char c)
-{
-	if (c == '|' || c == '>' || c == '<' || c == '&')
-		return (TRUE);
-	return (FALSE);
-}
-
-t_token	*tokenize(char *line)
+t_token	*tokenize(char *line, t_data *data)
 {
 	t_token	*token_list;
 	t_token	*dummy_first;
 	int		i;
 
 	if (what_quotes(line) != 0)
-	{
-		printf("invalid quote situation\n");
-		return (NULL);
-	}
-	token_list = malloc(sizeof(t_token));
-	token_list->next = NULL;
-	token_list->prev = NULL;
+		return (set_syntax_error(data));
+	token_list = ft_calloc(1, sizeof(t_token));
 	i = 0;
 	while (*line)
 	{

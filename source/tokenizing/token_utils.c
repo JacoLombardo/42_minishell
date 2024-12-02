@@ -20,13 +20,6 @@ void	print_ttoken(t_token *token)
 	printf("\n");
 }
 
-int	is_quote(char c)
-{
-	if (c == '\'' || c == '\"')
-		return (TRUE);
-	return (FALSE);
-}
-
 t_type	get_type(char *str)
 {
 	if (ft_strncmp(str, "||", 2) == 0)

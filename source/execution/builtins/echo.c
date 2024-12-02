@@ -45,12 +45,12 @@ int	ft_echo(t_full_cmd *cmd, t_data *data)
 	}
 	while (cmd->args[i])
 	{
-		printf("%s", cmd->args[i]);
+		ft_putstr_fd(cmd->args[i], 1);
 		i++;
 		if (cmd->args[i])
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 	}
 	if (!n_flag)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	return (0);
 }

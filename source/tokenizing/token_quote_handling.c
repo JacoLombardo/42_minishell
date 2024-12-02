@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_quote_handling.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: csilva-r <csilva-r@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/19 08:19:35 by csilva-r          #+#    #+#             */
+/*   Updated: 2024/11/19 08:19:38 by csilva-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/parsing.h"
 
 int	what_quotes(char const *string)
@@ -22,7 +34,7 @@ int	what_quotes(char const *string)
 	return (quote_type);
 }
 
-static int		to_remove(char *line, int i)
+static int	to_remove(char *line, int i)
 {
 	if (!is_quote(line[i]))
 		return (FALSE);
@@ -38,9 +50,10 @@ char	*super_trimmer(char *line)
 {
 	char	*trimmed;
 	char	*temp;
+	int		i;
 
 	trimmed = ft_strdup("");
-	int		i = 0;
+	i = 0;
 	while (line[i])
 	{
 		if (!to_remove(line, i))
@@ -52,7 +65,7 @@ char	*super_trimmer(char *line)
 		}
 		i++;
 	}
-	return(trimmed);
+	return (trimmed);
 }
 
 char	*trim_quote(char *str)
