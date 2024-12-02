@@ -46,6 +46,7 @@ char	*ft_dup_var_name(char *var)
 }
 
 /* Clones the VAR value */
+
 char	*ft_dup_var_value(char *var)
 {
 	int		i;
@@ -70,6 +71,7 @@ char	*ft_dup_var_value(char *var)
 }
 
 /* Extracts the VAR value */
+
 char	*ft_get_var_value(char *var)
 {
 	int		i;
