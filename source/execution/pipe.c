@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 18:19:27 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:56:01 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	ft_fork(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 		ft_child(cmd, data, pipex);
 	else
 		status = ft_parent(pipex);
+	printf("cmd: %s, status: %i\n", cmd->cmd, status);
 	return (status);
 }
 

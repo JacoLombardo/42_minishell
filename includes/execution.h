@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/20 16:37:04 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:48:15 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ void	ft_free_both_tab(char **tab1, char **tab2);
 void	ft_free_tab(char **tab);
 void	ft_cleanup_list(t_full_cmd *cmd);
 void	ft_free_data_temps(t_data *data, int child);
+
+/* heredoc */
+void	ft_heredoc(char *delimiter, t_data *data, int flag);
 
 /* pipe */
 void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex);
