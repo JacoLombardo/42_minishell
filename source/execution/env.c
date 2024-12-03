@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/20 16:40:00 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:46:16 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,33 +97,6 @@ char	**ft_cpyenv(char **env)
 		i++;
 	}
 	new_env[i] = NULL;
-	return (new_env);
-}
-
-char	**ft_cpyenv_with_oldpwd(char **env)
-{
-	char	**new_env;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	new_env = (char **)malloc((ft_tablen(env) + 2) * sizeof(char *));
-	if (!new_env)
-		return (ft_malloc_error2(NULL, NULL, 0));
-	while (env[i])
-	{
-		new_env[i + j] = ft_strdup(env[i]);
-		if (!new_env)
-			return (ft_malloc_error2(NULL, new_env, i + j));
-		if (!ft_strncmp(env[i], "PWD", 3))
-		{
-			j++;
-			new_env[i + j] = ft_strjoin("OLD", env[i]);
-		}
-		i++;
-	}
-	new_env[i + j] = NULL;
 	return (new_env);
 }
 

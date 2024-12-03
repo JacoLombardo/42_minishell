@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:11:28 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/20 16:37:08 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/02 18:35:31 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_pipe_error(t_full_cmd *cmd, t_data *data, t_pipe pipex, char *error)
 		close(*pipex.prev_fd);
 	close(pipex.pipe_fd[0]);
 	close(pipex.pipe_fd[1]);
-	return (1);
+	return (-1);
 }
 
 int	ft_file_error(char *path, int error)
