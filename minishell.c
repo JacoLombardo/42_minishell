@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/19 16:14:24 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:10:56 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ char	*ft_create_prompt(t_data *data)
 	while (cwd[len - i] != '/')
 		i++;
 	cwd = ft_strdup(cwd + (len - i));
-	if (data->last_exit > 0)
-		prompt = ft_strjoinjoin("💀\033[1;36m:~", cwd, "  \033[0m");
-	else
-		prompt = ft_strjoinjoin("🫠 \033[1;36m:~", cwd, "  \033[0m");
+	prompt = ft_strjoinjoin("🫠 \033[1;36m:~", cwd, "  \033[0m");
 	free(cwd);
 	return (prompt);
 }

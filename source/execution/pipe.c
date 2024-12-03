@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/02 18:37:46 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:05:37 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ int	ft_pipe(t_full_cmd *cmd, t_data *data)
 			return (ft_pipe_error(cmd, data, pipex, NULL));
 		i++;
 	}
+	while (waitpid(-1, NULL, 0) > 0) { }
 	return (status);
 }
