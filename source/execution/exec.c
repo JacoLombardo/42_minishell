@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:59:53 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/02 18:38:26 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/04 10:22:42 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ int	ft_exec(t_full_cmd *cmd, t_data *data)
 	int	status;
 
 	status = 0;
-	if (!ft_strcmp(cmd->cmd, "minishell") || !ft_strcmp(cmd->cmd,
+	if (!cmd->cmd)
+		status = ft_exec_redir(cmd, data, status);
+	else if (!ft_strcmp(cmd->cmd, "minishell") || !ft_strcmp(cmd->cmd,
 			"./minishell"))
 		status = ft_subshell(cmd, data, status);
 	else if (cmd->built_in == TRUE)
 		status = ft_builtins(cmd, data, status);
-	else if (!cmd->cmd)
-		status = ft_exec_redir(cmd, data, status);
 	else
 		status = ft_bin(cmd, data, status);
 	return (status);

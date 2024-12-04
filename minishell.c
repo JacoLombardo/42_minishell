@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/03 16:10:56 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/04 10:22:25 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_handle_line(char *line, t_data *data)
 	add_history(line);
 	data->history = history_list();
 	cmd = parse(line, data);
-	if (!cmd || !cmd->cmd)
+	if (!cmd)
 	{
 		ft_cleanup_list(cmd);
 		return ;
