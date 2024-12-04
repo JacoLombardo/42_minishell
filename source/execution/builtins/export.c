@@ -128,7 +128,7 @@ int	ft_export(t_full_cmd *cmd, t_data *data)
 	while (cmd->args[i])
 	{
 		if (ft_check_var_valid(cmd->args[i]))
-			status = ft_builtins_error("export", cmd->args[i],0);
+			status = ft_builtins_error("export", cmd->args[i], 0);
 		else
 		{
 			if (ft_handle_export(cmd->args[i], data))

@@ -86,7 +86,7 @@ int	ft_pipe(t_full_cmd *cmd, t_data *data)
 {
 	int		i;
 	int		len;
-	int 	status;
+	int		status;
 	t_pipe	pipex;
 	int		prev_fd;
 
@@ -106,6 +106,7 @@ int	ft_pipe(t_full_cmd *cmd, t_data *data)
 			return (ft_pipe_error(cmd, data, pipex, NULL));
 		i++;
 	}
-	while (waitpid(-1, NULL, 0) > 0) { }
+	while (waitpid(-1, NULL, 0) > 0)
+		;
 	return (status);
 }

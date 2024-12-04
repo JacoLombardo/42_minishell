@@ -29,7 +29,6 @@ char	*ft_getenv(char *name, char **env)
 	return (NULL);
 }
 
-
 /* Adds a new VAR to ENV */
 char	*ft_setenv(char *name, char *value, char **env)
 {
