@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:48 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/12 14:16:17 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/08 18:13:51 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,5 @@
 
 # define FALSE 0
 # define TRUE 1
-
-/* TESTING */
-void	print_node(t_node *node);
-void	print_jacopo(t_full_cmd *jacopo, int index);
-
-void	ft_check(t_full_cmd *cmd);
 
 #endif
