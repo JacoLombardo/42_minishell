@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/20 16:37:35 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/08 18:32:10 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ char	*ft_move(char *cwd, char *arg)
 	int		i;
 	char	*path;
 
-	if (arg[0] == '~')
+	if (arg[0] == '/')
+		return (ft_strdup(arg));
+	else if (arg[0] == '~')
 		i = 2;
 	else
 		i = 0;
