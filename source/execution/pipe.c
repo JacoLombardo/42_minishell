@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:27:59 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/03 16:05:37 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:51:24 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_full_cmd	*ft_select_cmd(t_full_cmd *cmd, int index)
 
 void	ft_child(t_full_cmd *cmd, t_data *data, t_pipe pipex)
 {
-	int			status;
+	int	status;
 
 	if (*pipex.prev_fd != -1)
 	{

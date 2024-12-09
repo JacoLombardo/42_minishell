@@ -13,3 +13,5 @@ old_*
 *.txt
 
 invalid
+
+readline.supp

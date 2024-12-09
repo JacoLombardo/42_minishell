@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:09:40 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/02 18:14:56 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/09 10:58:22 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,18 @@ void	ft_bin_child(t_full_cmd *cmd, t_data *data, int status, char *path)
 		ft_error(cmd->cmd, ft_clean_house(cmd, data, 1, 0));
 }
 
+int	ft_bin_parent(char *path, int pid, int status)
+{
+	free(path);
+	waitpid(pid, &status, 0);
+	signal(SIGINT, ft_handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else
+		return (status);
+}
+
 int	ft_bin(t_full_cmd *cmd, t_data *data, int status)
 {
 	char	*path;
@@ -94,17 +106,14 @@ int	ft_bin(t_full_cmd *cmd, t_data *data, int status)
 			ft_exec_redir(cmd, data, status);
 		return (ft_is_function(cmd->cmd));
 	}
+	signal(SIGINT, ft_handle_sigint3);
+	signal(SIGQUIT, ft_handle_sigquit);
 	pid = fork();
 	if (pid == -1)
 		exit(-1);
 	if (!pid)
 		ft_bin_child(cmd, data, status, path);
 	else
-	{
-		free(path);
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			return (WEXITSTATUS(status));
-	}
+		status = ft_bin_parent(path, pid, status);
 	return (status);
 }

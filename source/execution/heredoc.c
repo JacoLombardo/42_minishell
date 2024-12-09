@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 12:21:18 by csilva-r          #+#    #+#             */
-/*   Updated: 2024/12/08 18:17:41 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:52:36 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	ft_heredoc_child(int fd, char *delimiter, t_data *data, int flag)
 	char	*line;
 	char	*trimmed;
 
-	signal(SIGQUIT, ft_handle_sigquit);
 	signal(SIGINT, ft_handle_sigint2);
 	trimmed = trim_quote(delimiter);
 	free(delimiter);
@@ -78,4 +77,3 @@ void	ft_heredoc(char *delimiter, t_data *data, int flag)
 			data->error = WEXITSTATUS(status);
 	}
 }
-

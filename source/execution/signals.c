@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:25:29 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/08 18:17:16 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:52:31 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,16 @@ void	ft_handle_sigint2(int signal)
 	exit(130);
 }
 
+void	ft_handle_sigint3(int signal)
+{
+	(void) signal;
+	ft_putstr_fd("\n", 1);
+}
+
 void	ft_handle_sigquit(int signal)
 {
-    (void)signal;
-	ft_putstr_fd("\n", 1);
-	rl_on_new_line();
+	(void)signal;
 	ft_putstr_fd("Quit (core dumped)\n", 2);
-	exit(128);
 }
 
 void	ft_sig_init(void)
