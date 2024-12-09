@@ -129,11 +129,8 @@ int	ft_cd(t_full_cmd *cmd, t_data *data)
 		free(path);
 		return (ft_builtins_error("cd", cmd->args[1], 1));
 	}
-	else
-	{
-		path = trim_trailing_slash(path);
-		ft_set_pwd(path, data, 0);
-		free(path);
-		return (0);
-	}
+	path = trim_trailing_slash(path);
+	ft_set_pwd(path, data, 0);
+	free(path);
+	return (0);
 }
