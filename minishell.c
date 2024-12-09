@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/09 16:40:06 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:30:20 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_create_prompt(t_data *data)
 	len = ft_strlen(cwd);
 	while (cwd[len - i] != '/')
 		i++;
-	cwd = ft_strdup(cwd + (len - i + 1));
+	cwd = ft_strdup(cwd + (len - i));
 	prompt = ft_strjoinjoin("🫠 \033[1;36m:", cwd, " \033[0m");
 	free(cwd);
 	return (prompt);
