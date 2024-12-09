@@ -131,6 +131,7 @@ int	ft_cd(t_full_cmd *cmd, t_data *data)
 	}
 	else
 	{
+		path = trim_trailing_slash(path);
 		ft_set_pwd(path, data, 0);
 		free(path);
 		return (0);

@@ -26,8 +26,8 @@ char	*ft_create_prompt(t_data *data)
 	len = ft_strlen(cwd);
 	while (cwd[len - i] != '/')
 		i++;
-	cwd = ft_strdup(cwd + (len - i));
-	prompt = ft_strjoinjoin("🫠 \033[1;36m:~", cwd, "  \033[0m");
+	cwd = ft_strdup(cwd + (len - i + 1));
+	prompt = ft_strjoinjoin("🫠 \033[1;36m:", cwd, " \033[0m");
 	free(cwd);
 	return (prompt);
 }
