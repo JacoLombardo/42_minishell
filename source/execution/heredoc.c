@@ -60,7 +60,7 @@ void	ft_heredoc(char *delimiter, t_data *data, int flag)
 	free(temp);
 	if (fd < 0)
 		ft_error("open", 1);
-	rl_getc_function = getc;	
+	rl_getc_function = getc;
 	signal(SIGINT, ft_handle_sigint_heredoc);
 	ft_handle_heredoc(delimiter, fd, flag, data);
 	signal(SIGINT, ft_handle_sigint);

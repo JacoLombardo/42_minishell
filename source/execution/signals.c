@@ -28,7 +28,6 @@ void	ft_handle_sigint_heredoc(int signal)
 	g_flag = 130;
 	ft_putstr_fd("\n", 1);
 	rl_on_new_line();
-	
 	rl_replace_line("", 0);
 	rl_redisplay();
 	rl_cleanup_after_signal();
