@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:47:39 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/08 17:39:55 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:39:59 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_data
 	char					**env;
 	HIST_ENTRY				**history;
 	int						last_exit;
-	int						error;
 }							t_data;
 
 /* PARSING */

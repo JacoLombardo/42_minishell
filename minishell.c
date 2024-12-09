@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/09 14:44:20 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:40:06 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_data	ft_init(char **env)
 		data.shell_id = 0;
 	data.history = NULL;
 	data.last_exit = 0;
-	data.error = 0;
 	ft_sig_init();
 	return (data);
 }
@@ -64,8 +63,6 @@ void	ft_handle_line(char *line, t_data *data)
 
 	add_history(line);
 	data->history = history_list();
-	data->error = 0;
-	g_flag = 0;
 	cmd = parse(line, data);
 	if (!cmd)
 	{
@@ -81,6 +78,7 @@ int	ft_readline(t_data *data)
 	char	*line;
 	char	*prompt;
 
+	g_flag = 0;
 	prompt = ft_create_prompt(data);
 	line = readline(prompt);
 	if (!line)
