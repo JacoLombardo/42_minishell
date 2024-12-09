@@ -12,6 +12,30 @@
 
 #include "../../../includes/execution.h"
 
+char	*trim_trailing_slash(char *path)
+{
+	char	*trimmed;
+	size_t	i;
+
+	if (path[ft_strlen(path) - 1] != '/' || ft_strlen(path) == 1)
+		trimmed = ft_strdup(path);
+	else
+	{
+		trimmed = malloc(sizeof(char) * (ft_strlen(path)));
+		if (!trimmed)
+			return (NULL);
+		i = 0;
+		while (i < ft_strlen(path) - 1)
+		{
+			trimmed[i] = path[i];
+			i++;
+		}
+		trimmed[i] = '\0';
+	}
+	free (path);
+	return (trimmed);
+}
+
 int	ft_pwd(t_full_cmd *cmd, t_data *data)
 {
 	char	*cwd;
