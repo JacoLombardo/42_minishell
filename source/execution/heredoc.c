@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 12:21:18 by csilva-r          #+#    #+#             */
-/*   Updated: 2024/12/09 11:52:36 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:31:00 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_write_heredoc(int fd, char *line, int flag, t_data *data)
 	ft_putchar_fd('\n', fd);
 }
 
-void	ft_heredoc_child(int fd, char *delimiter, t_data *data, int flag)
+/* void	ft_heredoc_child(int fd, char *delimiter, t_data *data, int flag)
 {
 	char	*line;
 	char	*trimmed;
@@ -38,6 +38,7 @@ void	ft_heredoc_child(int fd, char *delimiter, t_data *data, int flag)
 	while (1)
 	{
 		line = readline("heredoc> ");
+		printf("LINE -->%s<--\n", line);
 		if (!line || !ft_strcmp(line, trimmed))
 		{
 			free(line);
@@ -76,4 +77,38 @@ void	ft_heredoc(char *delimiter, t_data *data, int flag)
 		if (WIFEXITED(status))
 			data->error = WEXITSTATUS(status);
 	}
+} */
+
+void	ft_heredoc(char *delimiter, t_data *data, int flag)
+{
+	int		fd;
+	char	*temp;
+	char	*line;
+	char	*trimmed;
+
+	if (!data || !data->env)
+		return ;
+	temp = ft_charjoin("/tmp/heredoc_temp", data->shell_id + '0');
+	fd = open(temp, O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	free(temp);
+	if (fd < 0)
+		ft_error("open", 1);
+	signal(SIGINT, ft_handle_sigint_heredoc);
+	trimmed = trim_quote(delimiter);
+	while (!g_flag)
+	{
+		line = readline("heredoc> ");
+		if (!line || !ft_strcmp(line, trimmed))
+		{
+			free(line);
+			break ;
+		}
+		ft_write_heredoc(fd, line, flag, data);
+		free(line);
+	}
+	close(fd);
+	free(trimmed);
+	signal(SIGINT, ft_handle_sigint);
+	if (g_flag)
+		data->error = g_flag;
 }

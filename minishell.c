@@ -6,11 +6,13 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/08 18:13:26 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/09 14:44:20 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		g_flag = 0;
 
 char	*ft_create_prompt(t_data *data)
 {
@@ -63,6 +65,7 @@ void	ft_handle_line(char *line, t_data *data)
 	add_history(line);
 	data->history = history_list();
 	data->error = 0;
+	g_flag = 0;
 	cmd = parse(line, data);
 	if (!cmd)
 	{

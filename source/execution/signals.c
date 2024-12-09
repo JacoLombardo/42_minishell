@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:25:29 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/09 11:52:31 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:28:52 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,18 @@ void	ft_handle_sigint(int signal)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	rl_cleanup_after_signal();
 }
 
-void	ft_handle_sigint2(int signal)
+void	ft_handle_sigint_heredoc(int signal)
 {
 	(void)signal;
+	ft_putstr_fd("\n", 1);
 	rl_on_new_line();
-	exit(130);
+	g_flag = 130;
 }
 
-void	ft_handle_sigint3(int signal)
+void	ft_handle_sigint_bin(int signal)
 {
 	(void) signal;
 	ft_putstr_fd("\n", 1);
