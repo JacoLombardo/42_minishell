@@ -98,6 +98,7 @@ int		ft_listlen(t_full_cmd *cmd);
 int		ft_tablen(char **tab);
 int		ft_filelen(char *path);
 char	*trim_trailing_slash(char *path);
+int		event(void);
 
 /* var */
 int		ft_check_var_valid(char *var);
