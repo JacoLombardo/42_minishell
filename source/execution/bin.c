@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:09:40 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/09 16:29:19 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:09:21 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ int	ft_bin(t_full_cmd *cmd, t_data *data, int status)
 	char	*path;
 	pid_t	pid;
 
-	path = ft_get_path(cmd->cmd, data->env);
+	if (cmd->cmd[0] == '/' || !ft_strncmp(cmd->cmd, "..", 2))
+		path = ft_strdup(cmd->cmd);
+	else
+		path = ft_get_path(cmd->cmd, data->env);
 	if (!path)
 	{
 		if (cmd->redirections)
