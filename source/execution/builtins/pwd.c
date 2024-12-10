@@ -6,18 +6,20 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:28:54 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/02 09:46:20 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/10 11:25:45 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/execution.h"
 
-char	*trim_trailing_slash(char *path)
+char	*ft_trim_trailing_slash(char *path)
 {
 	char	*trimmed;
 	size_t	i;
 
-	if (path[ft_strlen(path) - 1] != '/' || ft_strlen(path) == 1)
+	if (path[0] == '/' && path[1] == '/')
+		trimmed = ft_strdup(path + 1);
+	else if (path[ft_strlen(path) - 1] != '/' || ft_strlen(path) == 1)
 		trimmed = ft_strdup(path);
 	else
 	{
