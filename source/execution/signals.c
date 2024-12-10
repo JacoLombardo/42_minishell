@@ -25,8 +25,8 @@ void	ft_handle_sigint(int signal)
 void	ft_handle_sigint_heredoc(int signal)
 {
 	(void)signal;
-	rl_on_new_line();
 	g_flag = 130;
+	rl_done = 1;
 }
 
 void	ft_handle_sigint_bin(int signal)

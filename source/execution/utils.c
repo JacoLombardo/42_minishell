@@ -62,3 +62,8 @@ int	ft_filelen(char *path)
 	close(fd);
 	return (len);
 }
+
+int	event(void)
+{
+	return (0);
+}

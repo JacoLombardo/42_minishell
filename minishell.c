@@ -79,6 +79,7 @@ int	ft_readline(t_data *data)
 	char	*prompt;
 
 	g_flag = 0;
+	rl_event_hook = event;
 	prompt = ft_create_prompt(data);
 	line = readline(prompt);
 	if (!line)
