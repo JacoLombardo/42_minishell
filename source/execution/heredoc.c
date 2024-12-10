@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 12:21:18 by csilva-r          #+#    #+#             */
-/*   Updated: 2024/12/09 16:43:32 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/10 11:09:52 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	ft_heredoc(char *delimiter, t_data *data, int flag)
 	rl_getc_function = getc;
 	signal(SIGINT, ft_handle_sigint_heredoc);
 	ft_handle_heredoc(delimiter, fd, flag, data);
-	signal(SIGINT, ft_handle_sigint);
 	rl_getc_function = rl_getc;
+	signal(SIGINT, ft_handle_sigint);
 }

@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:29:17 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/08 18:32:10 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/10 11:34:03 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ char	*ft_back(char *temp, int *index)
 	free(temp);
 	if (index)
 		*index += 3;
+	if (!path[0])
+	{
+		free(path);
+		path = ft_strdup("/");
+	}
 	return (path);
 }
 
@@ -129,7 +134,7 @@ int	ft_cd(t_full_cmd *cmd, t_data *data)
 		free(path);
 		return (ft_builtins_error("cd", cmd->args[1], 1));
 	}
-	path = trim_trailing_slash(path);
+	path = ft_trim_trailing_slash(path);
 	ft_set_pwd(path, data, 0);
 	free(path);
 	return (0);
