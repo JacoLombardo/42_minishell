@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:11:21 by jalombar          #+#    #+#             */
-/*   Updated: 2024/11/18 17:25:22 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:13:44 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_filelen(char *path)
 	return (len);
 }
 
-int	event(void)
+int	ft_event(void)
 {
 	return (0);
 }

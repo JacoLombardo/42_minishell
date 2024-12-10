@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 13:48:35 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/10 11:14:47 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:13:20 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		ft_subshell(t_full_cmd *cmd, t_data *data, int status);
 int		ft_listlen(t_full_cmd *cmd);
 int		ft_tablen(char **tab);
 int		ft_filelen(char *path);
-int		event(void);
+int		ft_event(void);
 
 /* var */
 int		ft_check_var_valid(char *var);

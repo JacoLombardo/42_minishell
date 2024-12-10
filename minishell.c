@@ -6,7 +6,7 @@
 /*   By: jalombar <jalombar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:26:23 by jalombar          #+#    #+#             */
-/*   Updated: 2024/12/09 21:30:20 by jalombar         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:13:47 by jalombar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_readline(t_data *data)
 	char	*prompt;
 
 	g_flag = 0;
-	rl_event_hook = event;
+	rl_event_hook = ft_event;
 	prompt = ft_create_prompt(data);
 	line = readline(prompt);
 	if (!line)
